@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const copyToClipboard = async (
   data: string | Blob,
-  msg: string = "Copied to clipboard!"
+  // msg: string = "Copied to clipboard!"
 ) => {
   try {
     if (typeof data === "string") {
