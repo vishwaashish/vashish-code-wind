@@ -1,7 +1,21 @@
+"use client";
+
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
+import { Button } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const { setTheme, theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure component is mounted before rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container-wrapper">
@@ -82,23 +96,15 @@ const Header = () => {
                   <span className="sr-only">GitHub</span>
                 </a>
               </button>
-              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground py-2 group/toggle h-8 w-8 px-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-moon hidden [html.light_&amp;]:block"
+
+              {mounted && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                 >
-                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                </svg>
-                <span className="sr-only">Toggle theme</span>
-              </button>
+                  {theme === "light" ? <Sun /> : <Moon />}
+                </Button>
+              )}
             </nav>
           </div>
         </div>

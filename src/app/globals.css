@@ -119,10 +119,19 @@ body {
 .preview-code {
   background: repeating-linear-gradient(
     45deg,
-    #ffffff,
-    #ffffff 10px,
-    #f2f2f2 10px,
-    #f2f2f2 10.6px
+    hsl(var(--background)),
+    hsl(var(--background)) 10px,
+    hsl(var(--muted)) 10px,
+    hsl(var(--muted)) 10.6px
   );
   background-size: 30px 30px;
+}
+
+.prose {
+  /* @apply; */
+}
+
+.prose :where(hr):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }

@@ -1,3 +1,4 @@
+"use client";
 import { Tooltip } from "@/components/ui/tooltip";
 import { cn, copyToClipboard } from "@/lib/utils";
 import { VariantProps } from "class-variance-authority";
@@ -64,7 +65,9 @@ export const CopyButton = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`w-${width} h-${height} swap-on`}
+            width={width}
+            height={height}
+            // className={`w-${width} h-${height} swap-on`}
           >
             <path
               strokeLinecap="round"
@@ -80,7 +83,9 @@ export const CopyButton = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`w-${width} h-${height} swap-off`}
+            // className={`w-${width} h-${height} swap-off`}
+            width={width}
+            height={height}
           >
             <path
               strokeLinecap="round"

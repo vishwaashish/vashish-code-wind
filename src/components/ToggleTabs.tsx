@@ -1,9 +1,9 @@
 "use client";
+import { isValidHtmlElement } from "@/lib/utils";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import CodePreview from "./CodePreview";
-import { CopyButton } from "./CopyButton";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { isValidHtmlElement } from "@/lib/utils";
 
 /**
  * Converts raw HTML into a React Component.
@@ -74,7 +73,6 @@ const ToggleTabs = ({
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
-        <div className="flex gap-1 items-center">
           <Select
             value={codeType}
             onValueChange={(val) => {
@@ -92,8 +90,6 @@ const ToggleTabs = ({
               </SelectGroup>
             </SelectContent>
           </Select>
-          <CopyButton />
-        </div>
       </div>
 
       <TabsContent

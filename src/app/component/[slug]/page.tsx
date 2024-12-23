@@ -18,7 +18,6 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
-  console.log("slug", slug);
   const { default: Post } = await import(`@/content/${slug}.mdx`);
 
   const index = navigation.findIndex(
@@ -43,7 +42,7 @@ export default async function Page({
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="prose max-w-full mt-3">
+      <div className="prose dark:prose-invert max-w-full mt-3">
         <Post />
       </div>
       <br />
