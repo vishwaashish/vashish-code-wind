@@ -67,7 +67,7 @@ export const CopyButton = ({
             stroke="currentColor"
             width={width}
             height={height}
-            // className={`w-${width} h-${height} swap-on`}
+            className={`w-${width} h-${height} swap-on`}
           >
             <path
               strokeLinecap="round"
@@ -83,7 +83,7 @@ export const CopyButton = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            // className={`w-${width} h-${height} swap-off`}
+            className={`w-${width} h-${height} swap-off`}
             width={width}
             height={height}
           >

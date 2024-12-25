@@ -1,8 +1,5 @@
-import { Button } from "@/components/ui/button";
-import ToggleTabs from "@/components/ToggleTabs";
-import CodePreview from "@/components/CodePreview";
-import ToggleCodePreview from "@/components/ToggleCodePreview";
-import { button } from "@/components/examples/buttons.tsx";
+{/* // import { Button } from "@/components/ui/button"; */}
+{/* // import ToggleCodePreview from "@/components/ToggleCodePreview"; */}
 
 # Button
 
@@ -14,8 +11,25 @@ The **Button** component is a reusable UI element built with React, TypeScript, 
 
 Ensure you have the following dependencies installed:
 
-```
+```bash
 npm install @radix-ui/react-slot class-variance-authority tailwindcss
+```
+<br/>
+
+```jsx
+import { Button } from "@/components/ui/button";
+export function ButtonDemo() {
+  return (
+    <div>
+      <button>Default Button</button>
+      <button variant="destructive">Destructive Button</button>
+      <button variant="outline">Outline Button</button>
+      <button variant="secondary">Secondary Button</button>
+      <button variant="ghost">Ghost Button</button>
+      <button variant="link">Link Button</button>
+    </div>
+  );
+}
 ```
 
 ---
@@ -27,7 +41,7 @@ Basic Example
 <ToggleCodePreview
   className="flex gap-2 justify-center flex-wrap"
   code={`
-import { Button } from "@/components/ui/button"
+ import { Button } from "@/components/ui/button"
 export function ButtonDemo() {
 return (
     <div>
@@ -51,21 +65,21 @@ return (
 
 With Sizes
 
-<ToggleCodePreview 
+ <ToggleCodePreview
 className="flex gap-2 justify-center flex-wrap"
 code={`
 import { Button } from "@/components/ui/button"
 export function ButtonDemo() {
 return (
-    <div>
-      <Button size="sm">Small Button</Button>
+<div>
+<Button size="sm">Small Button</Button>
+
 <Button size="default">Default Button</Button>
 <Button size="lg">Large Button</Button>
 <Button size="icon">Icon Button</Button>
     </div>
   );
 }`}>
-
 <Button size="sm">Small Button</Button>
 <Button size="default">Default Button</Button>
 <Button size="lg">Large Button</Button>
@@ -74,13 +88,13 @@ return (
 
 ---
 
-##  🎨 Variants
+## 🎨 Variants
 
 The variant prop controls the visual appearance of the button:
 
-| **Property** | **Type**    | **Default** | **Description**              |
-|--------------|-------------|-------------|------------------------------|
-| `variant`    | `string`    | `"default"` | Button variant style         |
-| `size`       | `string`    | `"default"` | Button size                  |
-| `asChild`    | `boolean`   | `false`     | Renders as a custom component|
-| `className`  | `string`    | `-`         | Additional custom styles     |
+| **Property** | **Type**  | **Default** | **Description**               |
+| ------------ | --------- | ----------- | ----------------------------- |
+| `variant`    | `string`  | `"default"` | Button variant style          |
+| `size`       | `string`  | `"default"` | Button size                   |
+| `asChild`    | `boolean` | `false`     | Renders as a custom component |
+| `className`  | `string`  | `-`         | Additional custom styles      |

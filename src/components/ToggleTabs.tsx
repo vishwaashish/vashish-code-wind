@@ -76,7 +76,6 @@ const ToggleTabs = ({
           <Select
             value={codeType}
             onValueChange={(val) => {
-              console.log("val", val);
               setCodeType(val);
             }}
           >

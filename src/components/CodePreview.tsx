@@ -1,9 +1,7 @@
 "use client";
 
-import { formatCode } from "@/lib/utils";
+import { formatCode, renderCode } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { agate } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { CopyButton } from "./CopyButton";
 
 /**
@@ -13,34 +11,51 @@ import { CopyButton } from "./CopyButton";
  */
 const CodePreview = ({
   code,
-  language = "typescript",
+  language = "tsx",
 }: {
   code: string;
-  language?: "html" | "typescript";
+  language?: string;
 }) => {
   const [formattedCode, setFormattedCode] = useState<string>("");
 
   useEffect(() => {
-    const renderCode = async () => {
+    const renderCodeData = async () => {
       try {
         const formatted = await formatCode(`${code}`, language);
-        setFormattedCode(formatted);
+        const html = await renderCode(formatted, language);
+        setFormattedCode(html ?? "");
       } catch (error) {
         console.log("error", error);
       }
     };
-    renderCode();
+    renderCodeData();
   }, [code, language]);
 
   return (
-    <div className="relative border rounded-lg overflow-hidden bg-gray-900 text-white">
+    <div className="relative">
       {/* Copy Button in the corner */}
       <div className="absolute top-2 right-2 z-10">
-        <CopyButton title={formattedCode} />
+        <CopyButton title={formattedCode} width={4} height={4} />
       </div>
 
+      {formattedCode ? (
+        <div
+          className="shiki"
+          dangerouslySetInnerHTML={{ __html: formattedCode }}
+        />
+      ) : (
+        <pre
+          className="p-4 whitespace-pre-wrap"
+          style={{ paddingInline: "0.3rem", paddingBlock: "0.2rem" }}
+        >
+          {code}
+        </pre>
+      )}
+
+      {/* <Pre>{formattedCode}</Pre> */}
+
       {/* Code Preview */}
-      <SyntaxHighlighter
+      {/* <SyntaxHighlighter
         language={language}
         style={agate}
         customStyle={{
@@ -51,7 +66,7 @@ const CodePreview = ({
         }}
       >
         {formattedCode}
-      </SyntaxHighlighter>
+      </SyntaxHighlighter> */}
     </div>
   );
 };
