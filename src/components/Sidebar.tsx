@@ -37,7 +37,7 @@ export default function Sidebar() {
   return (
     <>
       <SidebarContainer>
-        <SidebarContent className="py-6 lg:py-8">
+        <SidebarContent className="py-4 lg:py-6">
           <SidebarGroup className="flex flex-col gap-2">
             <Link
               className="mr-4 flex items-center gap-2 md:hidden mb-4"

@@ -94,32 +94,6 @@ export async function formatCode(code: string, lang: string) {
   }
 }
 
-/**
- * Validates if an HTML string contains a single valid root element.
- * @param {string} html - The HTML string to validate.
- * @returns {boolean} - True if valid, false otherwise.
- */
-export function isValidHtmlElement(html: string): boolean {
-  // Remove spaces, newlines, and comments from the HTML
-  const cleanedHtml = html
-    .trim()
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/\n/g, "");
-
-  // Match valid root elements
-  const match = cleanedHtml.match(/^<(\w+)[^>]*>[\s\S]*<\/\1>$/);
-
-  // Check if it's a valid root tag and no extra sibling elements
-  if (!match) {
-    return false;
-  }
-
-  // Ensure no content exists outside the root tag
-  const hasExtraContent = cleanedHtml.replace(match[0], "").trim().length > 0;
-
-  return !hasExtraContent;
-}
-
 // const highlighter = createHighlighterCore({
 //   themes: [import("shiki/themes/vitesse-light.mjs")],
 //   langs: [import("shiki/langs/javascript.mjs")],
@@ -197,13 +171,16 @@ export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
   );
 }
 
-
 export function formatString(str: string): string {
   if (!str) return ""; // Handle empty or falsy strings
 
   // Remove underscores and capitalize the first letter
   return str
     .replace(/[_\W]+/g, " ") // Replace underscores with spaces
-    .trim()            // Remove any leading/trailing spaces
+    .trim() // Remove any leading/trailing spaces
     .replace(/\b\w/, (char) => char.toUpperCase()); // Capitalize the first letter
+}
+
+export function absoluteUrl(path: string) {
+  return `${process.env.NEXT_PUBLIC_APP_URL ?? ""}${path}`;
 }
