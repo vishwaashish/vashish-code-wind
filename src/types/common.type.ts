@@ -4,3 +4,7 @@ export interface NavigationModel {
   slug: string;
   url: string;
 }
+
+export type PageProps = {
+  params: Promise<{ slug: string }>;
+};

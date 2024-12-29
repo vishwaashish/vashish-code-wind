@@ -85,8 +85,8 @@ export default async function Page({ params }: Props) {
 
   return (
     <Layout>
-      <div className="grid grid-cols-1 lg:grid-cols-8 lg:gap-10">
-        <div className="lg:col-span-6">
+      <div className="flex">
+        <div className="w-full">
           <Breadcrumb className="mb-4">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -151,9 +151,7 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
 
-        <div className="hidden lg:col-span-2 lg:block">
-          <TableOfContents />
-        </div>
+        <TableOfContents className="ml-10 hidden basis-52 lg:block" />
       </div>
     </Layout>
   );

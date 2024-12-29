@@ -18,7 +18,7 @@ const ComponentPreview = ({
   ...props
 }: ComponentPreviewProps) => {
   const { theme } = useTheme();
-  const [themeBox, setThemeBox] = useState<string | undefined>("light");
+  const [themeBox, setThemeBox] = useState<string | undefined>("");
 
   useEffect(() => {
     setThemeBox(theme);
@@ -58,7 +58,7 @@ const ComponentPreview = ({
               onClick={() =>
                 setThemeBox((val) => (val === "light" ? "dark" : "light"))
               }
-              className="bg-transparent transition-none text-sm aspect-square data-[state=active]:hi"
+              className="data-[state=active]:hi aspect-square bg-transparent text-sm transition-none"
             >
               {themeBox === "light" ? (
                 <Sun size={15} className="mx-auto" />
@@ -73,9 +73,9 @@ const ComponentPreview = ({
           <TabsContent value="preview">
             <div
               className={cn(
-                "bg-background relative flex items-center justify-between border rounded-md overflow-hidden p-4 preview-code",
+                "preview-code relative flex items-center justify-between overflow-hidden rounded-md border bg-background p-4",
                 themeBox === "light" ? "light" : "dark",
-                previewClassName
+                previewClassName,
               )}
             >
               {preview}

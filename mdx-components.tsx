@@ -1,11 +1,13 @@
 import ComponentCodes from "@/components/ComponentCodes";
 import ComponentPreview from "@/components/ComponentPreview";
+import DemoComponent from "@/components/DemoComponent";
 import { CodeBlock } from "@/components/shiki";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import Link from "next/link";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -14,7 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h1
         className={cn(
           "font-heading mt-2 scroll-m-20 text-4xl font-bold",
-          className
+          className,
         )}
         {...props}
       />
@@ -23,7 +25,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h2
         className={cn(
           "font-heading mt-12 scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-4",
-          className
+          className,
         )}
         {...props}
       />
@@ -32,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h3
         className={cn(
           "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-          className
+          className,
         )}
         {...props}
       />
@@ -41,7 +43,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h4
         className={cn(
           "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-          className
+          className,
         )}
         {...props}
       />
@@ -50,7 +52,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h5
         className={cn(
           "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-          className
+          className,
         )}
         {...props}
       />
@@ -59,7 +61,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h6
         className={cn(
           "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-          className
+          className,
         )}
         {...props}
       />
@@ -116,7 +118,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <table
           className={cn(
             "relative w-full overflow-hidden border-none text-sm",
-            className
+            className,
           )}
           {...props}
         />
@@ -138,7 +140,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <th
         className={cn(
           "px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
-          className
+          className,
         )}
         {...props}
       />
@@ -150,7 +152,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <td
         className={cn(
           "px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
-          className
+          className,
         )}
         {...props}
       />
@@ -161,8 +163,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <code
           className={cn(
-            "relative rounded whitespace-pre-wrap break-words bg-muted px-1 font-normal text-sm border py-0.5 font-mono",
-            className
+            "font-mono relative whitespace-pre-wrap break-words rounded border bg-muted px-1 py-0.5 text-sm font-normal",
+            className,
           )}
           {...props}
         ></code>
@@ -172,7 +174,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h3
         className={cn(
           "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-          className
+          className,
         )}
         {...props}
       />
@@ -190,7 +192,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <TabsList
         className={cn(
           "w-full justify-start rounded-none border-b bg-transparent p-0",
-          className
+          className,
         )}
         {...props}
       />
@@ -202,7 +204,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <TabsTrigger
         className={cn(
           "relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none",
-          className
+          className,
         )}
         {...props}
       />
@@ -214,7 +216,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <TabsContent
         className={cn(
           "relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-semibold",
-          className
+          className,
         )}
         {...props}
       />
@@ -223,5 +225,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Button: Button as React.FC<React.ComponentProps<"button">>,
     ComponentPreview,
     ComponentCodes,
+    DemoComponent,
+    Link,
   };
 }
