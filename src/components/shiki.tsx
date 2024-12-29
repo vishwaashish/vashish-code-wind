@@ -1,142 +1,159 @@
 "use client";
-import { renderCode } from "@/lib/utils";
-import React, {
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { BundledLanguage } from "shiki";
-import CodePreview from "./CodePreview";
+import { cn, copyToClipboard } from "@/lib/utils";
+import { Clipboard, ClipboardCheck } from "lucide-react";
+import React, { ReactElement, ReactNode, useState } from "react";
+// import { BundledLanguage } from "shiki";
 
 /**
  * Pre component for code blocks
  */
 
-interface PreProps {
-  children: React.ReactNode;
-  "data-language"?: string;
+// interface PreProps {
+//   children: React.ReactNode;
+//   "data-language"?: string;
+//   className?: string;
+// }
+// export const Pre: React.FC<PreProps> = ({ children }) => {
+//   // const [highlighted, setHighlighted] = useState<string | null>(null);
+//   const { code, lang } = useMemo(() => {
+//     let extractedCode = "";
+//     let extractedLang = "plaintext";
+
+//     if (React.isValidElement(children)) {
+//       const childElement = children as ReactElement<{
+//         children?: ReactNode;
+//         className?: string;
+//       }>;
+
+//       // Extract `className` and `children` from the child element's props
+//       extractedCode =
+//         typeof childElement.props?.children === "string"
+//           ? childElement.props.children
+//           : "";
+
+//       if (childElement.props?.className) {
+//         const match = childElement.props.className.match(/language-([\w-]+)/);
+//         extractedLang = match ? match[1] : "plaintext";
+//       }
+//     }
+
+//     return { code: extractedCode, lang: extractedLang };
+//   }, [children]);
+
+//   // useEffect(() => {
+//   //   let isMounted = true;
+//   //   let timeoutId: NodeJS.Timeout;
+
+//   //   async function highlight() {
+//   //     try {
+//   //       timeoutId = setTimeout(async () => {
+//   //         let formattedCode = code;
+//   //         if (code) {
+//   //           formattedCode = await formatCode(code, lang);
+//   //           const html = await renderCode(formattedCode, lang);
+//   //           if (isMounted && html) {
+//   //             setHighlighted(html);
+//   //           }
+//   //         }
+//   //       }, 100); // Slight debounce for performance
+//   //     } catch (error) {
+//   //       console.error("Error rendering code:", error);
+//   //     }
+//   //   }
+
+//   //   highlight();
+
+//   //   return () => {
+//   //     isMounted = false;
+//   //     clearTimeout(timeoutId);
+//   //   };
+//   // }, [code, lang]);
+
+//   if (!code) {
+//     console.warn("No code found in <Pre /> children");
+//     return null; // Safeguard if `code` is empty
+//   }
+
+//   return ();
+// };
+
+interface CodeBlockProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
+  children: React.ReactNode;
 }
-export const Pre: React.FC<PreProps> = ({ children }) => {
-  // const [highlighted, setHighlighted] = useState<string | null>(null);
-  const { code, lang } = useMemo(() => {
-    let extractedCode = "";
-    let extractedLang = "plaintext";
 
-    if (React.isValidElement(children)) {
-      const childElement = children as ReactElement<{
-        children?: ReactNode;
-        className?: string;
-      }>;
+type ReactElementWithChildren = ReactElement<{ children?: ReactNode }>;
 
-      // Extract `className` and `children` from the child element's props
-      extractedCode =
-        typeof childElement.props?.children === "string"
-          ? childElement.props.children
-          : "";
+// Type guard for React elements with children
+function isReactElementWithChildren(
+  node: unknown
+): node is ReactElementWithChildren {
+  return (
+    React.isValidElement(node) &&
+    node.props !== null &&
+    typeof node.props === "object" &&
+    "children" in node.props
+  );
+}
 
-      if (childElement.props?.className) {
-        const match = childElement.props.className.match(/language-([\w-]+)/);
-        extractedLang = match ? match[1] : "plaintext";
-      }
-    }
-
-    return { code: extractedCode, lang: extractedLang };
-  }, [children]);
-
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   let timeoutId: NodeJS.Timeout;
-
-  //   async function highlight() {
-  //     try {
-  //       timeoutId = setTimeout(async () => {
-  //         let formattedCode = code;
-  //         if (code) {
-  //           formattedCode = await formatCode(code, lang);
-  //           const html = await renderCode(formattedCode, lang);
-  //           if (isMounted && html) {
-  //             setHighlighted(html);
-  //           }
-  //         }
-  //       }, 100); // Slight debounce for performance
-  //     } catch (error) {
-  //       console.error("Error rendering code:", error);
-  //     }
-  //   }
-
-  //   highlight();
-
-  //   return () => {
-  //     isMounted = false;
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [code, lang]);
-
-  if (!code) {
-    console.warn("No code found in <Pre /> children");
-    return null; // Safeguard if `code` is empty
+const extractText = (children: ReactNode): string => {
+  if (typeof children === "string") {
+    return children;
   }
 
-  return (
-    <CodePreview code={code} language={lang} />
-    // <div className="relative my-4 overflow-auto rounded-lg ">
-    //   <CopyButton
-    //     copy={code}
-    //     className="absolute top-2 right-2 z-10 h-auto w-auto p-1"
-    //     height={6}
-    //     width={6}
-    //   />
-    //   {highlighted ? (
-    //     <div
-    //       className="shiki"
-    //       dangerouslySetInnerHTML={{ __html: highlighted }}
-    //     />
-    //   ) : (
-    //     <pre {...props} className="p-4 whitespace-pre-wrap">
-    //       {code}
-    //     </pre>
-    //   )}
-    // </div>
-  );
+  if (Array.isArray(children)) {
+    return children.map(extractText).join("");
+  }
+
+  if (isReactElementWithChildren(children)) {
+    return extractText(children.props.children);
+  }
+
+  return "";
 };
 
-/**
- * Inline Code Component
- */
-export const InlineCode: React.FC<{
-  children: React.ReactNode;
-  className?: string;
-}> = ({ children, className, ...props }) => {
-  const [highlighted, setHighlighted] = useState<string | null>(null);
-  const lang = className?.replace("language-", "") || "plaintext";
+export const CodeBlock: React.FC<CodeBlockProps> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    async function highlight() {
-      const html = await renderCode(
-        children as string,
-        lang as BundledLanguage
-      );
-      setHighlighted(html);
+  const handleCopy = async () => {
+    const text = extractText(children);
+    try {
+      if (typeof text === "string") {
+        copyToClipboard(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch (err) {
+      console.error("Failed to copy text:", err);
     }
-    highlight();
-  }, [children, lang]);
+  };
 
-  if (highlighted) {
-    return (
-      <code
-        {...props}
-        dangerouslySetInnerHTML={{ __html: highlighted }}
-        className="block overflow-auto"
-      />
-    );
+  if (!extractText(children)) {
+    return;
   }
 
   return (
-    <code {...props} className={`language-${lang}`}>
-      {children}
-    </code>
+    <>
+      <pre
+        className={cn(
+          "mb-4 mt-6 overflow-x-auto relative rounded-lg whitespace-pre-wrap break-words border-code bg-code p-4 [&>code]:p-0 [&>code]:bg-transparent [&>code]:border-0",
+          className
+        )}
+        {...props}
+      >
+        <button
+          onClick={handleCopy}
+          className="w-6 h-6 flex absolute backdrop-blur-[3px] text-white rounded-[25%] right-2 z-[1]"
+          aria-label="Copy code to clipboard"
+        >
+          {copied ? <ClipboardCheck size={15} /> : <Clipboard size={15} />}
+        </button>
+        {children}
+      </pre>
+    </>
   );
 };

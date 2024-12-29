@@ -19,4 +19,4 @@ export const navigation: NavigationModel[] = [
     slug: "input",
     url: "/component/input",
   },
-];
+].sort((a, b) => a.name.localeCompare(b.name));

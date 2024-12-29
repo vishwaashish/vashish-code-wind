@@ -10,13 +10,25 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/content/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/mdx-components/*.{js,ts,jsx,tsx,mdx}",
+    "./mdx-components.tsx",
+    "./contentlayer.config.ts",
   ],
   theme: {
+    fontFamily: {
+      body: [
+        "Geist",
+        "Geist Fallback",
+        "Arial",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+      ],
+    },
     extend: {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        code: "hsl(var(--background-code))",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

@@ -61,10 +61,10 @@ export default function TableOfContents() {
   }, []);
 
   return (
-    <nav className="w-full p-6 lg:py-8 hidden lg:block sticky top-[56px]">
-      {headings.length && (
+    <nav className="w-full py-4 lg:py-6 hidden lg:block sticky top-[56px]">
+      {!!headings.length && (
         <>
-          <p className="text-lg font-bold mb-2 h4">On this Page</p>
+          <p className="text-sm font-semibold mb-3">On this Page</p>
           <ul className="space-y-3 text-sm">
             {headings.map((heading) => (
               <li key={heading.id} className={`ml-${(heading.level - 1) * 4}`}>

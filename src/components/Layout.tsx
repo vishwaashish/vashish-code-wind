@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import TableOfContents from "./TableOfContents";
 import { Button } from "./ui/button";
 import { SidebarInset, SidebarProvider } from "./ui/sidebar";
 
@@ -26,14 +25,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="border-grid flex flex-1 flex-col">
         <Header />
         <main className="flex flex-1 flex-col container-wrapper">
-          <div className="container relative flex-1 items-start md:grid md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)_var(--toc-width)] lg:gap-16si">
+          <div className="container relative flex-1 items-start md:grid md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:gap-16si">
             <Sidebar />
             <SidebarInset className="min-h-max">
-              <main className="relative py-6 lg:gap-10 lg:py-8  rounded-lg m-2">
+              <main className="relative py-4 lg:py-6  rounded-lg m-2">
                 {children}
               </main>
             </SidebarInset>
-            <TableOfContents />
+            {/* <TableOfContents /> */}
           </div>
         </main>
         <div className="py-5 container-wrapper  border-t">
