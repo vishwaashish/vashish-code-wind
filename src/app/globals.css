@@ -7,6 +7,14 @@ body {
 }
 
 @layer base {
+  :root {
+    --loader-primary: hsl(var(--primary));
+    --loader-secondary: hsl(var(--muted));
+    --loader-border: 5px;
+    --loader-width: 48px;
+    --loader-speed: 1s;
+  }
+
   :root,
   .light {
     --background: 0 0% 100%;

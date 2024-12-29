@@ -1,0 +1,112 @@
+---
+title: Loaders Gallary
+description:
+  Enhance User Experience and Aesthetics with Our Range of Creative CSS
+  Loaders for Seamless Loading Animations
+---
+
+# Loaders Gallary
+
+Enhance User Experience and Aesthetics with Our Range of Creative CSS Loaders for Seamless Loading Animations
+
+<div className="mt-12 grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 [&>*]:relative [&>*]:px-1 [&>*]:py-12 [&>*]:before:absolute [&>*]:before:bg-border/70 [&>*]:before:[block-size:100vh] [&>*]:before:[inline-size:1px] [&>*]:before:[inset-block-start:0] [&>*]:before:[inset-inline-start:-1px] [&>*]:after:absolute [&>*]:after:bg-border/70 [&>*]:after:[block-size:1px] [&>*]:after:[inline-size:100vw] [&>*]:after:[inset-block-start:-1px] [&>*]:after:[inset-inline-start:0] sm:[&>*]:px-8 xl:[&>*]:px-12">
+  {[
+    "loader-01",
+    "loader-02",
+    "loader-03",
+    "loader-04",
+    "loader-05",
+    "loader-06",
+  ].map((componentName) => {
+    return (
+      <div
+        // href={`/component/loaders/${componentName}`}
+        key={componentName}
+        className="group/item relative"
+      >
+        <DemoComponent
+          key={componentName}
+          directory={"loaders"}
+          componentName={componentName}
+          className="flex w-full items-center justify-center"
+        />
+      </div>
+    );
+  })}
+</div>
+
+## Code Example
+
+<ComponentPreview previewClassName="min-h-[200px]">
+
+<DemoComponent
+  key={"loader-01"}
+  directory={"loaders"}
+  componentName={"loader-01"}
+  className="flex min-h-[200px] w-full items-center justify-center"
+  showCopy={false}
+/>
+
+```html
+<style>
+  :root {
+    --loader-primary: hsl(var(--primary));
+    --loader-secondary: hsl(var(--muted));
+    --loader-border: 5px;
+    --loader-width: 48px;
+    --loader-speed: 1s;
+  }
+
+  .loader-01 {
+    width: var(--loader-width);
+    height: var(--loader-width);
+    border: var(--loader-border) solid var(--loader-secondary);
+    border-bottom-color: var(--loader-primary);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation var(--loader-speed) linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+<div class="loader-01"></div>
+```
+
+</ComponentPreview >
+
+## 🎨 Customization Guide
+
+You can easily adjust the loader's appearance using the following CSS variables:
+
+- `--loader-primary`: Adjusts the primary color of the loader. Use your theme's `--primary` variable.
+- `--loader-secondary`: Controls the secondary color, usually used for backgrounds or accents.
+- `--loader-border`: Sets the border thickness for the loader rings.
+- `--loader-width`: Defines the overall size of the loader.
+- `--loader-speed`: Controls the speed of the animation.
+
+### Example Customization
+
+```css
+:root {
+  --loader-primary: hsl(220, 90%, 56%);
+  --loader-secondary: hsl(220, 20%, 80%);
+  --loader-border: 3px;
+  --loader-width: 64px;
+  --loader-speed: 1.5s;
+}
+```
+
+## Usage Instructions
+
+1. Copy the CSS and place it in your stylesheet (global.css or relevant module
+   file).
+2. Use the HTML structure in your component or .mdx file.
+3. Customize the variables (`--primary`, `--secondary`) to fit your theme.
