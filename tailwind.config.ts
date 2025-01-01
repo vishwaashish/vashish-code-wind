@@ -85,5 +85,8 @@ export default {
       },
     },
   },
-  plugins: [typography, animate],
+  plugins: [
+    typography,
+    animate,
+  ],
 } satisfies Config;

@@ -1,17 +1,29 @@
 import { cn } from "@/lib/utils";
-import { CopyButton } from "./CopyButton";
+import { Code2 } from "lucide-react";
+import { ReactNode } from "react";
+import ComponentCodes from "./ComponentCodes";
+import { SyntaxHighlighter } from "./shiki";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export default async function DemoComponent({
   directory,
   componentName,
   className,
   showCopy = true,
+  children,
   ...props
 }: {
   directory: string;
   componentName: string;
   className?: string;
   showCopy?: boolean;
+  children?: ({ html }: { html: string }) => ReactNode;
 }) {
   const singular = directory.slice(0, directory.length - 1);
   console.log("singular", singular);
@@ -19,7 +31,6 @@ export default async function DemoComponent({
   const fileData = await import(
     `@/components/${directory}/${componentName}`
   ).catch(() => null);
-  console.log("fileData", fileData, fileData.html);
 
   if (!fileData) {
     return null;
@@ -33,15 +44,49 @@ export default async function DemoComponent({
 
   return (
     <>
-      <div className={cn("", className)}>
-        <Component {...props} />
-      </div>
-      {showCopy && (
-        <CopyButton
-          copy={fileData.html}
-          className="absolute right-2 top-2 z-10 text-foreground transition-opacity"
-        />
+      {!children && (
+        <div className={cn("", className)}>
+          <Component {...props} />
+        </div>
       )}
+      {showCopy && (
+        <Dialog>
+          <DialogTrigger asChild>
+            {/* <CopyButton
+              copy={fileData.html}
+              className="absolute right-2 top-2 z-10 text-foreground transition-opacity"
+            /> */}
+            <Code2
+              role="button"
+              className="absolute right-2 top-2 z-10 text-foreground transition-opacity"
+              size={15}
+            />
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl gap-0">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Code2 />
+                Source code
+              </DialogTitle>
+            </DialogHeader>
+
+            <ComponentCodes tabs={["Html", "React"]}>
+              <SyntaxHighlighter
+                maxHeight="450px"
+                code={fileData.html}
+                language="html"
+              />
+              <SyntaxHighlighter
+                maxHeight="450px"
+                code={fileData.react}
+                language="jsx"
+              />
+            </ComponentCodes>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {!!children && children(fileData)}
     </>
   );
 }

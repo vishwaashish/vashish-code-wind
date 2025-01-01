@@ -1,7 +1,7 @@
 import ComponentCodes from "@/components/ComponentCodes";
 import ComponentPreview from "@/components/ComponentPreview";
 import DemoComponent from "@/components/DemoComponent";
-import { CodeBlock } from "@/components/shiki";
+import { CodeBlock, SyntaxHighlighter } from "@/components/shiki";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
+  
   return {
     ...components,
     h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -227,5 +228,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ComponentCodes,
     DemoComponent,
     Link,
+    SyntaxHighlighter
   };
 }

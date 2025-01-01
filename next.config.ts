@@ -48,5 +48,5 @@ export default withContentlayer(
     cleanDistDir: true,
     reactStrictMode: true,
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-  })
+  }),
 );

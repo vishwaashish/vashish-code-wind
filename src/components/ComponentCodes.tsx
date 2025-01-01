@@ -50,7 +50,7 @@ const ComponentCodes = ({
         {Children.map(children, (child, index) => (
           <TabsContent value={tabs[index]} key={"tabs-" + index}>
             <div className="flex flex-col space-y-4">
-              <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+              <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:overflow-auto">
                 {child}
               </div>
             </div>

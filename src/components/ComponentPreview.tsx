@@ -73,7 +73,7 @@ const ComponentPreview = ({
           <TabsContent value="preview">
             <div
               className={cn(
-                "preview-code relative flex items-center justify-between overflow-hidden rounded-md border bg-background p-4",
+                "preview-code relative rounded-md border bg-background p-4",
                 themeBox === "light" ? "light" : "dark",
                 previewClassName,
               )}
@@ -89,7 +89,7 @@ const ComponentPreview = ({
             className={cn(themeBox === "light" ? "light" : "dark")}
           >
             <div className="flex flex-col space-y-4">
-              <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+              <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:overflow-auto">
                 {block}
               </div>
             </div>

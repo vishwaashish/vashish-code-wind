@@ -2,6 +2,7 @@
 import { cn, copyToClipboard } from "@/lib/utils";
 import { Clipboard, ClipboardCheck } from "lucide-react";
 import { MouseEvent, useState } from "react";
+import { Tooltip } from "./ui/tooltip";
 
 interface CopyButtonModel
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,17 +34,19 @@ export const CopyButton = ({
     }
   };
   return (
-    <button
-      onClick={onButtonClick}
-      className={cn(
-        "absolute right-2 z-[1] flex h-6 w-6 rounded-[25%] text-white backdrop-blur-[3px]",
-        className,
-      )}
-      aria-label="Copy code to clipboard"
-      {...rest}
-    >
-      {state ? <ClipboardCheck size={size} /> : <Clipboard size={size} />}
-    </button>
+    <Tooltip title={state ? "Copied!" : "Copy"}>
+      <button
+        onClick={onButtonClick}
+        className={cn(
+          "absolute right-2 z-[1] flex h-6 w-6 items-center justify-center rounded-[25%] text-white backdrop-blur-[3px] transition-all hover:scale-110 active:scale-100",
+          className,
+        )}
+        aria-label="Copy code to clipboard"
+        {...rest}
+      >
+        {state ? <ClipboardCheck size={size} /> : <Clipboard size={size} />}
+      </button>
+    </Tooltip>
     // <Tooltip title={state ? "Copied!" : "Copy"}>
     //   <Button
     //     variant="ghost"

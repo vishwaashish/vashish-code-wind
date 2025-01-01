@@ -1,81 +1,109 @@
 "use client";
-import { cn, copyToClipboard } from "@/lib/utils";
+import moonlightTheme from "@/assets/moonlight-ii.json";
+import { cn, copyToClipboard, formatCode } from "@/lib/utils";
 import { Clipboard, ClipboardCheck } from "lucide-react";
-import React, { ReactElement, ReactNode, useState } from "react";
-// import { BundledLanguage } from "shiki";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import type { Options, Theme } from "rehype-pretty-code";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeStringify from "rehype-stringify";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import remarkToc from "remark-toc";
+import { unified } from "unified";
+import { CopyButton } from "./CopyButton";
 
-/**
- * Pre component for code blocks
- */
+export function SyntaxHighlighter({
+  code = "",
+  language = "jsx",
+  className = "",
+  maxHeight = "",
+}: {
+  code: string;
+  className?: string;
+  language?: "plaintext" | "html" | "css" | "jsx" | "tsx";
+  maxHeight?: string;
+}) {
+  const [syntaxCode, setSyntaxCode] = useState<string>("");
+  const [formattedCode, setFormattedCode] = useState<string>("");
 
-// interface PreProps {
-//   children: React.ReactNode;
-//   "data-language"?: string;
-//   className?: string;
-// }
-// export const Pre: React.FC<PreProps> = ({ children }) => {
-//   // const [highlighted, setHighlighted] = useState<string | null>(null);
-//   const { code, lang } = useMemo(() => {
-//     let extractedCode = "";
-//     let extractedLang = "plaintext";
+  useEffect(() => {
+    (async () => {
+      try {
+        const fcode = await formatCode(code, language);
+        const file = await unified()
+          .use(remarkParse)
+          .use(remarkRehype)
+          .use(remarkToc)
+          .use(remarkFrontmatter)
+          .use(rehypePrettyCode, {
+            theme: moonlightTheme as unknown as Theme,
+            keepBackground: false,
+            grid: false,
+          } as Options)
+          .use(rehypeStringify)
+          .process("```" + language + "\n" + fcode.trim() + "\n```");
 
-//     if (React.isValidElement(children)) {
-//       const childElement = children as ReactElement<{
-//         children?: ReactNode;
-//         className?: string;
-//       }>;
+        setFormattedCode(fcode);
+        setSyntaxCode(String(file));
+      } catch (error) {
+        console.error("Error processing Markdown:", error);
+        setSyntaxCode("Failed to render syntax-highlighted code.");
+      }
+    })();
+  }, [code, language]);
 
-//       // Extract `className` and `children` from the child element's props
-//       extractedCode =
-//         typeof childElement.props?.children === "string"
-//           ? childElement.props.children
-//           : "";
+  const height = `[&_pre]:max-h-[${maxHeight}]`;
 
-//       if (childElement.props?.className) {
-//         const match = childElement.props.className.match(/language-([\w-]+)/);
-//         extractedLang = match ? match[1] : "plaintext";
-//       }
-//     }
+  if (!syntaxCode) {
+    return (
+      <div
+        className={cn(
+          "flex h-full w-full animate-pulse items-center overflow-auto rounded-lg border-code bg-code",
+          height,
+        )}
+      >
+        <div className="flex-1 space-y-3 p-4">
+          <div className="h-2 w-2/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-3/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-4/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-3/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-5/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-4/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-1/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-4/6 rounded bg-slate-700"></div>
+          <div className="w-6/6 h-2 rounded bg-slate-700"></div>
+          <div className="h-2 w-3/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-2/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-5/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-4/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-1/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-2/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-3/6 rounded bg-slate-700"></div>
+          <div className="w-0/6 h-2 rounded bg-slate-700"></div>
+          <div className="h-2 w-1/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-3/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-5/6 rounded bg-slate-700"></div>
+          <div className="h-2 w-2/6 rounded bg-slate-700"></div>
+        </div>
+      </div>
+    );
+  }
 
-//     return { code: extractedCode, lang: extractedLang };
-//   }, [children]);
-
-//   // useEffect(() => {
-//   //   let isMounted = true;
-//   //   let timeoutId: NodeJS.Timeout;
-
-//   //   async function highlight() {
-//   //     try {
-//   //       timeoutId = setTimeout(async () => {
-//   //         let formattedCode = code;
-//   //         if (code) {
-//   //           formattedCode = await formatCode(code, lang);
-//   //           const html = await renderCode(formattedCode, lang);
-//   //           if (isMounted && html) {
-//   //             setHighlighted(html);
-//   //           }
-//   //         }
-//   //       }, 100); // Slight debounce for performance
-//   //     } catch (error) {
-//   //       console.error("Error rendering code:", error);
-//   //     }
-//   //   }
-
-//   //   highlight();
-
-//   //   return () => {
-//   //     isMounted = false;
-//   //     clearTimeout(timeoutId);
-//   //   };
-//   // }, [code, lang]);
-
-//   if (!code) {
-//     console.warn("No code found in <Pre /> children");
-//     return null; // Safeguard if `code` is empty
-//   }
-
-//   return ();
-// };
+  return (
+    <div className="relative overflow-hidden rounded-lg">
+      <CopyButton copy={formattedCode} className="m-2" />
+      <div
+        className={cn(
+          "border-code bg-code [&_pre]:overflow-auto [&_pre]:p-4",
+          height,
+          className,
+        )}
+        dangerouslySetInnerHTML={{ __html: syntaxCode }}
+      ></div>
+    </div>
+  );
+}
 
 interface CodeBlockProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
@@ -86,7 +114,7 @@ type ReactElementWithChildren = ReactElement<{ children?: ReactNode }>;
 
 // Type guard for React elements with children
 function isReactElementWithChildren(
-  node: unknown
+  node: unknown,
 ): node is ReactElementWithChildren {
   return (
     React.isValidElement(node) &&
@@ -140,14 +168,14 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     <>
       <pre
         className={cn(
-          "mb-4 mt-6 overflow-x-auto relative rounded-lg whitespace-pre-wrap break-words border-code bg-code p-4 [&>code]:p-0 [&>code]:bg-transparent [&>code]:border-0",
-          className
+          "relative mb-4 mt-6 overflow-x-auto whitespace-pre-wrap break-words rounded-lg border-code bg-code p-4 text-foreground [&>code]:border-0 [&>code]:bg-transparent [&>code]:p-0",
+          className,
         )}
         {...props}
       >
         <button
           onClick={handleCopy}
-          className="w-6 h-6 flex absolute backdrop-blur-[3px] text-white rounded-[25%] right-2 z-[1]"
+          className="absolute right-2 z-[1] flex h-6 w-6 rounded-[25%] text-white backdrop-blur-[3px]"
           aria-label="Copy code to clipboard"
         >
           {copied ? <ClipboardCheck size={15} /> : <Clipboard size={15} />}

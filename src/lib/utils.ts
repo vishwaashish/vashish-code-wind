@@ -59,6 +59,7 @@ export async function formatCode(code: string, lang: string) {
       break;
     case "typescript":
     case "tsx":
+    case "jsx":
       parser = "typescript";
       break;
     case "css":

@@ -1,13 +1,5 @@
 import DemoComponent from "@/components/DemoComponent";
-import Layout from "@/components/Layout";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { SyntaxHighlighter } from "@/components/shiki";
 
 type PageProps = {
   params: Promise<{ slug: string; slugChild: string }>;
@@ -16,8 +8,8 @@ const page = async ({ params }: PageProps) => {
   const { slug, slugChild } = await params;
 
   return (
-    <Layout>
-      <div className="flex">
+    <>
+      {/* <div className="flex">
         <div className="w-full">
           <Breadcrumb className="mb-4">
             <BreadcrumbList>
@@ -41,7 +33,12 @@ const page = async ({ params }: PageProps) => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href={`/component/${slug}`} className="capitalize">{slug}</BreadcrumbLink>
+                <BreadcrumbLink
+                  href={`/component/${slug}`}
+                  className="capitalize"
+                >
+                  {slug}
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -50,16 +47,23 @@ const page = async ({ params }: PageProps) => {
             </BreadcrumbList>
           </Breadcrumb>
           <div className="flex min-h-[300px] max-w-full items-center justify-center">
-            <DemoComponent
-              directory={slug}
-              componentName={slugChild}
-              className=""
-            />
+
           </div>
-          {/* <Separator className="my-10" /> */}
         </div>
+      </div> */}
+      <div className="flex min-h-screen items-center justify-center">
+        <DemoComponent
+          directory={slug}
+          componentName={slugChild}
+          className=""
+          showCopy={false}
+        >
+          {({ html }) => {
+            return <SyntaxHighlighter code={html} language="css" />;
+          }}
+        </DemoComponent>
       </div>
-    </Layout>
+    </>
   );
 };
 

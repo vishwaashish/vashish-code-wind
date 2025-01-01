@@ -80,6 +80,34 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  code {
+    @apply relative whitespace-pre-wrap break-words rounded px-1 py-0.5 text-sm font-normal;
+  }
+
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply rounded-lg bg-transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    /* background: hsl(var(--muted-foreground)); */
+    @apply rounded-s-lg bg-muted-foreground;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* pre {
+    @apply scrollbar-none;
+  } */
 }
 
 html {
@@ -95,6 +123,8 @@ h5,
 h6 {
   scroll-margin-top: 80px;
 }
+
+/* width */
 
 .container-wrapper {
   margin-left: auto;
@@ -204,3 +234,12 @@ h6 {
   counter-increment: step;
   content: counter(step);
 }
+
+/* pre {
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+ 
+pre [data-line] {
+  padding: 0 1rem;
+} */

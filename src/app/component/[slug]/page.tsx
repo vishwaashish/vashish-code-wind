@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl, formatString } from "@/lib/utils";
 import { allComponents, Component } from "contentlayer/generated";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -127,7 +127,7 @@ export default async function Page({ params }: Props) {
                       <span className="text-xs text-muted-foreground">
                         Prev
                       </span>
-                      <strong className="text-lg"> {prev.slugAsParams}</strong>
+                      <strong className="text-lg"> {formatString(prev.slugAsParams)}</strong>
                     </div>
                   </div>
                 </Link>
@@ -141,7 +141,7 @@ export default async function Page({ params }: Props) {
                       <span className="text-xs text-muted-foreground">
                         Next
                       </span>
-                      <strong className="text-lg"> {next.slugAsParams}</strong>
+                      <strong className="text-lg"> {formatString(next.slugAsParams)}</strong>
                     </div>
                     <ChevronRight className="mb-[2.7px] !size-6" />
                   </div>
