@@ -1,7 +1,8 @@
-import ComponentCodes from "@/components/ComponentCodes";
-import ComponentPreview from "@/components/ComponentPreview";
+import ComponentViewer from "@/components/ComponentViewer";
 import DemoComponent from "@/components/DemoComponent";
+import PreviewAndCodePanel from "@/components/PreviewAndCodePanel";
 import { CodeBlock, SyntaxHighlighter } from "@/components/shiki";
+import TabbedContent from "@/components/TabbedContent";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
@@ -10,9 +11,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
-  
   return {
     ...components,
+    Image,
+    Button: Button as React.FC<React.ComponentProps<"button">>,
+    PreviewAndCodePanel,
+    TabbedContent,
+    DemoComponent,
+    Link,
+    SyntaxHighlighter,
+    ComponentViewer,
     h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h1
         className={cn(
@@ -222,12 +230,5 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    Image,
-    Button: Button as React.FC<React.ComponentProps<"button">>,
-    ComponentPreview,
-    ComponentCodes,
-    DemoComponent,
-    Link,
-    SyntaxHighlighter
   };
 }

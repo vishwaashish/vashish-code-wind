@@ -15,7 +15,7 @@ function headerDemo() {
             >
               <path
                 d="M24.9463 0L13.4363 24.8431H3.66446L1.73828 29.9181L16.349 29.9591L27.9793 4.91132H37.49L39.9799 0H24.9463Z"
-                className="fill-white"
+                className="fill-black dark:fill-white"
               ></path>
               <path
                 fillRule="evenodd"
@@ -81,7 +81,7 @@ function headerDemo() {
               <li>
                 <a
                   href="#"
-                  className="bg-primary-700 lg:text-primary-700 block rounded py-2 pl-3 pr-4 text-white dark:text-white lg:bg-transparent lg:p-0"
+                  className="bg-primary-700 lg:text-primary-700 text-black-700 block rounded py-2 pl-3 pr-4 hover:text-white lg:bg-transparent lg:p-0"
                   aria-current="page"
                 >
                   Home
@@ -120,35 +120,7 @@ function headerDemo() {
   );
 }
 
-const html = `<style>
-  :root {
-    --loader-primary: hsl(var(--primary));
-    --loader-secondary: hsl(var(--muted));
-    --loader-border: 5px;
-    --loader-width: 48px;
-    --loader-speed: 1s;
-  }
-
-  .loader-01 {
-    width: var(--loader-width);
-    height: var(--loader-width);
-    border: var(--loader-border) solid var(--loader-secondary);
-    border-bottom-color: var(--loader-primary);
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation var(--loader-speed) linear infinite;
-  }
-  @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-</style>
-<div className="loader-01"></div>`;
+const html = ``;
 
 const react = `
 function headerDemo() {

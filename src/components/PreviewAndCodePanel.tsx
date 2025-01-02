@@ -6,27 +6,62 @@ import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-interface ComponentPreviewProps {
+/**
+ * A flexible panel component for displaying both preview and code sections in a tabbed interface.
+ *
+ * @component
+ * @param {PreviewAndCodePanelProps} props - Props for configuring the preview and code panel.
+ * @param {ReactNode} props.children - Content for both preview and code sections. The first child is used for the preview, and the second child for the code block.
+ * @param {string} [props.className] - Additional custom class names for styling the outer container.
+ * @param {string} [props.previewClassName] - Additional class names for styling the preview section.
+ *
+ * @returns {JSX.Element} - A tabbed panel interface with options to switch between preview and code views.
+ *
+ * @example
+ * <PreviewAndCodePanel>
+ *   <div>Preview Content</div>
+ *   <pre>
+ *     {`
+ *       <div>Preview Content</div>
+ *     `}
+ *   </pre>
+ * </PreviewAndCodePanel>
+ *
+ * @description
+ * - **Preview Tab:** Displays a live preview of the provided content.
+ * - **Code Tab:** Shows the code representation of the component.
+ * - **Theme Toggle:** Allows switching between light and dark themes.
+ *
+ * @note
+ * - Ensure that `children` includes exactly two elements: one for the preview and one for the code block.
+ * - Theme toggling is handled internally and updates the appearance of both tabs dynamically.
+ */
+
+interface PreviewAndCodePanelProps {
   children: ReactNode;
   className?: string;
   previewClassName?: string;
 }
-const ComponentPreview = ({
+const PreviewAndCodePanel = ({
   children,
   className = "",
   previewClassName = "",
   ...props
-}: ComponentPreviewProps) => {
+}: PreviewAndCodePanelProps) => {
   const { theme } = useTheme();
-  const [themeBox, setThemeBox] = useState<string | undefined>("");
+  const [currentTheme, setCurrentTheme] = useState<string | undefined>("");
 
   useEffect(() => {
-    setThemeBox(theme);
+    setCurrentTheme(theme);
   }, [theme]);
 
   const childArray = Children.toArray(children);
-  const preview = childArray.length ? Children.toArray(children)[0] : null;
-  const block = childArray.length ? Children.toArray(children)[1] : null;
+  const previewContent = childArray[0] || null;
+  const codeContent = childArray[1] || null;
+
+  const toggleTheme = () => {
+    setCurrentTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   return (
     <div
@@ -36,7 +71,7 @@ const ComponentPreview = ({
       <Tabs defaultValue="preview" className="relative mr-auto w-full">
         <div className="flex items-center justify-between pb-3">
           <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
-            {!!preview && (
+            {!!previewContent && (
               <TabsTrigger
                 value="preview"
                 className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
@@ -44,7 +79,7 @@ const ComponentPreview = ({
                 Preview
               </TabsTrigger>
             )}
-            {!!block && (
+            {!!codeContent && (
               <TabsTrigger
                 value="block"
                 className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
@@ -55,12 +90,10 @@ const ComponentPreview = ({
           </TabsList>
           <TabsList className="rounded-none border-b bg-transparent">
             <button
-              onClick={() =>
-                setThemeBox((val) => (val === "light" ? "dark" : "light"))
-              }
+              onClick={toggleTheme}
               className="data-[state=active]:hi aspect-square bg-transparent text-sm transition-none"
             >
-              {themeBox === "light" ? (
+              {currentTheme === "light" ? (
                 <Sun size={15} className="mx-auto" />
               ) : (
                 <Moon size={12} className="mx-auto" />
@@ -69,28 +102,28 @@ const ComponentPreview = ({
           </TabsList>
         </div>
 
-        {!!preview && (
+        {!!previewContent && (
           <TabsContent value="preview">
             <div
               className={cn(
                 "preview-code relative rounded-md border bg-background p-4",
-                themeBox === "light" ? "light" : "dark",
+                currentTheme === "light" ? "light" : "dark",
                 previewClassName,
               )}
             >
-              {preview}
+              {previewContent}
             </div>
           </TabsContent>
         )}
 
-        {!!block && (
+        {!!codeContent && (
           <TabsContent
             value="block"
-            className={cn(themeBox === "light" ? "light" : "dark")}
+            className={cn(currentTheme === "light" ? "light" : "dark")}
           >
             <div className="flex flex-col space-y-4">
               <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:overflow-auto">
-                {block}
+                {codeContent}
               </div>
             </div>
           </TabsContent>
@@ -100,4 +133,4 @@ const ComponentPreview = ({
   );
 };
 
-export default ComponentPreview;
+export default PreviewAndCodePanel;

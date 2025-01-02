@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Code2 } from "lucide-react";
 import { ReactNode } from "react";
-import ComponentCodes from "./ComponentCodes";
 import { SyntaxHighlighter } from "./shiki";
+import TabbedContent from "./TabbedContent";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+
+// export const useComponent = ({
+//   directory,
+//   componentName,
+// }: {
+//   directory: string;
+//   componentName: string;
+// }) => {
+//   // const singular = directory.slice(0, directory.length - 1);
+//   // const fileData = await import(
+//   //   `@/components/${directory}/${componentName}`
+//   // ).catch(() => null);
+//   // return fileData;
+// };
 
 export default async function DemoComponent({
   directory,
@@ -70,7 +84,7 @@ export default async function DemoComponent({
               </DialogTitle>
             </DialogHeader>
 
-            <ComponentCodes tabs={["Html", "React"]}>
+            <TabbedContent tabs={["Html", "React"]}>
               <SyntaxHighlighter
                 maxHeight="450px"
                 code={fileData.html}
@@ -81,7 +95,7 @@ export default async function DemoComponent({
                 code={fileData.react}
                 language="jsx"
               />
-            </ComponentCodes>
+            </TabbedContent>
           </DialogContent>
         </Dialog>
       )}

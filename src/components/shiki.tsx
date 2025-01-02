@@ -2,7 +2,13 @@
 import moonlightTheme from "@/assets/moonlight-ii.json";
 import { cn, copyToClipboard, formatCode } from "@/lib/utils";
 import { Clipboard, ClipboardCheck } from "lucide-react";
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { Options, Theme } from "rehype-pretty-code";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
@@ -13,19 +19,48 @@ import remarkToc from "remark-toc";
 import { unified } from "unified";
 import { CopyButton } from "./CopyButton";
 
+/**
+ * A component for syntax highlighting code blocks with Markdown and Rehype.
+ *
+ * @component
+ * @param {Object} props - Props for configuring the syntax highlighter.
+ * @param {string} props.code - The raw code string to be highlighted.
+ * @param {string} [props.language='jsx'] - The programming language of the code block.
+ * @param {string} [props.className] - Additional class names for custom styling.
+ * @param {string} [props.maxHeight] - Maximum height of the code block (e.g., '300px', '50vh').
+ * @param {boolean} [props.loading=false] - Loading state for skeleton rendering.
+ *
+ * @returns {JSX.Element} - A highlighted code block with optional loading state.
+ *
+ * @example
+ * <SyntaxHighlighter code="const x = 5;" language="jsx" maxHeight="400px" />
+ */
 export function SyntaxHighlighter({
   code = "",
   language = "jsx",
   className = "",
   maxHeight = "",
+  loading = false,
 }: {
   code: string;
   className?: string;
   language?: "plaintext" | "html" | "css" | "jsx" | "tsx";
   maxHeight?: string;
+  loading?: boolean;
 }) {
   const [syntaxCode, setSyntaxCode] = useState<string>("");
   const [formattedCode, setFormattedCode] = useState<string>("");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current && maxHeight) {
+      const preElement = containerRef.current.querySelector("pre");
+      if (preElement) {
+        preElement.style.maxHeight = maxHeight;
+        preElement.style.overflow = "auto";
+      }
+    }
+  }, [maxHeight, syntaxCode]);
 
   useEffect(() => {
     (async () => {
@@ -53,14 +88,11 @@ export function SyntaxHighlighter({
     })();
   }, [code, language]);
 
-  const height = `[&_pre]:max-h-[${maxHeight}]`;
-
-  if (!syntaxCode) {
+  if (loading || !syntaxCode) {
     return (
       <div
         className={cn(
           "flex h-full w-full animate-pulse items-center overflow-auto rounded-lg border-code bg-code",
-          height,
         )}
       >
         <div className="flex-1 space-y-3 p-4">
@@ -83,11 +115,13 @@ export function SyntaxHighlighter({
           <div className="w-0/6 h-2 rounded bg-slate-700"></div>
           <div className="h-2 w-1/6 rounded bg-slate-700"></div>
           <div className="h-2 w-3/6 rounded bg-slate-700"></div>
-          <div className="h-2 w-5/6 rounded bg-slate-700"></div>
-          <div className="h-2 w-2/6 rounded bg-slate-700"></div>
         </div>
       </div>
     );
+  }
+
+  if (!formattedCode) {
+    return;
   }
 
   return (
@@ -95,10 +129,10 @@ export function SyntaxHighlighter({
       <CopyButton copy={formattedCode} className="m-2" />
       <div
         className={cn(
-          "border-code bg-code [&_pre]:overflow-auto [&_pre]:p-4",
-          height,
+          "overflow-auto border-code bg-code [&_pre]:overflow-auto [&_pre]:p-4",
           className,
         )}
+        ref={containerRef}
         dangerouslySetInnerHTML={{ __html: syntaxCode }}
       ></div>
     </div>

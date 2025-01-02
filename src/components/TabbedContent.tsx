@@ -2,7 +2,30 @@ import React, { Children, ReactNode } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { cn } from "@/lib/utils";
 
-interface ComponentCodesProps {
+/**
+ * A flexible and reusable component for displaying content in a tabbed interface.
+ *
+ * @component
+ * @param {TabbedContentProps} props - The props for configuring the tabbed interface.
+ * @param {string[]} props.tabs - An array of tab labels to define the tabs.
+ * @param {ReactNode} props.children - The content corresponding to each tab, in the same order as `tabs`.
+ * @param {string} [props.defaultValue] - The default active tab. Defaults to the first tab if not specified.
+ * @param {string} [props.className] - Additional custom class names for styling the outer container.
+ *
+ * @returns {JSX.Element | null} - A tabbed interface displaying content corresponding to the selected tab.
+ *
+ * @example
+ * <TabbedContent tabs={['Preview', 'Code']}>
+ *   <div>Preview Content</div>
+ *   <pre>Code Content</pre>
+ * </TabbedContent>
+ *
+ * @note
+ * - Ensure the `children` prop contains content in the same order as the `tabs` array.
+ * - If no `defaultValue` is provided, the first tab will be selected by default.
+ */
+
+interface TabbedContentProps {
   children: ReactNode;
   className?: string;
   tabs: string[];
@@ -10,22 +33,18 @@ interface ComponentCodesProps {
 
   //   code: string;
 }
-const ComponentCodes = ({
+const TabbedContent = ({
   tabs,
   children,
   defaultValue,
   className,
   ...props
-}: ComponentCodesProps) => {
-
-
-
+}: TabbedContentProps) => {
   if (!tabs.length) {
     return;
   }
 
-
-  const defaultTab = defaultValue ?? tabs[0] 
+  const defaultTab = defaultValue ?? tabs[0];
 
   return (
     <div
@@ -61,4 +80,4 @@ const ComponentCodes = ({
   );
 };
 
-export default ComponentCodes;
+export default TabbedContent;

@@ -5,33 +5,15 @@ description: A clean and responsive header component with a brand title and navi
 
 # Responsive Header
 
-<div className="mt-9 grid grid-cols-1">
+<div className="mt-9 grid grid-cols-1 gap-10">
   {["header-01"].map((componentName) => {
     return (
-      <>
-        <ComponentPreview >
+        <ComponentViewer 
+        directory="headers"
+          componentName={componentName}
+            key={componentName}>
 
-          <DemoComponent
-            key={componentName}
-            directory={"headers"}
-            componentName={componentName}
-            className=""
-            showCopy={false}
-          />
-
-<DemoComponent
-  key={componentName}
-  directory={"headers"}
-  componentName={componentName}
-  showCopy={false}
->
-  {({ react }) => {
-    return <SyntaxHighlighter code={react} language="jsx" />;
-  }}
-</DemoComponent>
-
-        </ComponentPreview>
-      </>
+        </ComponentViewer>
     );
 
 })}
