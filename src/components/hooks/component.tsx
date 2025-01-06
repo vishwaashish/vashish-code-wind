@@ -48,7 +48,7 @@ const useDynamicComponent = ({
   const Component: ComponentType | null = fileData
     ? (fileData[`${componentFunc}Demo`] as ComponentType) ||
       (() => <div>Component not found</div>)
-    : () => <div>Loading...</div>;
+    : () => <div></div>;
 
   /**
    * Dynamically loads the specified component.

@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { Code2 } from "lucide-react";
 import { ReactNode } from "react";
+import { useDynamicComponent } from "./hooks/component";
 import { SyntaxHighlighter } from "./shiki";
 import TabbedContent from "./TabbedContent";
 import {
@@ -11,7 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { useDynamicComponent } from "./hooks/component";
 
 // export const useComponent = ({
 //   directory,
@@ -46,6 +46,14 @@ export default function DemoComponent({
     componentName,
   });
 
+  if (!Component) {
+    return (
+      <div className="flex h-full w-full animate-pulse items-center justify-center">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       {!children && (
@@ -56,10 +64,6 @@ export default function DemoComponent({
       {showCopy && (
         <Dialog>
           <DialogTrigger asChild>
-            {/* <CopyButton
-              copy={fileData.html}
-              className="absolute right-2 top-2 z-10 text-foreground transition-opacity"
-            /> */}
             <Code2
               role="button"
               className="absolute right-2 top-2 z-10 text-foreground transition-opacity"

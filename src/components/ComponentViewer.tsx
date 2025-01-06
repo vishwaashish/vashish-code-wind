@@ -10,7 +10,6 @@ import { SyntaxHighlighter } from "./shiki";
 import { Separator } from "./ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Tooltip } from "./ui/tooltip";
-
 const ComponentViewer = ({
   componentName,
   directory,
@@ -23,11 +22,18 @@ const ComponentViewer = ({
   isComponent?: boolean;
 }) => {
   const { theme } = useTheme();
-  const { isLoading, html, error, react, Component, fullScreen, title } =
-    useDynamicComponent({
-      directory,
-      componentName,
-    });
+  const {
+    isLoading,
+    html,
+    error,
+    react,
+    Component,
+    fullScreen,
+    title,
+  } = useDynamicComponent({
+    directory,
+    componentName,
+  });
 
   const languageOptions = [
     { value: html, label: "html" },

@@ -31,7 +31,6 @@ const PreviewComponent = () => {
   useEffect(() => {
     const sendHeightToParent = () => {
       const height = document.body.clientHeight;
-      console.log("height", componentName, height);
       window.parent.postMessage(
         { type: `${componentName}-iframeHeight`, height },
         "*",

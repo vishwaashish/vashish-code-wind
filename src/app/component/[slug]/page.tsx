@@ -126,7 +126,7 @@ export default async function Page({ params }: Props) {
           </Breadcrumb>
           <div className="max-w-full">
             {/* <Post /> */}
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense>
               <MDXContent slug={slug} />
             </Suspense>
           </div>

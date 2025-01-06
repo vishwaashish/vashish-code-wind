@@ -13,7 +13,6 @@ interface Heading {
 
 export default function TableOfContents({ className }: { className?: string }) {
   const [headings, setHeadings] = useState<Heading[]>([]);
-  console.log("headings", headings);
 
   const [activeId, setActiveId] = useState<string>("");
 
