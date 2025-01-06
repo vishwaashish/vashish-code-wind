@@ -22,7 +22,9 @@ interface useDynamicComponentProps {
 interface FileData {
   html: string;
   react: string;
-  [key: string]: string | ComponentType | (() => ReactNode);
+  title: string;
+  fullScreen?: boolean;
+  [key: string]: string | ComponentType | (() => ReactNode) | boolean | undefined;
 }
 
 /**
@@ -41,9 +43,10 @@ const useDynamicComponent = ({
 
   // Ensure proper handling of singular directory names
   const singular = directory.endsWith("s") ? directory.slice(0, -1) : directory;
+  const componentFunc = singular.charAt(0).toUpperCase() + singular.slice(1);
 
   const Component: ComponentType | null = fileData
-    ? (fileData[`${singular}Demo`] as ComponentType) ||
+    ? (fileData[`${componentFunc}Demo`] as ComponentType) ||
       (() => <div>Component not found</div>)
     : () => <div>Loading...</div>;
 
@@ -73,6 +76,8 @@ const useDynamicComponent = ({
   return {
     html: fileData?.html || "",
     react: fileData?.react || "",
+    title: fileData?.title || "",
+    fullScreen: fileData?.fullScreen || false,
     Component,
     isLoading,
     error,
@@ -81,3 +86,4 @@ const useDynamicComponent = ({
 };
 
 export { useDynamicComponent };
+

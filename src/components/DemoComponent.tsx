@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { Code2 } from "lucide-react";
 import { ReactNode } from "react";
@@ -10,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { useDynamicComponent } from "./hooks/component";
 
 // export const useComponent = ({
 //   directory,
@@ -25,7 +27,7 @@ import {
 //   // return fileData;
 // };
 
-export default async function DemoComponent({
+export default function DemoComponent({
   directory,
   componentName,
   className,
@@ -39,22 +41,10 @@ export default async function DemoComponent({
   showCopy?: boolean;
   children?: ({ html }: { html: string }) => ReactNode;
 }) {
-  const singular = directory.slice(0, directory.length - 1);
-  console.log("singular", singular);
-
-  const fileData = await import(
-    `@/components/${directory}/${componentName}`
-  ).catch(() => null);
-
-  if (!fileData) {
-    return null;
-  }
-
-  const Component = fileData[`${singular}Demo`];
-
-  if (!Component) {
-    return null;
-  }
+  const { html, react, Component } = useDynamicComponent({
+    directory,
+    componentName,
+  });
 
   return (
     <>
@@ -87,12 +77,12 @@ export default async function DemoComponent({
             <TabbedContent tabs={["Html", "React"]}>
               <SyntaxHighlighter
                 maxHeight="450px"
-                code={fileData.html}
+                code={html}
                 language="html"
               />
               <SyntaxHighlighter
                 maxHeight="450px"
-                code={fileData.react}
+                code={react}
                 language="jsx"
               />
             </TabbedContent>
@@ -100,7 +90,7 @@ export default async function DemoComponent({
         </Dialog>
       )}
 
-      {!!children && children(fileData)}
+      {!!children && children({ html })}
     </>
   );
 }

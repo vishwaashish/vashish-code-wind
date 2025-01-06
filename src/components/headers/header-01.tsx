@@ -1,6 +1,6 @@
 import React from "react";
 
-function headerDemo() {
+function HeaderDemo() {
   return (
     <header>
       <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
@@ -123,7 +123,7 @@ function headerDemo() {
 const html = ``;
 
 const react = `
-function headerDemo() {
+function HeaderDemo() {
   return (
     <header>
       <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
@@ -244,4 +244,6 @@ function headerDemo() {
 }
 `;
 
-export { headerDemo, html, react };
+const title = "Simple Navigation Header";
+
+export { HeaderDemo, html, react, title };

@@ -1,6 +1,6 @@
 import React from "react";
 
-function loaderDemo() {
+function LoaderDemo() {
   return (
     <>
       <style>
@@ -99,7 +99,7 @@ const html = `<style>
 </style>
 <div class="loader-04"></div>`;
 
-const react = `function loaderDemo() {
+const react = `function LoaderDemo() {
   return (
     <>
       <style>
@@ -158,4 +158,4 @@ const react = `function loaderDemo() {
   );
 }`;
 
-export { loaderDemo, html, react };
+export { LoaderDemo, html, react };

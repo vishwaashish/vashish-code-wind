@@ -1,6 +1,6 @@
 import React from "react";
 
-function loaderDemo() {
+function LoaderDemo() {
   return (
     <>
       <style>
@@ -11,7 +11,7 @@ function loaderDemo() {
       border: var(--loader-border) solid var(--loader-secondary);
       border-bottom-color: var(--loader-primary);
       border-radius: 50%;
-      display: inline-block;
+      display: inline-flex;
       box-sizing: border-box;
       animation: rotation var(--loader-speed) linear infinite;
     }
@@ -63,7 +63,7 @@ const html = `<style>
 <div class="loader-01"></div>`;
 
 const react = `
-function loaderDemo() {
+function LoaderDemo() {
   return (
     <>
       <style>
@@ -105,4 +105,4 @@ function loaderDemo() {
 }
 `;
 
-export { loaderDemo, html, react };
+export { LoaderDemo, html, react };

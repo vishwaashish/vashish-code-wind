@@ -24,20 +24,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     >
       <div className="border-grid flex flex-1 flex-col">
         <Header />
-        <main className="flex flex-1 flex-col container-wrapper">
-          <div className="container relative flex-1 items-start md:grid md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:gap-16si">
+        <main className="container-wrapper flex flex-1 flex-col">
+          <div className="lg:gap-16si container relative flex-1 items-start md:grid md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]">
             <Sidebar />
             <SidebarInset className="min-h-max">
-              <main className="relative py-4 lg:py-6  rounded-lg m-2">
+              <main className="relative m-2 rounded-lg py-4 lg:py-6">
                 {children}
               </main>
             </SidebarInset>
             {/* <TableOfContents /> */}
           </div>
         </main>
-        <div className="py-5 container-wrapper  border-t">
-          <div className="container flex justify-between ">
-            <p className="">
+        <div className="container-wrapper border-t py-5">
+          <div className="container flex justify-between">
+            <p className="my-auto">
               © 2024{" "}
               <a
                 role="link"

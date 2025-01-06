@@ -15,6 +15,7 @@ import { allComponents, Component } from "contentlayer/generated";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -59,6 +60,16 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
+const MDXContent = async ({ slug }: { slug: string }) => {
+  try {
+    const Component = (await import(`@/content/component/${slug}.mdx`)).default;
+    return <Component />;
+  } catch (error) {
+    console.error("Failed to load MDX content for slug:", slug, error);
+    return <div>Error loading content.</div>;
+  }
+};
+
 export default async function Page({ params }: Props) {
   const slug = (await params).slug;
 
@@ -72,7 +83,7 @@ export default async function Page({ params }: Props) {
     return notFound();
   }
 
-  const { default: Post } = await import(`@/content/component/${slug}.mdx`);
+  // const { default: Post } = await import(`@/content/component/${slug}.mdx`);
 
   const allComp = allComponents.sort((a: Component, b: Component) =>
     a.slugAsParams.localeCompare(b.slugAsParams),
@@ -114,7 +125,10 @@ export default async function Page({ params }: Props) {
             </BreadcrumbList>
           </Breadcrumb>
           <div className="max-w-full">
-            <Post />
+            {/* <Post /> */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <MDXContent slug={slug} />
+            </Suspense>
           </div>
           <Separator className="my-10" />
           <div className="flex flex-row items-center justify-between">
@@ -127,7 +141,10 @@ export default async function Page({ params }: Props) {
                       <span className="text-xs text-muted-foreground">
                         Prev
                       </span>
-                      <strong className="text-lg"> {formatString(prev.slugAsParams)}</strong>
+                      <strong className="text-lg">
+                        {" "}
+                        {formatString(prev.slugAsParams)}
+                      </strong>
                     </div>
                   </div>
                 </Link>
@@ -141,7 +158,10 @@ export default async function Page({ params }: Props) {
                       <span className="text-xs text-muted-foreground">
                         Next
                       </span>
-                      <strong className="text-lg"> {formatString(next.slugAsParams)}</strong>
+                      <strong className="text-lg">
+                        {" "}
+                        {formatString(next.slugAsParams)}
+                      </strong>
                     </div>
                     <ChevronRight className="mb-[2.7px] !size-6" />
                   </div>

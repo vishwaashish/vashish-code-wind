@@ -1,24 +1,33 @@
 "use client";
 import { cn, formatString } from "@/lib/utils";
-import { Moon, Sun } from "lucide-react";
+import { FullscreenIcon, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { useQueryState } from "nuqs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDynamicComponent } from "./hooks/component";
 import { SyntaxHighlighter } from "./shiki";
+import { Separator } from "./ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tooltip } from "./ui/tooltip";
+
 const ComponentViewer = ({
   componentName,
   directory,
+  isComponent = false,
+  previewClassName,
 }: {
   componentName: string;
   directory: string;
+  previewClassName: string;
+  isComponent?: boolean;
 }) => {
   const { theme } = useTheme();
-  const { isLoading, html, error, react, Component } = useDynamicComponent({
-    directory,
-    componentName,
-  });
+  const { isLoading, html, error, react, Component, fullScreen, title } =
+    useDynamicComponent({
+      directory,
+      componentName,
+    });
 
   const languageOptions = [
     { value: html, label: "html" },
@@ -30,6 +39,42 @@ const ComponentViewer = ({
     defaultValue: languageOptions[1]?.label || "react",
   });
   const [codeSnippet, setCodeSnippet] = useState<string>("");
+
+  const IMinHeight = 300;
+  const IMaxHeight = fullScreen ? "auto" : 500;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeHeight, setIframeHeight] = useState<number>(IMinHeight); // Default height
+
+  useEffect(() => {
+    const sendThemeToIframe = () => {
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: "updateTheme", theme: themeBox },
+        "*",
+      );
+    };
+
+    sendThemeToIframe();
+  }, [themeBox]);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) {
+        console.warn("Received message from unauthorized origin");
+        return;
+      }
+
+      if (event.data.type === `${componentName}-iframeHeight`) {
+        const height = Number(event.data.height) || IMinHeight;
+        setIframeHeight(height);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [componentName]);
 
   useEffect(() => {
     if (selectedLanguage === "html") {
@@ -59,8 +104,14 @@ const ComponentViewer = ({
 
   return (
     <Tabs defaultValue="preview" className="relative mr-auto w-full">
-      <div className="flex items-center justify-between pb-3">
+      <div className="pb-3">
+        <div className="block pb-4 lg:hidden">
+          <p className="text-lg text-foreground">{title}</p>
+        </div>
         <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
+          <div className="hidden sm:mr-auto lg:block">
+            <p className="m-auto pb-3 pt-2 text-foreground">{title}</p>
+          </div>
           <TabsTrigger
             value="preview"
             className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
@@ -73,29 +124,56 @@ const ComponentViewer = ({
           >
             Block
           </TabsTrigger>
-        </TabsList>
-        <TabsList className="flex gap-3 rounded-none border-b bg-transparent">
-          <select
-            className="text-sm outline-none"
-            value={selectedLanguage}
-            onChange={(e) => handleLanguageChange(e.target.value)}
-          >
-            {languageOptions.map((item) => (
-              <option key={item.label} value={item.label}>
-                {formatString(item.label)}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={toggleTheme}
-            className="data-[state=active]:hi aspect-square bg-transparent text-sm transition-none"
-          >
-            {themeBox === "light" ? (
-              <Sun size={15} className="mx-auto" />
-            ) : (
-              <Moon size={12} className="mx-auto" />
-            )}
-          </button>
+
+          {!!languageOptions.length && (
+            <>
+              <Separator orientation="vertical" className="h-auto py-2" />
+              <Tooltip title="Select language">
+                <select
+                  className="relative mr-4 rounded-none border-b-2 border-b-transparent bg-transparent pb-3 pl-4 pr-2 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
+                  value={selectedLanguage}
+                  onChange={(e) => handleLanguageChange(e.target.value)}
+                >
+                  {languageOptions.map((item) => (
+                    <option key={item.label} value={item.label}>
+                      {formatString(item.label)}
+                    </option>
+                  ))}
+                </select>
+              </Tooltip>
+            </>
+          )}
+          {!isComponent && (
+            <>
+              <Separator orientation="vertical" className="h-auto py-2" />
+              <Tooltip title="Toggle theme">
+                <button
+                  onClick={toggleTheme}
+                  className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
+                >
+                  {themeBox === "light" ? (
+                    <Sun size={15} className="mx-auto" />
+                  ) : (
+                    <Moon size={12} className="mx-auto" />
+                  )}
+                </button>
+              </Tooltip>
+            </>
+          )}
+          {!isComponent && (
+            <>
+              <Separator orientation="vertical" className="h-auto py-2" />
+              <Tooltip title="Open in new tab">
+                <Link
+                  href={`/preview?component=${componentName}&directory=${directory}`}
+                  target="_blank"
+                  className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
+                >
+                  <FullscreenIcon size={15} />
+                </Link>
+              </Tooltip>
+            </>
+          )}
         </TabsList>
       </div>
 
@@ -128,7 +206,23 @@ const ComponentViewer = ({
               </div>
             </div>
           ) : (
-            <Component />
+            <div className={cn("relative rounded-md", previewClassName)}>
+              {isComponent ? (
+                <Component />
+              ) : (
+                <iframe
+                  ref={iframeRef}
+                  src={`/preview?component=${componentName}&directory=${directory}`}
+                  className="h-full w-full rounded border-none"
+                  title="Component Preview"
+                  style={{
+                    height: `${iframeHeight}px`,
+                    maxHeight: IMaxHeight,
+                    transition: "height 0.3s ease-in-out",
+                  }}
+                />
+              )}
+            </div>
           )}
         </div>
       </TabsContent>
@@ -149,7 +243,7 @@ const ComponentViewer = ({
                 🚧 Coming Soon 🚧
               </h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                The code preview for this component is not yet available.
+                The code for this component is not yet available.
               </p>
             </div>
           )}

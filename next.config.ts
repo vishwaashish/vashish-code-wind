@@ -13,6 +13,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
+
   options: {
     remarkPlugins: [
       remarkGfm,
@@ -45,7 +46,6 @@ const withMDX = createMDX({
 
 export default withContentlayer(
   withMDX({
-    cleanDistDir: true,
     reactStrictMode: true,
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   }),

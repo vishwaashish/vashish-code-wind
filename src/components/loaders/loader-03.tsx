@@ -1,4 +1,4 @@
-function loaderDemo() {
+function LoaderDemo() {
   return (
     <>
       <style>
@@ -103,7 +103,7 @@ const html = `
 </style>
 <div class="loader-03"></div>`;
 
-const react = `function loaderDemo() {
+const react = `function LoaderDemo() {
   return (
     <>
       <style>
@@ -167,4 +167,4 @@ const react = `function loaderDemo() {
   );
 }`;
 
-export { html, loaderDemo, react };
+export { html, LoaderDemo, react };
