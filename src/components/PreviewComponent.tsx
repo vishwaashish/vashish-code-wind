@@ -60,7 +60,7 @@ const PreviewComponent = () => {
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center gap-2">
-        <div className="spinner"></div>Loading...
+        {/* <div className="spinner"></div>Loading... */}
       </div>
     );
   }

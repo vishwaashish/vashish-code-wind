@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="lg:gap-16si container relative flex-1 items-start md:grid md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] md:gap-6 lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]">
             <Sidebar />
             <SidebarInset className="min-h-max">
-              <main className="relative m-2 rounded-lg py-4 lg:py-6">
+              <main className="relative rounded-lg py-4 md:m-2 lg:py-6">
                 {children}
               </main>
             </SidebarInset>

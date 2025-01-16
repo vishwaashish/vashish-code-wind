@@ -22,18 +22,11 @@ const ComponentViewer = ({
   isComponent?: boolean;
 }) => {
   const { theme } = useTheme();
-  const {
-    isLoading,
-    html,
-    error,
-    react,
-    Component,
-    fullScreen,
-    title,
-  } = useDynamicComponent({
-    directory,
-    componentName,
-  });
+  const { isLoading, html, error, react, Component, fullScreen, title } =
+    useDynamicComponent({
+      directory,
+      componentName,
+    });
 
   const languageOptions = [
     { value: html, label: "html" },
@@ -186,15 +179,15 @@ const ComponentViewer = ({
       <TabsContent value="preview">
         <div
           className={cn(
-            "preview-code relative rounded-md border bg-background p-4",
-            themeBox === "light" ? "light" : "dark",
+            "preview-code relative overflow-hidden rounded-md border bg-background p-1 md:p-0",
+            // themeBox === "light" ? "light" : "dark",
           )}
           style={{
             colorScheme: themeBox,
           }}
         >
           {isLoading ? (
-            <div className="flex animate-pulse items-center gap-4 space-y-3">
+            <div className="flex animate-pulse items-center gap-4 space-y-3 p-1 md:p-4">
               <div className="h-20 w-20 rounded-full bg-input"></div>
               <div className="!m-0 flex-1 space-y-3">
                 <div className="h-2 rounded bg-input"></div>
@@ -212,7 +205,7 @@ const ComponentViewer = ({
               </div>
             </div>
           ) : (
-            <div className={cn("relative rounded-md", previewClassName)}>
+            <div className={cn("", previewClassName)}>
               {isComponent ? (
                 <Component />
               ) : (
