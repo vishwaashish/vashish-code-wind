@@ -1,0 +1,261 @@
+---
+title: Input Component
+description: The `Input` component is a versatile and customizable input field designed for React applications. It provides built-in support for validation, styling, and flexible props.
+---
+
+# Input Component
+
+The `Input` component is a versatile and customizable input field designed for React applications. It provides built-in support for validation, styling, and flexible props.
+
+## Features
+
+1. **Variant-based Styling**: Define appearance using `size`, `variant`, `state`, and `position` options.
+2. **Validation**: Supports live validation with `KeyFilter`.
+3. **Customizable**: Accepts additional HTML attributes for flexibility.
+4. **Event Handling**: Handles keyboard, paste, and input events with custom logic.
+
+## Usage
+
+{/* ### Basic Example (Simple) */}
+
+### Default
+
+<br />
+<ComponentViewer
+  directory="inputs"
+  componentName={"input-01"}
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Controlled with useState
+
+<br />
+
+<ComponentViewer
+  directory="inputs"
+  componentName={"input-02"}
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Sizes
+
+The Input component supports size variants: Small (`sm`), Medium (`md`), and Large (`lg`) for different design needs.
+
+<br />
+
+<ComponentViewer
+  directory="inputs"
+  componentName={"input-sizes"}
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Filled
+
+The `Input` component with the `filled` variant, offering a distinct background for standout forms.
+
+<br />
+
+<ComponentViewer
+  directory="inputs"
+  componentName={"input-04"}
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### KeyFilter
+
+The `KeyFilter` functionality restricts user input based on predefined or custom patterns; for more details, visit [KeyFilters documentation](/component/keyfilters).
+
+<br />
+
+<ComponentViewer
+  directory="keyfilters"
+  componentName={"keyfilter-01"}
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### FormDemo Component
+
+The `FormDemo` component validates `Name`, `Age`, and `Email` fields in real-time, showing errors under invalid inputs and disabling submission until all fields are valid. Responsive and user-friendly, it ensures seamless data entry.
+
+<br />
+
+<ComponentViewer directory="forms" componentName={"form-01"} />
+
+## Installation
+
+<Steps>
+
+<Step> 
+
+  ### Install Dependencies
+
+  Ensure you have the following dependencies installed in your project:
+
+```bash
+npm install class-variance-authority
+```
+</Step>
+
+<Step> 
+
+  ### Add the Component Code
+
+ Copy the full component code and place it in your project under the desired directory, for example: `components/lib/Input.tsx`.
+
+```tsx
+"use client";
+import {
+  ClipboardEvent,
+  FormEvent,
+  forwardRef,
+  InputHTMLAttributes,
+  KeyboardEvent,
+  useRef,
+} from "react";
+
+import { cn } from "@/lib/utils";
+import { cva, VariantProps } from "class-variance-authority";
+import { KeyFilter, KeyFilterType } from "../keyfilter";
+
+const inputVariants = cva(
+  "flex h-9 w-full px-3 rounded-md border border-input bg-transparent text-base  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 ",
+  {
+    variants: {
+      size: {
+        sm: "h-7 text-sm py-1",
+        md: "text-sm py-1",
+        lg: "h-12 text-base py-3",
+      },
+      variant: {
+        outlined: "",
+        filled: "bg-muted",
+      },
+      state: {
+        invalid: "border-destructive text-destructive",
+        valid: "border-green-500",
+        default: "",
+      },
+      position: {
+        default: "",
+        left: "pl-8",
+        right: "pr-8",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+      variant: "outlined",
+      state: "default",
+      position: "default",
+    },
+  },
+);
+
+interface InputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onInput" | "size">,
+    VariantProps<typeof inputVariants> {
+  keyfilter?: KeyFilterType;
+  invalid?: boolean;
+  valid?: boolean;
+  validateOnly?: boolean;
+  onInput?: (event: FormEvent<HTMLInputElement>, isValid: boolean) => void;
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      keyfilter,
+      invalid = false,
+      valid = false,
+      validateOnly = false,
+      className,
+      onInput,
+      size,
+      variant,
+      state,
+      position,
+      ...rest
+    },
+    ref,
+  ) => {
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (keyfilter) {
+        KeyFilter.onKeyPress(event, keyfilter, validateOnly);
+      }
+    };
+
+    const handleInput = (event: FormEvent<HTMLInputElement>) => {
+      let isValid = true;
+      if (keyfilter && validateOnly) {
+        isValid = KeyFilter.validate(event, keyfilter);
+      }
+      onInput?.(event, isValid);
+    };
+
+    const handlePaste = (event: ClipboardEvent<HTMLInputElement>) => {
+      if (keyfilter) {
+        KeyFilter.onPaste(event, keyfilter, validateOnly);
+      }
+    };
+
+    const inputClass = cn(
+      inputVariants({
+        size,
+        variant,
+        state: (state ?? invalid) ? "invalid" : valid ? "valid" : "default",
+        position,
+      }),
+      className,
+    );
+
+    return (
+      <input
+        ref={(node) => {
+          inputRef.current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+        }}
+        className={inputClass}
+        onKeyDown={onKeyDown}
+        onInput={handleInput}
+        onPaste={handlePaste}
+        aria-invalid={invalid}
+        {...rest}
+      />
+    );
+  },
+);
+
+Input.displayName = "Input";
+
+export default Input;
+
+```
+</Step>
+
+</Steps>
+
+
+## API Reference
+
+### Props
+
+| Name           | Type                                                             | Default      | Description                                                                                          |
+| -------------- | ---------------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| `keyfilter`    | `KeyFilterType`                                                  | `undefined`  | Optional key filter for controlling user input.                                                      |
+| `invalid`      | `boolean`                                                        | `false`      | Sets the input's invalid state. Adds styling for error states.                                       |
+| `valid`        | `boolean`                                                        | `false`      | Sets the input's valid state. Adds styling for valid states.                                         |
+| `validateOnly` | `boolean`                                                        | `false`      | If `true`, the input validation does not modify the input value but checks validity only.            |
+| `onInput`      | `(event: FormEvent<HTMLInputElement>, isValid: boolean) => void` | `undefined`  | Callback function triggered when the input value changes, providing the event and validation status. |
+| `size`         | `"sm" or "md" or "lg"`                                           | `"md"`       | Sets the size of the input.                                                                          |
+| `variant`      | `"outlined" or "filled"`                                         | `"outlined"` | Determines the input style variant.                                                                  |
+| `state`        | `"invalid" or "valid" or "default"`                              | `"default"`  | Explicitly sets the input's state.                                                                   |
+| `position`     | `"default" or "left" or "right"`                                 | `"default"`  | Adds padding for icons or additional elements within the input.                                      |
+| `className`    | `string`                                                         | `undefined`  | Additional custom styles for the input.                                                              |
+| `...rest`      | `InputHTMLAttributes<HTMLInputElement>`                          | N/A          | Spread attributes to apply native `<input>` properties.                                              |

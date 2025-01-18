@@ -1,5 +1,9 @@
 import ComponentViewer from "@/components/ComponentViewer";
 import DemoComponent from "@/components/DemoComponent";
+import Input from "@/components/lib/input";
+import { Textarea } from "@/components/lib/textarea";
+// import Input from "@/components/lib/input";
+// import { Textarea } from "@/components/lib/textarea";
 import PreviewAndCodePanel from "@/components/PreviewAndCodePanel";
 import { CodeBlock, SyntaxHighlighter } from "@/components/shiki";
 import TabbedContent from "@/components/TabbedContent";
@@ -13,6 +17,8 @@ import Link from "next/link";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
+    Input: Input,
+    Textarea: Textarea,
     Image,
     Button: Button as React.FC<React.ComponentProps<"button">>,
     PreviewAndCodePanel,
@@ -33,7 +39,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2
         className={cn(
-          "font-heading mt-12 scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-4",
+          "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-4",
           className,
         )}
         {...props}
@@ -75,12 +81,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
-      <a
-        className={cn("font-medium underline underline-offset-4", className)}
-        {...props}
-      />
-    ),
+    a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => {
+      console.log(className, props)
+      return (
+        <a
+          className={cn("font-medium underline underline-offset-4", className)}
+          {...props}
+        />
+      )
+    },
     p: ({
       className,
       ...props
@@ -179,17 +188,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ></code>
       );
     },
+    Steps: ({ ...props }) => (
+      <div className="steps mb-12 ml-4 border-l" {...props} />
+    ),
     Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-      <h3
+      <div
         className={cn(
-          "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+          "mt-8 scroll-m-20 tracking-tight",
           className,
         )}
         {...props}
       />
-    ),
-    Steps: ({ ...props }) => (
-      <div className="steps mb-12 ml-4 border-l" {...props} />
     ),
     Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => (
       <Tabs className={cn("relative mt-6 w-full", className)} {...props} />

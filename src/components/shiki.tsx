@@ -202,7 +202,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     <>
       <pre
         className={cn(
-          "relative mb-4 mt-6 overflow-x-auto whitespace-pre-wrap break-words rounded-lg border-code bg-code p-4 text-foreground [&>code]:border-0 [&>code]:bg-transparent [&>code]:p-0",
+          "relative mb-4 mt-6 max-h-[500px] overflow-auto whitespace-pre-wrap break-words rounded-lg border-code bg-code p-4 text-foreground [&>code]:border-0 [&>code]:bg-transparent [&>code]:p-0",
           className,
         )}
         {...props}

@@ -15,11 +15,13 @@ const ComponentViewer = ({
   directory,
   isComponent = false,
   previewClassName,
+  hasTitle = true,
 }: {
   componentName: string;
   directory: string;
   previewClassName: string;
   isComponent?: boolean;
+  hasTitle?: boolean;
 }) => {
   const { theme } = useTheme();
   const { isLoading, html, error, react, Component, fullScreen, title } =
@@ -104,13 +106,17 @@ const ComponentViewer = ({
   return (
     <Tabs defaultValue="preview" className="relative mr-auto w-full">
       <div className="pb-3">
-        <div className="block pb-4 lg:hidden">
-          <p className="text-lg text-foreground">{title}</p>
-        </div>
-        <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
-          <div className="hidden sm:mr-auto lg:block">
-            <p className="m-auto pb-3 pt-2 text-foreground">{title}</p>
+        {hasTitle && (
+          <div className="block pb-4 lg:hidden">
+            <p className="text-lg text-foreground">{title}</p>
           </div>
+        )}
+        <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
+          {hasTitle && (
+            <div className="hidden sm:mr-auto lg:block">
+              <p className="m-auto pb-3 pt-2 text-foreground">{title}</p>
+            </div>
+          )}
           <TabsTrigger
             value="preview"
             className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
@@ -124,9 +130,13 @@ const ComponentViewer = ({
             Block
           </TabsTrigger>
 
+          {!hasTitle && <div className="ml-auto" />}
+
           {!!languageOptions.length && (
             <>
-              <Separator orientation="vertical" className="h-auto py-2" />
+              {hasTitle && (
+                <Separator orientation="vertical" className="h-auto py-2" />
+              )}
               <Tooltip title="Select language">
                 <select
                   className="relative mr-4 rounded-none border-b-2 border-b-transparent bg-transparent pb-3 pl-4 pr-2 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"

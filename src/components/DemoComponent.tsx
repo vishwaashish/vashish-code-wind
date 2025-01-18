@@ -13,20 +13,6 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
-// export const useComponent = ({
-//   directory,
-//   componentName,
-// }: {
-//   directory: string;
-//   componentName: string;
-// }) => {
-//   // const singular = directory.slice(0, directory.length - 1);
-//   // const fileData = await import(
-//   //   `@/components/${directory}/${componentName}`
-//   // ).catch(() => null);
-//   // return fileData;
-// };
-
 export default function DemoComponent({
   directory,
   componentName,
@@ -45,6 +31,11 @@ export default function DemoComponent({
     directory,
     componentName,
   });
+
+  const languageOptions = [
+    { value: html, label: "Html" },
+    { value: react, label: "React" },
+  ].filter((a) => a.value);
 
   if (!Component) {
     return (
@@ -78,17 +69,60 @@ export default function DemoComponent({
               </DialogTitle>
             </DialogHeader>
 
-            <TabbedContent tabs={["Html", "React"]}>
-              <SyntaxHighlighter
-                maxHeight="450px"
-                code={html}
-                language="html"
-              />
-              <SyntaxHighlighter
-                maxHeight="450px"
-                code={react}
-                language="jsx"
-              />
+            {!languageOptions.length && (
+              <div className="preview-code mt-6 rounded-lg border p-4">
+                <h1 className="font-semibold text-foreground">
+                  🚧 Coming Soon 🚧
+                </h1>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  The code for this component is not yet available.
+                </p>
+              </div>
+            )}
+
+            <TabbedContent tabs={languageOptions.map((item) => item.label)}>
+              {languageOptions.map((item) => (
+                <SyntaxHighlighter
+                  key={item.label}
+                  maxHeight="450px"
+                  code={item.value}
+                  language={
+                    item.label.toLowerCase() === "html" ? "html" : "tsx"
+                  }
+                />
+              ))}
+              {html ? (
+                <SyntaxHighlighter
+                  maxHeight="450px"
+                  code={html}
+                  language="html"
+                />
+              ) : (
+                <div className="preview-code rounded-lg border p-4">
+                  <h1 className="font-semibold text-foreground">
+                    🚧 Coming Soon 🚧
+                  </h1>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    The code for this component is not yet available.
+                  </p>
+                </div>
+              )}
+              {react ? (
+                <SyntaxHighlighter
+                  maxHeight="450px"
+                  code={react}
+                  language="jsx"
+                />
+              ) : (
+                <div className="preview-code rounded-lg border p-4">
+                  <h1 className="font-semibold text-foreground">
+                    🚧 Coming Soon 🚧
+                  </h1>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    The code for this component is not yet available.
+                  </p>
+                </div>
+              )}
             </TabbedContent>
           </DialogContent>
         </Dialog>

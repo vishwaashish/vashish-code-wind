@@ -1,3 +1,4 @@
+"use client"
 import { useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDynamicComponent } from "./hooks/component";

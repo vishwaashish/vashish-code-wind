@@ -21,9 +21,17 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@/components": ["./src/components/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/mdx-page/page.mdx",".contentlayer/generated"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/mdx-page/page.mdx",
+    ".contentlayer/generated"
+  ],
   "exclude": ["node_modules"]
 }

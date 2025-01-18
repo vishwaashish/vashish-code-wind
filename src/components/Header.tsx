@@ -1,11 +1,11 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
-import { cn } from "@/lib/utils";
 
 // https://chunky.framer.website/
 const Header = () => {
