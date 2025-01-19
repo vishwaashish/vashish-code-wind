@@ -15,6 +15,12 @@ export const navigation: NavigationModel[] = [
   },
   {
     heading: "components",
+    name: "Key Filter",
+    slug: "key-filter",
+    url: "/component/keyfilters",
+  },
+  {
+    heading: "components",
     name: "Loaders",
     slug: "Loaders",
     url: "/component/loaders",

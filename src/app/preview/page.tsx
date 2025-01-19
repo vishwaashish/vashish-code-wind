@@ -1,4 +1,6 @@
+"use client";
 import PreviewComponent from "@/components/PreviewComponent";
+import { Suspense } from "react";
 // const convertRegistryPaths = (content: string): string => {
 //   return content
 //     .replace(/@\/registry\/default\/ui/g, "@/components/ui")
@@ -6,7 +8,7 @@ import PreviewComponent from "@/components/PreviewComponent";
 //     .replace(/@\/registry\/default\/hooks/g, "@/hooks")
 //     .replace(/@\/registry\/default\/lib/g, "@/lib");
 // };
-async function PreviewPage() {
+function PreviewPage() {
   // const source = convertRegistryPaths(
   //   (await readComponentSource("CopyButton")) || "",
   // );
@@ -31,15 +33,15 @@ async function PreviewPage() {
   //   return null;
   // }
   return (
-    // <Suspense
-    //   fallback={
-    //     <div className="flex h-screen items-center justify-center">
-    //       <div className="spinner"></div>Loading Component...
-    //     </div>
-    //   }
-    // >
-    <PreviewComponent />
-    // </Suspense>
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center">
+          <div className="spinner"></div>Loading Component...
+        </div>
+      }
+    >
+      <PreviewComponent />
+    </Suspense>
   );
 }
 
