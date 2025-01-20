@@ -16,6 +16,7 @@ import { allComponents } from "contentlayer/generated";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -60,15 +61,15 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-// const MDXContent = async ({ slug }: { slug: string }) => {
-//   try {
-//     const Component = (await import(`@/content/component/${slug}.mdx`)).default;
-//     return <Component />;
-//   } catch (error) {
-//     console.error("Failed to load MDX content for slug:", slug, error);
-//     return <div>Error loading content.</div>;
-//   }
-// };
+const MDXContent = async ({ slug }: { slug: string }) => {
+  try {
+    const Component = (await import(`@/content/component/${slug}.mdx`)).default;
+    return <Component />;
+  } catch (error) {
+    console.error("Failed to load MDX content for slug:", slug, error);
+    return <div>Error loading content.</div>;
+  }
+};
 
 export default async function Page({ params }: Props) {
   const slug = (await params).slug;
@@ -78,9 +79,8 @@ export default async function Page({ params }: Props) {
   }
 
   const components = await getComponentFromParams(slug);
-  const Component = (await import(`@/content/component/${slug}.mdx`)).default;
 
-  if (!components || !Component) {
+  if (!components) {
     return notFound();
   }
 
@@ -147,7 +147,9 @@ export default async function Page({ params }: Props) {
               {components.description}
             </p>
             <div className="pb-12 pt-8">
-              <Component />
+              <Suspense fallback={<></>}>
+                <MDXContent slug={slug} />
+              </Suspense>
             </div>
           </div>
           <Separator className="my-10" />
