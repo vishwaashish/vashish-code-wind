@@ -8,6 +8,18 @@ export const navigation: NavigationModel[] = [
     url: "/ui/inputs",
   },
   {
+    heading: "UI",
+    name: "Loaders",
+    slug: "Loaders",
+    url: "/ui/loaders",
+  },
+  {
+    heading: "UI",
+    name: "Headers",
+    slug: "Headers",
+    url: "/ui/headers",
+  },
+  {
     heading: "components",
     name: "Button",
     slug: "Button",
@@ -19,21 +31,10 @@ export const navigation: NavigationModel[] = [
     slug: "key-filter",
     url: "/component/keyfilters",
   },
+
   {
     heading: "components",
-    name: "Loaders",
-    slug: "Loaders",
-    url: "/component/loaders",
-  },
-  {
-    heading: "components",
-    name: "Headers",
-    slug: "Headers",
-    url: "/component/headers",
-  },
-  {
-    heading: "components",
-    name: "Inputs",
+    name: "Input",
     slug: "inputs",
     url: "/component/inputs",
   },

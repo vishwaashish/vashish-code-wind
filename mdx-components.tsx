@@ -39,7 +39,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2
         className={cn(
-          "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-4",
+          "font-heading subheading-anchor mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-4",
           className,
         )}
         {...props}
@@ -81,14 +81,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => {
-      console.log(className, props)
+    a: ({
+      className,
+      href,
+      ...props
+    }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
       return (
-        <a
+        <Link
+          href={href ?? "#"}
           className={cn("font-medium underline underline-offset-4", className)}
           {...props}
         />
-      )
+      );
     },
     p: ({
       className,
@@ -193,10 +197,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
       <div
-        className={cn(
-          "mt-8 scroll-m-20 tracking-tight",
-          className,
-        )}
+        className={cn("mt-8 scroll-m-20 tracking-tight", className)}
         {...props}
       />
     ),

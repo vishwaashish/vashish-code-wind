@@ -1,47 +1,19 @@
-"use client";
+import { useDynamicComponentProps } from "@/components/hooks/component";
 import PreviewComponent from "@/components/PreviewComponent";
-import { Suspense } from "react";
-// const convertRegistryPaths = (content: string): string => {
-//   return content
-//     .replace(/@\/registry\/default\/ui/g, "@/components/ui")
-//     .replace(/@\/registry\/default\/components/g, "@/components")
-//     .replace(/@\/registry\/default\/hooks/g, "@/hooks")
-//     .replace(/@\/registry\/default\/lib/g, "@/lib");
-// };
-function PreviewPage() {
-  // const source = convertRegistryPaths(
-  //   (await readComponentSource("CopyButton")) || "",
-  // );
-  // console.log("source", source);
-  // const componentName = "CopyButton";
-  // const filePath = path.join(
-  //   process.cwd(),
-  //   // "registry",
-  //   // "default",
-  //   "src",
-  //   "components",
-  //   `${componentName}.tsx`,
-  // );
-  // try {
-  //   const source = await fs.readFile(filePath, "utf8");
-  //   console.log("source", source);
-  //   const data = convertRegistryPaths(await source);
-  //   console.log("source", data);
-  //   return source;
-  // } catch (error) {
-  //   console.error(`Error reading file ${filePath}:`, error);
-  //   return null;
-  // }
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<useDynamicComponentProps>;
+};
+
+async function PreviewPage(props: PageProps) {
+  const { component, directory, componentName } = await props.searchParams;
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen items-center justify-center">
-          <div className="spinner"></div>Loading Component...
-        </div>
-      }
-    >
-      <PreviewComponent />
-    </Suspense>
+    <PreviewComponent
+      component={component}
+      directory={directory}
+      componentName={componentName}
+    />
   );
 }
 

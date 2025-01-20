@@ -15,20 +15,25 @@ import {
 
 export default function DemoComponent({
   directory,
+  component,
   componentName,
   className,
   showCopy = true,
+  copyClassName = "",
   children,
   ...props
 }: {
   directory: string;
+  component: string;
   componentName: string;
   className?: string;
   showCopy?: boolean;
+  copyClassName?: string;
   children?: ({ html }: { html: string }) => ReactNode;
 }) {
-  const { html, react, Component } = useDynamicComponent({
+  const { html, react, Component, isLoading } = useDynamicComponent({
     directory,
+    component,
     componentName,
   });
 
@@ -37,16 +42,16 @@ export default function DemoComponent({
     { value: react, label: "React" },
   ].filter((a) => a.value);
 
-  if (!Component) {
+  if (isLoading) {
     return (
-      <div className="flex h-full w-full animate-pulse items-center justify-center">
-        <div className="spinner"></div>
+      <div className="flex min-h-40 w-full animate-pulse items-center justify-center">
+      {/* <div className="spinner"></div> */}
       </div>
     );
   }
 
   return (
-    <>
+    <div className="">
       {!children && (
         <div className={cn("", className)}>
           <Component {...props} />
@@ -57,7 +62,10 @@ export default function DemoComponent({
           <DialogTrigger asChild>
             <Code2
               role="button"
-              className="absolute right-2 top-2 z-10 text-foreground transition-opacity"
+              className={cn(
+                "absolute right-2 top-2 z-10 text-foreground transition-opacity",
+                copyClassName,
+              )}
               size={15}
             />
           </DialogTrigger>
@@ -129,6 +137,6 @@ export default function DemoComponent({
       )}
 
       {!!children && children({ html })}
-    </>
+    </div>
   );
 }

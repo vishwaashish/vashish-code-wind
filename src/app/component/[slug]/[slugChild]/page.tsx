@@ -1,11 +1,9 @@
-import DemoComponent from "@/components/DemoComponent";
-import { SyntaxHighlighter } from "@/components/shiki";
 
 type PageProps = {
   params: Promise<{ slug: string; slugChild: string }>;
 };
-const page = async ({ params }: PageProps) => {
-  const { slug, slugChild } = await params;
+const page = async ({  }: PageProps) => {
+  // const { slug, slugChild } = await params;
 
   return (
     <>
@@ -52,16 +50,16 @@ const page = async ({ params }: PageProps) => {
         </div>
       </div> */}
       <div className="flex min-h-screen items-center justify-center">
-        <DemoComponent
+        {/* <DemoComponent
           directory={slug}
-          componentName={slugChild}
+          component={slugChild}
           className=""
           showCopy={false}
         >
           {({ html }) => {
             return <SyntaxHighlighter code={html} language="css" />;
           }}
-        </DemoComponent>
+        </DemoComponent> */}
       </div>
     </>
   );

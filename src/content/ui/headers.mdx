@@ -1,0 +1,28 @@
+---
+title: Responsive Header
+description: A clean and responsive header component with a brand title and navigation links
+links:
+  - type: doc
+    url: https://www.radix-ui.com/docs/primitives/components/dialog
+    label: Docs
+  - type: api
+    url: https://www.radix-ui.com/docs/primitives/components/dialog#api-reference
+    label: API
+---
+
+<div className="grid grid-cols-1 gap-10">
+  {["header-01", "header-02"].map((componentName) => {
+    return (
+        <ComponentViewer 
+            directory="demos/headers"
+            component={componentName}
+            componentName={"HeaderDemo"}
+            key={componentName}
+        >
+
+        </ComponentViewer>
+    );
+
+})}
+
+</div>

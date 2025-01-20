@@ -12,12 +12,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Tooltip } from "./ui/tooltip";
 const ComponentViewer = ({
   componentName,
+  component,
   directory,
   isComponent = false,
   previewClassName,
   hasTitle = true,
 }: {
   componentName: string;
+  component: string;
   directory: string;
   previewClassName: string;
   isComponent?: boolean;
@@ -27,7 +29,8 @@ const ComponentViewer = ({
   const { isLoading, html, error, react, Component, fullScreen, title } =
     useDynamicComponent({
       directory,
-      componentName,
+      component: component,
+      componentName: componentName,
     });
 
   const languageOptions = [
@@ -64,7 +67,7 @@ const ComponentViewer = ({
         return;
       }
 
-      if (event.data.type === `${componentName}-iframeHeight`) {
+      if (event.data.type === `${component}-iframeHeight`) {
         const height = Number(event.data.height) || IMinHeight;
         setIframeHeight(height);
       }
@@ -75,7 +78,7 @@ const ComponentViewer = ({
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [componentName]);
+  }, [component]);
 
   useEffect(() => {
     if (selectedLanguage === "html") {
@@ -99,6 +102,7 @@ const ComponentViewer = ({
     if (value === "react") setCodeSnippet(react);
   };
 
+  const url = `/preview?component=${component}&directory=${directory}&componentName=${componentName}`;
   if (!!error) {
     return;
   }
@@ -174,7 +178,7 @@ const ComponentViewer = ({
               <Separator orientation="vertical" className="h-auto py-2" />
               <Tooltip title="Open in new tab">
                 <Link
-                  href={`/preview?component=${componentName}&directory=${directory}`}
+                  href={url}
                   target="_blank"
                   className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
                 >
@@ -221,7 +225,7 @@ const ComponentViewer = ({
               ) : (
                 <iframe
                   ref={iframeRef}
-                  src={`/preview?component=${componentName}&directory=${directory}`}
+                  src={url}
                   className="h-full w-full rounded border-none"
                   title="Component Preview"
                   style={{

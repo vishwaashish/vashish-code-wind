@@ -1,11 +1,7 @@
 ---
 title: Input Component
-description: The `Input` component is a versatile and customizable input field designed for React applications. It provides built-in support for validation, styling, and flexible props.
+description: The Input component is a versatile and customizable input field designed for React applications. It provides built-in support for validation, styling, and flexible props.
 ---
-
-# Input Component
-
-The `Input` component is a versatile and customizable input field designed for React applications. It provides built-in support for validation, styling, and flexible props.
 
 ## Features
 
@@ -22,8 +18,9 @@ The `Input` component is a versatile and customizable input field designed for R
 
 <br />
 <ComponentViewer
-  directory="inputs"
-  componentName={"input-01"}
+  directory="demos/inputs"
+  component="input-01"
+  componentName="InputDemo"
   isComponent={true}
   hasTitle={false}
 />
@@ -33,8 +30,9 @@ The `Input` component is a versatile and customizable input field designed for R
 <br />
 
 <ComponentViewer
-  directory="inputs"
-  componentName={"input-02"}
+  directory="demos/inputs"
+  component="input-02"
+  componentName="InputDemo"
   isComponent={true}
   hasTitle={false}
 />
@@ -46,8 +44,9 @@ The Input component supports size variants: Small (`sm`), Medium (`md`), and Lar
 <br />
 
 <ComponentViewer
-  directory="inputs"
-  componentName={"input-sizes"}
+  directory="demos/inputs"
+  component="input-sizes"
+  componentName="InputDemo"
   isComponent={true}
   hasTitle={false}
 />
@@ -59,8 +58,9 @@ The `Input` component with the `filled` variant, offering a distinct background 
 <br />
 
 <ComponentViewer
-  directory="inputs"
-  componentName={"input-04"}
+  directory="demos/inputs"
+  component="input-04"
+  componentName="InputDemo"
   isComponent={true}
   hasTitle={false}
 />
@@ -73,7 +73,8 @@ The `KeyFilter` functionality restricts user input based on predefined or custom
 
 <ComponentViewer
   directory="keyfilters"
-  componentName={"keyfilter-01"}
+  component="keyfilter-01"
+  componentName="InputDemo"
   isComponent={true}
   hasTitle={false}
 />
@@ -84,28 +85,33 @@ The `FormDemo` component validates `Name`, `Age`, and `Email` fields in real-tim
 
 <br />
 
-<ComponentViewer directory="forms" componentName={"form-01"} />
+<ComponentViewer
+  directory="forms"
+  component="form-01"
+  componentName="FormDemo"
+/>
 
 ## Installation
 
 <Steps>
 
-<Step> 
+<Step>
 
-  ### Install Dependencies
+### Install Dependencies
 
-  Ensure you have the following dependencies installed in your project:
+Ensure you have the following dependencies installed in your project:
 
 ```bash
 npm install class-variance-authority
 ```
+
 </Step>
 
-<Step> 
+<Step>
 
-  ### Add the Component Code
+### Add the Component Code
 
- Copy the full component code and place it in your project under the desired directory, for example: `components/lib/Input.tsx`.
+Copy the full component code and place it in your project under the desired directory, for example: `components/lib/Input.tsx`.
 
 ```tsx
 "use client";
@@ -235,12 +241,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 export default Input;
-
 ```
+
 </Step>
 
 </Steps>
-
 
 ## API Reference
 

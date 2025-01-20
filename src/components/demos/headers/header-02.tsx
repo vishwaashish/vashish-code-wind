@@ -1,12 +1,12 @@
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 // 📚 Menu Item Type
 type MenuItem = {

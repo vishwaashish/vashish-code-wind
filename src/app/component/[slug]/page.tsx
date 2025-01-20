@@ -11,11 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { absoluteUrl, formatString } from "@/lib/utils";
-import { allComponents, Component } from "contentlayer/generated";
+import { allComponents } from "contentlayer/generated";
+// import { allComponents, Component } from "contentlayer/generated";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -60,15 +60,15 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const MDXContent = async ({ slug }: { slug: string }) => {
-  try {
-    const Component = (await import(`@/content/component/${slug}.mdx`)).default;
-    return <Component />;
-  } catch (error) {
-    console.error("Failed to load MDX content for slug:", slug, error);
-    return <div>Error loading content.</div>;
-  }
-};
+// const MDXContent = async ({ slug }: { slug: string }) => {
+//   try {
+//     const Component = (await import(`@/content/component/${slug}.mdx`)).default;
+//     return <Component />;
+//   } catch (error) {
+//     console.error("Failed to load MDX content for slug:", slug, error);
+//     return <div>Error loading content.</div>;
+//   }
+// };
 
 export default async function Page({ params }: Props) {
   const slug = (await params).slug;
@@ -78,14 +78,15 @@ export default async function Page({ params }: Props) {
   }
 
   const components = await getComponentFromParams(slug);
+  const Component = (await import(`@/content/component/${slug}.mdx`)).default;
 
-  if (!components) {
+  if (!components || !Component) {
     return notFound();
   }
 
   // const { default: Post } = await import(`@/content/component/${slug}.mdx`);
 
-  const allComp = allComponents.sort((a: Component, b: Component) =>
+  const allComp = allComponents.sort((a, b) =>
     a.slugAsParams.localeCompare(b.slugAsParams),
   );
 
@@ -125,10 +126,29 @@ export default async function Page({ params }: Props) {
             </BreadcrumbList>
           </Breadcrumb>
           <div className="max-w-full">
-            {/* <Post /> */}
-            <Suspense>
-              <MDXContent slug={slug} />
-            </Suspense>
+            <h1 className="font-heading mt-2 scroll-m-20 text-4xl font-bold">
+              {components.title}
+            </h1>
+            {!!components.links?.length && (
+              <div className="mt-3 flex gap-2">
+                {components.links?.map((link) => (
+                  <Button
+                    className="h-auto rounded-full px-3 py-1 text-xs"
+                    variant={"secondary"}
+                    key={link.label}
+                    asChild
+                  >
+                    <Link href={link.url ?? "#"}>{link.label}</Link>
+                  </Button>
+                ))}
+              </div>
+            )}
+            <p className="leading-7 text-muted-foreground [&:not(:first-child)]:mt-6">
+              {components.description}
+            </p>
+            <div className="pb-12 pt-8">
+              <Component />
+            </div>
           </div>
           <Separator className="my-10" />
           <div className="flex flex-row items-center justify-between">

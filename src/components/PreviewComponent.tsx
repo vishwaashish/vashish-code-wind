@@ -1,15 +1,15 @@
-"use client"
-import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
-import { useDynamicComponent } from "./hooks/component";
+"use client";
+import { useEffect } from "react";
+import { useDynamicComponent, useDynamicComponentProps } from "./hooks/component";
 
-const PreviewComponent = () => {
-  const searchParams = useSearchParams();
-  const componentName = searchParams.get("component") || "";
-  const directory = searchParams.get("directory") || "";
-
+const PreviewComponent = ({
+  component,
+  directory,
+  componentName,
+}: useDynamicComponentProps) => {
   const { Component, isLoading, error } = useDynamicComponent({
     directory,
+    component,
     componentName,
   });
 
@@ -33,11 +33,11 @@ const PreviewComponent = () => {
     const sendHeightToParent = () => {
       const height = document.body.clientHeight;
       window.parent.postMessage(
-        { type: `${componentName}-iframeHeight`, height },
+        { type: `${component}-iframeHeight`, height },
         "*",
       );
     };
-    sendHeightToParent(); // Initial height on load
+    sendHeightToParent();
 
     const observer = new MutationObserver(sendHeightToParent);
     observer.observe(document.body, { childList: true, subtree: true });
@@ -48,7 +48,7 @@ const PreviewComponent = () => {
       observer.disconnect();
       window.removeEventListener("resize", sendHeightToParent);
     };
-  }, [Component, componentName]);
+  }, [Component, component]);
 
   if (error) {
     return (
@@ -60,7 +60,7 @@ const PreviewComponent = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2">
         {/* <div className="spinner"></div>Loading... */}
       </div>
     );

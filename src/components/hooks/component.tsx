@@ -11,8 +11,9 @@ import {
 /**
  * Defines the properties required by the `useDynamicComponent` hook.
  */
-interface useDynamicComponentProps {
+export interface useDynamicComponentProps {
   directory: string;
+  component: string;
   componentName: string;
 }
 
@@ -24,7 +25,12 @@ interface FileData {
   react: string;
   title: string;
   fullScreen?: boolean;
-  [key: string]: string | ComponentType | (() => ReactNode) | boolean | undefined;
+  [key: string]:
+    | string
+    | ComponentType
+    | (() => ReactNode)
+    | boolean
+    | undefined;
 }
 
 /**
@@ -35,6 +41,7 @@ interface FileData {
  */
 const useDynamicComponent = ({
   directory,
+  component,
   componentName,
 }: useDynamicComponentProps) => {
   const [fileData, setFileData] = useState<FileData | null>(null);
@@ -42,12 +49,12 @@ const useDynamicComponent = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Ensure proper handling of singular directory names
-  const singular = directory.endsWith("s") ? directory.slice(0, -1) : directory;
-  const componentFunc = singular.charAt(0).toUpperCase() + singular.slice(1);
+  // const singular = directory.endsWith("s") ? directory.slice(0, -1) : directory;
+  // const componentFunc = singular.charAt(0).toUpperCase() + singular.slice(1);
 
   const Component: ComponentType | null = fileData
-    ? (fileData[`${componentFunc}Demo`] as ComponentType) ||
-      (() => <div>Component not found</div>)
+    ? (fileData[componentName] as ComponentType) ||
+      (() => <div className="p-4">Component not found</div>)
     : () => <div></div>;
 
   /**
@@ -58,20 +65,18 @@ const useDynamicComponent = ({
     setError(null);
 
     try {
-      const importedData = await import(
-        `@/components/${directory}/${componentName}`
-      );
+      const importedData = await import(`../${directory}/${component}`);
       setFileData(importedData);
     } catch (err) {
       setError(`Failed to load component: ${(err as Error).message}`);
     } finally {
       setIsLoading(false);
     }
-  }, [componentName, directory]);
+  }, [component, directory]);
 
   useEffect(() => {
     loadComponent();
-  }, [componentName, directory, loadComponent]);
+  }, [component, directory, loadComponent]);
 
   return {
     html: fileData?.html || "",
@@ -86,4 +91,3 @@ const useDynamicComponent = ({
 };
 
 export { useDynamicComponent };
-
