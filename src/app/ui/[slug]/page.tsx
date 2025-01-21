@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props) {
 
 const MDXContent = async ({ slug }: { slug: string }) => {
   try {
-    const Component = (await import(`@/content/component/${slug}.mdx`)).default;
+    const Component = (await import(`@/content/ui/${slug}.mdx`)).default;
     return <Component />;
   } catch (error) {
     console.error("Failed to load MDX content for slug:", slug, error);
@@ -81,7 +81,7 @@ export default async function Page({ params }: Props) {
             <h1 className="font-heading mt-2 scroll-m-20 text-4xl font-bold">
               {components.title}
             </h1>
-            {!!components.links?.length && (
+            {!!components?.links?.length && (
               <div className="mt-3 flex gap-2">
                 {components.links?.map((link) => (
                   <Button
