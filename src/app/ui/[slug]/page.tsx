@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { absoluteUrl } from "@/lib/utils";
 import { allUIs } from "contentlayer/generated";
+import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -86,8 +87,9 @@ export default async function Page({ params }: Props) {
                 {components.links?.map((link) => (
                   <Button
                     className="h-auto rounded-full px-3 py-1 text-xs"
-                    variant={"secondary"}
+                    variant={"outlined"}
                     key={link.label}
+                    startIcon={<SquareArrowOutUpRight className="!h-3 !w-3" />}
                     asChild
                   >
                     <Link href={link.url ?? "#"}>{link.label}</Link>

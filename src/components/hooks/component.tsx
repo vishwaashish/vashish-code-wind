@@ -20,7 +20,7 @@ export interface useDynamicComponentProps {
 /**
  * Represents the structure of dynamically imported file data.
  */
-interface FileData {
+export interface FileData {
   html: string;
   react: string;
   title: string;

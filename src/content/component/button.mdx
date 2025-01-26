@@ -1,138 +1,445 @@
 ---
 title: Button
-description: The Button component is a reusable UI element built with React, TypeScript, TailwindCSS, and Radix UI's Slot API. It supports different variants, sizes, and customization options for flexibility and consistency across your project.
+description: The Button component is a flexible, accessible, and customizable UI element. It supports multiple variants, sizes, colors, and states, enabling developers to use it in diverse scenarios. The component also includes built-in support for icons and loading indicators.
+links:
+  - type: api
+    url: /component/button/#api-reference
+    label: API
+  - type: examples
+    url: /ui/buttons
+    label: Examples
 ---
+
+## Features
+
+1.  **Variant-based Styling**:
+    - Five distinct variants: `contained`, `outlined`, `ghost`, `text`, and `link`.
+2.  **Color Options**:
+    - Supports `primary`, `success`, and `destructive` colors for buttons.
+3.  **Size Variants**:
+    - Sizes include `tiny`, `sm`, `lg`, and `icon` for compact or prominent designs.
+4.  **Loading State**:
+    - Built-in loading support with customizable indicators and positions (`start` or `end`).
+5.  **Customizable**:
+    - Supports icons (`startIcon`, `endIcon`) and animation options (`disableAnimation`).
 
 ## 🚀 Usage
 
-<PreviewAndCodePanel >
+<br />
 
-<div className="flex flex-wrap justify-center gap-2">
-  <Button>Default Button</Button>
-  <Button variant="destructive">Destructive Button</Button>
-  <Button variant="outline">Outline Button</Button>
-  <Button variant="secondary">Secondary Button</Button>
-  <Button variant="ghost">Ghost Button</Button>
-  <Button variant="link">Link Button</Button>
-</div>
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-all-variants"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
 
-```jsx
-import { Button } from "@/components/ui/button";
-export function ButtonDemo() {
-  return (
-    <>
-      <Button>Default Button</Button>
-      <Button variant="destructive">Destructive Button</Button>
-      <Button variant="outline">Outline Button</Button>
-      <Button variant="secondary">Secondary Button</Button>
-      <Button variant="ghost">Ghost Button</Button>
-      <Button variant="link">Link Button</Button>
-    </>
-  );
-}
-```
+## Variants
 
-</PreviewAndCodePanel>
+### Contained
 
-With Sizes
+The `Contained` button variant is ideal for primary actions and tasks that require the most emphasis. It features a solid background with clear visual prominence, making it suitable for actions like "Submit," "Buy Now," or "Get Started."
 
-<PreviewAndCodePanel previewClassName="">
+<br />
 
-<div className="flex w-full flex-wrap justify-center gap-2">
-  <Button size="sm">Small Button</Button>
-  <Button size="default">Default Button</Button>
-  <Button size="lg">Large Button</Button>
-  <Button size="icon">Icon</Button>
-</div>
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-contained"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
 
-```jsx
-import { Button } from "@/components/ui/button";
-export function ButtonDemo() {
-  return (
-    <div>
-      <Button size="sm">Small Button</Button>
-      <Button size="default">Default Button</Button>
-      <Button size="lg">Large Button</Button>
-      <Button size="icon">Icon Button</Button>
-    </div>
-  );
-}
-```
+### Outlined
 
-</PreviewAndCodePanel>
+The `Outlined` button variant provides a lightweight alternative to the Contained button. It uses a border and no solid background, making it less visually heavy, yet suitable for secondary actions or less critical tasks like "Cancel" or "More Info."
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-outlined"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Ghost
+
+The `Ghost` button variant is designed for minimal visual prominence, blending seamlessly into the background. It doesn’t have a solid background or border, keeping the UI clean. However, on `hover`, it reveals a background color, providing a visual cue for interactivity. This makes it ideal for secondary actions or inline options in areas with dense UI.
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-ghost"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Text
+
+The `Text` button variant removes all background, border, and hover effects except for the text itself. It appears like plain text but maintains button interactivity. On hover, only the text color changes subtly, offering a minimalist yet functional design. This is useful for inline actions or tertiary interactions like "Read More" links.
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-text"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Link
+
+The `Link` button variant is specifically designed to mimic the behavior of traditional hyperlinks while maintaining the styling and accessibility of a button. It is perfect for scenarios where navigation or linking to other pages is required.
+
+Integration with routing libraries like `Next.js` using the `asChild` prop to wrap a `Link` component, ensuring seamless client-side navigation with consistent styling.
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-link"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+## Sizes
+
+This example demonstrates the various size options available for the Button component. Each size is tailored to fit specific use cases:
+
+1.  **Tiny**: Ideal for compact UI elements like toolbar actions or pagination controls.
+2.  **Small**: Suitable for secondary actions or smaller form elements.
+3.  **Medium**: A balanced size for general-purpose actions across the UI.
+4.  **Large**: Perfect for primary actions, providing maximum visibility and emphasis.
+5.  **Icon**: Designed for buttons with icons only, ensuring a square, balanced layout.
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-sizes"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+## Rounded
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-rounded"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+## Loading
+
+This example demonstrates how to handle loading states with the Button component:
+
+- **Default Loading**: Shows the built-in loading spinner at the start of the button text.
+- **Loading at End**: Positions the loading spinner after the button text.
+- **Custom Loading Indicator**: Replaces the default spinner with a custom SVG spinner.
+
+<br />
+
+<ComponentViewer
+  directory="demos/buttons"
+  component="button-loading"
+  componentName="ButtonDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
 
 ## Installation
 
-Copy and paste the following code into your project.
+<Steps>
 
-```jsx
+<Step>
+
+### Install Dependencies
+
+Ensure you have the following dependencies installed in your project:
+
+```bash
+npm install class-variance-authority @radix-ui/react-slot
+```
+
+</Step>
+
+<Step>
+
+### Add the Component Code
+
+Copy the full component code and place it in your project under the desired directory, for example: `components/lib/button.tsx`.
+
+```tsx
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex shrink-0 cursor-pointer select-none flex-wrap items-center justify-center text-center leading-[1em] gap-2 font-medium no-underline duration-[0.2s] ease-out transition-[color,background-color,border-color,opacity,box-shadow,transform] shadow border-transparent border-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:hidden  active:scale-95 disabled:cursor-not-allowed disabled:scale-100 disabled:bg-muted disabled:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background text-foreground shadow-sm hover:bg-accent hover:text-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-accent hover:text-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        contained: "bg-background text-foreground hover:bg-foreground/5",
+        outlined: "border border-border shadow-none",
+        ghost:
+          "text-foreground shadow-none hover:bg-accent hover:text-foreground",
+        text: "shadow-none cursor-auto",
+        link: "shadow-none underline-offset-4 hover:underline",
+      },
+      color: {
+        default: "focus-visible:outline-foreground",
+        primary: "focus-visible:outline-primary",
+        success: "focus-visible:outline-success",
+        destructive: "focus-visible:outline-destructive",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        tiny: "h-5 px-2 py-0 text-xs [&_svg]:size-3 gap-1",
+        sm: "h-7 px-3 text-xs [&_svg]:size-3 gap-1.5",
+        md: "h-9 px-4 text-sm [&_svg]:size-4 ",
+        lg: "h-10 px-8 text-lg [&_svg]:size-5",
         icon: "h-9 w-9",
+      },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        full: "rounded-full",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "contained",
+      size: "md",
+      color: "default",
+      rounded: "lg",
     },
-  }
+    compoundVariants: [
+      // Contained
+      {
+        variant: "contained",
+        color: "primary",
+        className: "bg-primary text-primary-foreground hover:bg-primary/80",
+      },
+      {
+        variant: "contained",
+        color: "destructive",
+        className:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/80",
+      },
+      {
+        variant: "contained",
+        color: "success",
+        className: "bg-success text-success-foreground hover:bg-success/80",
+      },
+
+      // Outlined
+      {
+        variant: "outlined",
+        color: "primary",
+        className:
+          "border-primary text-primary hover:bg-primary hover:text-primary-foreground",
+      },
+      {
+        variant: "outlined",
+        color: "destructive",
+        className:
+          "border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground",
+      },
+      {
+        variant: "outlined",
+        color: "success",
+        className:
+          "border-success text-success hover:bg-success hover:text-success-foreground",
+      },
+
+      // Ghost
+      {
+        variant: "ghost",
+        color: "primary",
+        className:
+          "text-primary hover:bg-primary hover:text-primary-foreground",
+      },
+      {
+        variant: "ghost",
+        color: "destructive",
+        className:
+          "text-destructive hover:bg-destructive hover:text-destructive-foreground",
+      },
+      {
+        variant: "ghost",
+        color: "success",
+        className:
+          "text-success hover:bg-success hover:text-success-foreground",
+      },
+
+      // Text
+      {
+        variant: "text",
+        color: "primary",
+        className: "text-primary",
+      },
+      {
+        variant: "text",
+        color: "destructive",
+        className: "text-destructive",
+      },
+      {
+        variant: "text",
+        color: "success",
+        className: "text-success",
+      },
+
+      // Link
+      {
+        variant: "link",
+        color: "primary",
+        className: "text-primary underline-offset-4 hover:underline",
+      },
+      {
+        variant: "link",
+        color: "destructive",
+        className: "text-destructive underline-offset-4 hover:underline",
+      },
+      {
+        variant: "link",
+        color: "success",
+        className: "text-success underline-offset-4 hover:underline ",
+      },
+    ],
+  },
+);
+
+const defaultLoadingIndicator = (
+  <svg
+    className="animate-spin"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle
+      className="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+    ></circle>
+    <path
+      className="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+    ></path>
+  </svg>
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  disableAnimation?: boolean;
+  noPadding?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  loading?: boolean;
+  loadingPosition?: "start" | "end";
+  loadingIndicator?: React.ReactNode;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className = "",
+      variant,
+      disableAnimation,
+      noPadding,
+      size,
+      color,
+      asChild = false,
+      startIcon,
+      endIcon,
+      disabled,
+      rounded,
+      loading = false,
+      loadingPosition = "start",
+      loadingIndicator = defaultLoadingIndicator,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
+
+    const renderStartIcon =
+      loading && loadingPosition === "start"
+        ? loadingIndicator
+        : (startIcon ?? null);
+
+    const renderEndIcon =
+      loading && loadingPosition === "end"
+        ? loadingIndicator
+        : (endIcon ?? null);
+
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(
+          buttonVariants({ variant, size, color, rounded }),
+          disableAnimation && "active:scale-0",
+          noPadding && "h-auto p-0",
+          className,
+        )}
         ref={ref}
+        aria-busy={loading}
+        aria-label={props["aria-label"] || (loading ? "Loading" : undefined)}
+        disabled={loading || disabled}
         {...props}
-      />
+      >
+        {renderStartIcon && renderStartIcon}
+        <Slottable>{children}</Slottable>
+        {renderEndIcon && renderEndIcon}
+      </Comp>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-
 ```
 
-## 🎨 Props
+</Step>
+</Steps>
+
+## API Reference
+
+### 🎨 Props
 
 The variant prop controls the visual appearance of the button:
 
-| **Property** | **Type**  | **Default** | **Description**               |
-| ------------ | --------- | ----------- | ----------------------------- |
-| `variant`    | `string`  | `"default"` | Button variant style          |
-| `size`       | `string`  | `"default"` | Button size                   |
-| `asChild`    | `boolean` | `false`     | Renders as a custom component |
-| `className`  | `string`  | `-`         | Additional custom styles      |
+| **Name**           | **Type**                                              | **Default**         | **Description**                                                                                                   |
+| ------------------ | ----------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `variant`          | `"contained", "outlined", "ghost", "text", "link"` | `"contained"`       | Defines the visual style of the button.                                                                           |
+| `color`            | `"default", "primary", "success", "destructive"`   | `"default"`         | Specifies the color scheme.                                                                                       |
+| `size`             | `"tiny", "sm", "md", "lg", "icon"`                | `"md"`              | Determines the size and padding of the button.                                                                    |
+| `rounded`          | `"none", "sm", "md", "lg", "full"`                | `"lg"`              | Controls the border-radius of the button. Enables customization of button corner styles for various design needs. |
+| `asChild`          | `boolean`                                             | `false`             | If `true`, renders the button as a child of another component using the `Slot` component.                         |
+| `disableAnimation` | `boolean`                                             | `false`             | Disables the animation effects when set to `true`.                                                                |
+| `noPadding`        | `boolean`                                             | `false`             | Removes all padding from the button when set to `true`.                                                           |
+| `startIcon`        | `React.ReactNode`                                     | `null`              | Icon or element to render at the start of the button.                                                             |
+| `endIcon`          | `React.ReactNode`                                     | `null`              | Icon or element to render at the end of the button.                                                               |
+| `loading`          | `boolean`                                             | `false`             | Shows a loading indicator when set to `true`.                                                                     |
+| `loadingPosition`  | `"start", "end"`                                     | `"start"`           | Determines whether the loading indicator appears at the start or end of the button.                               |
+| `loadingIndicator` | `React.ReactNode`                                     | Default spinner SVG | Custom loading indicator to display when `loading` is `true`.                                                     |
+| `disabled`         | `boolean`                                             | `false`             | Disables the button when set to `true`.                                                                           |

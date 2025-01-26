@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { absoluteUrl, formatString } from "@/lib/utils";
 import { allComponents } from "contentlayer/generated";
 // import { allComponents, Component } from "contentlayer/generated";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -134,8 +134,9 @@ export default async function Page({ params }: Props) {
                 {components.links?.map((link) => (
                   <Button
                     className="h-auto rounded-full px-3 py-1 text-xs"
-                    variant={"secondary"}
+                    variant={"outlined"}
                     key={link.label}
+                    startIcon={<SquareArrowOutUpRight className="!h-3 !w-3" />}
                     asChild
                   >
                     <Link href={link.url ?? "#"}>{link.label}</Link>

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Code2 } from "lucide-react";
+import { Code, Code2 } from "lucide-react";
 import { ReactNode } from "react";
 import { useDynamicComponent } from "./hooks/component";
 import { SyntaxHighlighter } from "./shiki";
@@ -45,7 +45,7 @@ export default function DemoComponent({
   if (isLoading) {
     return (
       <div className="flex min-h-40 w-full animate-pulse items-center justify-center">
-      {/* <div className="spinner"></div> */}
+        {/* <div className="spinner"></div> */}
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function DemoComponent({
       {showCopy && (
         <Dialog>
           <DialogTrigger asChild>
-            <Code2
+            <Code
               role="button"
               className={cn(
                 "absolute right-2 top-2 z-10 text-foreground transition-opacity",
