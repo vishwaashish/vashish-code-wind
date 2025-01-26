@@ -1,9 +1,9 @@
-import Input  from "@/components/lib/input";
+import Input from "@/components/lib/input";
 import Label from "@/components/lib/label";
 
 const KeyfilterDemo = () => {
   return (
-    <div className="mx-auto grid min-h-80 grid-cols-1 place-content-center gap-5 p-5 sm:gap-10 sm:p-10 md:grid-cols-2 ">
+    <div className="mx-auto grid grid-cols-1 place-content-center gap-5 p-5 sm:gap-10 sm:p-10 md:grid-cols-2">
       {/* Numeric Input */}
       <div className="space-y-1">
         <Label htmlFor="numeric-input">Numeric Input (Numbers Only)</Label>
@@ -11,6 +11,7 @@ const KeyfilterDemo = () => {
           id="numeric-input"
           placeholder="Enter numbers only"
           keyfilter={"num"}
+          className="w-full"
         />
       </div>
 
@@ -23,6 +24,7 @@ const KeyfilterDemo = () => {
           id="alphanumeric-input"
           placeholder="Enter letters and numbers"
           keyfilter={"alphanum"}
+          className="w-full"
         />
       </div>
 
@@ -35,6 +37,7 @@ const KeyfilterDemo = () => {
           id="alphabetic-input"
           placeholder="Enter letters only"
           keyfilter={"alpha"}
+          className="w-full"
         />
       </div>
 
@@ -47,6 +50,7 @@ const KeyfilterDemo = () => {
           id="custom-input"
           placeholder="Enter uppercase letters only"
           keyfilter={/^[A-Z]*$/}
+          className="w-full"
         />
       </div>
     </div>
@@ -59,7 +63,7 @@ import Input from "@/components/lib/Input";
 
 const KeyfilterDemo = () => {
   return (
-   <div className="mx-auto grid min-h-80 grid-cols-1 place-content-center gap-5 p-5 sm:gap-10 sm:p-10 md:grid-cols-2 lg:grid-cols-3">
+   <div className="mx-auto grid grid-cols-1 place-content-center gap-5 p-5 sm:gap-10 sm:p-10 md:grid-cols-2 lg:grid-cols-3">
       {/* Numeric Input */}
       <div className="space-y-1">
         <Label htmlFor="numeric-input">Numeric Input (Numbers Only)</Label>

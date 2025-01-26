@@ -1,0 +1,346 @@
+---
+title: Textarea Component
+description: Explore the customizable Textarea component for React applications. Supports validation, auto-resizing, and dynamic styling. View examples and implementation.
+links:
+  - type: api
+    url: /component/button/#api-reference
+    label: API
+  - type: examples
+    url: /ui/inputs
+    label: Examples
+---
+
+## Features
+
+1. **Variant-based Styling**: Configure appearance using `variant`, `state`, and `position` options.
+2. **Validation**: Supports input validation with `KeyFilter` for custom filtering.
+3. **Auto-resize**: Dynamically adjusts the height of the textarea based on its content.
+4. **Custom Events**: Provides hooks for handling `onInput`, `onKeyDown`, and `onPaste` events.
+5. **Accessibility**: Includes ARIA attributes for better usability and accessibility.
+6. **Flexibility**: Accepts additional HTML attributes for extended functionality.
+
+## Usage
+
+### Default
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-basic"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Autoresize
+
+The `Auto-Resize` Textarea dynamically adjusts its height based on content, ideal for forms, comments, or text editors requiring flexible multiline input.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-autoresize"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Filled
+
+The `Filled` Textarea Component features a solid background style, providing a visually distinct input field. It is ideal for forms, surveys, or any interface requiring a standout, easy-to-use multiline text input.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-filled"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Keyfilter
+
+The `Numeric Input` Textarea restricts user input to numbers only, ensuring validation directly within the field. Ideal for use cases like numeric forms, calculators, or any interface requiring precise number input. For more, go to [KeyFilters documentation](/component/keyfilters).
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-keyfilter"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Labeled
+
+The `Labeled` Textarea pairs a descriptive label with the textarea input, enhancing accessibility and clarity for users. Perfect for use in forms, feedback sections, or any interface requiring labeled text input.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-01"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Required
+
+The `Labeled` Textarea pairs a descriptive label with the textarea input, enhancing accessibility and clarity for users. Perfect for use in forms, feedback sections, or any interface requiring labeled text input.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-02"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Disabled
+
+The `Disabled` Textarea is a non-editable input field paired with a label for clarity. It is useful in scenarios where the input field is temporarily or permanently unavailable for user interaction, such as read-only forms or inactive states.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-03"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### Invalid
+
+The Textarea with `Invaid` Message enhances user experience by pairing an accessible label with an error message for invalid input. Ideal for forms where validation feedback is essential, ensuring users are guided to correct errors effectively.
+
+<br />
+<ComponentViewer
+  directory="demos/textareas"
+  component="textarea-04"
+  componentName="TextareaDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+### FormDemo Component
+
+The `FormDemo` component validates `Name`, `Age`, and `Email` fields in real-time, showing errors under invalid inputs and disabling submission until all fields are valid. Responsive and user-friendly, it ensures seamless data entry.
+
+<br />
+
+<ComponentViewer
+  directory="demos/forms"
+  component="form-01"
+  componentName="FormDemo"
+/>
+
+## Installation
+
+<Steps>
+
+<Step>
+
+### Install Dependencies
+
+Ensure you have the following dependencies installed in your project:
+
+```bash
+npm install class-variance-authority
+```
+
+</Step>
+
+<Step>
+
+### Add the Component Code
+
+Copy the full component code and place it in your project under the desired directory, for example: `components/lib/textarea.tsx`.
+
+```tsx
+"use client";
+import {
+  ClipboardEvent,
+  FormEvent,
+  forwardRef,
+  KeyboardEvent,
+  TextareaHTMLAttributes,
+  useEffect,
+  useRef,
+} from "react";
+
+import { cn } from "@/lib/utils";
+import { cva, VariantProps } from "class-variance-authority";
+import { KeyFilter, KeyFilterType } from "@/components/lib/keyfilter";
+
+const textareaVariants = cva(
+  "flex px-3 py-1 text-sm rounded-md border border-input  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:resize-none",
+  {
+    variants: {
+      variant: {
+        outlined: "bg-transparent",
+        filled: "bg-muted",
+      },
+      state: {
+        invalid: "border-destructive",
+        valid: "border-green-500",
+        default: "",
+      },
+      position: {
+        default: "",
+        left: "pl-8",
+        right: "pr-8",
+      },
+    },
+    defaultVariants: {
+      variant: "outlined",
+      state: "default",
+      position: "default",
+    },
+  },
+);
+
+interface TextareaProps
+  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onInput" | "size">,
+    VariantProps<typeof textareaVariants> {
+  keyfilter?: KeyFilterType;
+  invalid?: boolean;
+  valid?: boolean;
+  validateOnly?: boolean;
+  autoResize?: boolean;
+  onInput?: (event: FormEvent<HTMLTextAreaElement>, isValid: boolean) => void;
+}
+
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  (
+    {
+      keyfilter,
+      invalid = false,
+      valid = false,
+      validateOnly = false,
+      autoResize = false,
+      className,
+      onInput,
+      state,
+      variant,
+      position,
+      ...rest
+    },
+    ref,
+  ) => {
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const cachedScrollHeight = useRef(0);
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (keyfilter) {
+        KeyFilter.onKeyPress(event, keyfilter, validateOnly);
+      }
+    };
+
+    const handleInput = (event: FormEvent<HTMLTextAreaElement>) => {
+      const target = event.target as HTMLTextAreaElement;
+      let isValid = true;
+      if (keyfilter && validateOnly) {
+        isValid = KeyFilter.validate(event, keyfilter);
+      }
+      if (autoResize) {
+        resize(target);
+      }
+      onInput?.(event, isValid);
+    };
+
+    const handlePaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
+      if (keyfilter) {
+        KeyFilter.onPaste(event, keyfilter, validateOnly);
+      }
+    };
+
+    const resize = (textarea: HTMLTextAreaElement) => {
+      if (textarea) {
+        if (!cachedScrollHeight.current) {
+          cachedScrollHeight.current = textarea.scrollHeight;
+          textarea.style.overflow = "hidden";
+        }
+
+        const cursorPosition = textarea.selectionStart;
+
+        textarea.style.height = "";
+        textarea.style.height = textarea.scrollHeight + "px";
+
+        textarea.selectionStart = cursorPosition;
+        textarea.selectionEnd = cursorPosition;
+
+        if (
+          parseFloat(textarea.style.height) >=
+          parseFloat(textarea.style.maxHeight || "10000px")
+        ) {
+          textarea.style.overflowY = "scroll";
+        } else {
+          textarea.style.overflow = "hidden";
+        }
+      }
+    };
+
+    useEffect(() => {
+      if (autoResize && textareaRef.current) {
+        resize(textareaRef.current);
+      }
+    }, [autoResize]);
+
+    const textareaClass = cn(
+      textareaVariants({
+        variant,
+        state: (state ?? invalid) ? "invalid" : valid ? "valid" : "default",
+        position,
+      }),
+      autoResize && "resize-none",
+      className,
+    );
+
+    return (
+      <textarea
+        ref={(node) => {
+          textareaRef.current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+        }}
+        className={textareaClass}
+        onKeyDown={handleKeyDown}
+        onInput={handleInput}
+        onPaste={handlePaste}
+        aria-invalid={invalid}
+        {...rest}
+      />
+    );
+  },
+);
+
+Textarea.displayName = "Textarea";
+
+export default Textarea;
+```
+
+</Step>
+</Steps>
+
+## API Reference
+
+### 🎨 Props
+
+The variant prop controls the visual appearance of the button:
+
+| Prop Name      | Type                                          | Default      | Description                                                 |
+| -------------- | --------------------------------------------- | ------------ | ----------------------------------------------------------- |
+| `keyfilter`    | `KeyFilterType`                               |              | Filters input to match a specific pattern or key set.       |
+| `invalid`      | `boolean`                                     | `false`      | Marks the textarea as invalid for styling purposes.         |
+| `valid`        | `boolean`                                     | `false`      | Marks the textarea as valid for styling purposes.           |
+| `validateOnly` | `boolean`                                     | `false`      | When `true`, only validates input without applying filters. |
+| `autoResize`   | `boolean`                                     | `false`      | Automatically resizes the textarea based on the content.    |
+| `onInput`      | `(event, isValid) => void`                    |              | Custom input handler that provides validity state.          |
+| `variant`      | `'outlined', 'filled'`                        | `'outlined'` | Defines the visual style of the textarea.                   |
+| `state`        | `'invalid' , 'valid', 'default'`              | `'default'`  | Sets the validation state for styling purposes.             |
+| `position`     | `'default', 'left', 'right'`                  | `'default'`  | Adjusts padding and alignment inside the textarea.          |
+| `className`    | `string`                                      | `''`         | Additional custom styles for the textarea.                  |
+| `...rest`      | `TextareaHTMLAttributes<HTMLTextAreaElement>` |              | Other native textarea attributes.                           |
+
+---

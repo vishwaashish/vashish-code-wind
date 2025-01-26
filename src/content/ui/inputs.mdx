@@ -9,7 +9,6 @@ links:
     label: Input
 ---
 
-
 <div className="preview-code grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 [&>*]:relative [&>*]:px-1 [&>*]:py-10 [&>*]:before:absolute [&>*]:before:bg-border/70 [&>*]:before:[block-size:100vh] [&>*]:before:[inline-size:1px] [&>*]:before:[inset-block-start:0] [&>*]:before:[inset-inline-start:-1px] [&>*]:after:absolute [&>*]:after:bg-border/70 [&>*]:after:[block-size:1px] [&>*]:after:[inline-size:100vw] [&>*]:after:[inset-block-start:-1px] [&>*]:after:[inset-inline-start:0] sm:[&>*]:px-8 xl:[&>*]:px-12">
   {["input-03", "input-04", "input-05", "input-06"].map((componentName) => {
     return (
@@ -19,6 +18,20 @@ links:
           directory={"demos/inputs"}
           component={componentName}
           componentName="InputDemo"
+          className="flex w-full items-center justify-center"
+          copyClassName="opacity-0 group-hover:opacity-100"
+        />
+      </div>
+    );
+  })}
+  {["textarea-01", "textarea-02", "textarea-03","textarea-04","textarea-05"].map((componentName) => {
+    return (
+      <div key={componentName} className="group relative">
+        <DemoComponent
+          key={componentName}
+          directory={"demos/textareas"}
+          component={componentName}
+          componentName="TextareaDemo"
           className="flex w-full items-center justify-center"
           copyClassName="opacity-0 group-hover:opacity-100"
         />

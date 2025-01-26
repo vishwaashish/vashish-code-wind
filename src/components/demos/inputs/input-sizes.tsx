@@ -2,7 +2,7 @@ import Input from "@/components/lib/input";
 
 const InputDemo = () => {
   return (
-    <div className="mx-auto grid max-w-lg place-content-center space-y-4 py-5">
+    <div className="flex w-full flex-col gap-3 items-center justify-center py-5">
       {/* Small Input */}
       <Input placeholder="Small input" size="sm" />
 

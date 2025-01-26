@@ -4,7 +4,7 @@ import { useState } from "react";
 const InputDemo = () => {
   const [value, setValue] = useState("");
   return (
-    <div className="mx-auto flex min-h-40 max-w-xs items-center space-y-4 py-5 w-full">
+    <div className="flex w-full flex-wrap items-center justify-center py-5">
       <Input value={value} placeholder="Enter text here" onChange={(e)=> setValue(e.target.value)}/>
     </div>
   );

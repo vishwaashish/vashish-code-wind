@@ -2,7 +2,7 @@ import Input from "@/components/lib/input";
 
 const InputDemo = () => {
   return (
-    <div className="mx-auto flex min-h-40 max-w-xs items-center space-y-4 py-5 w-full">
+    <div className="flex w-full flex-wrap items-center justify-center py-5">
       <Input placeholder="Enter text here" />
     </div>
   );

@@ -13,7 +13,6 @@ type Props = {
 
 async function getComponentFromParams(slug: string) {
   const doc = allUIs.find((doc) => doc.slugAsParams === slug);
-  console.log("doc", doc);
   return doc || null;
 }
 export async function generateMetadata({ params }: Props) {

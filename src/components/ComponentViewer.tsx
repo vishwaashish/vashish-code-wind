@@ -29,9 +29,10 @@ const ComponentViewer = ({
   const { isLoading, html, error, react, Component, fullScreen, title } =
     useDynamicComponent({
       directory,
-      component: component,
-      componentName: componentName,
+      component,
+      componentName,
     });
+
 
   const languageOptions = [
     { value: html, label: "html" },

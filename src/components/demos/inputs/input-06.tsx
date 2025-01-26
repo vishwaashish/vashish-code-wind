@@ -1,16 +1,20 @@
 import Input from "@/components/lib/input";
 import Label from "@/components/lib/label";
+import { useId } from "react";
 
 const InputDemo = () => {
+  const id = useId();
   return (
-    <div className="mx-auto flex min-h-40 max-w-xs items-center space-y-4 py-5 w-full">
-      <div className="space-y-1 w-full">
-        <Label htmlFor="input-with-helper-text">
-          Input with helper text
-        </Label>
-        <Input id="input-with-helper-text" placeholder="Enter text here" />
-        <small className="text-muted-foreground">
-        Full name as on official documents
+    <div className="flex w-full flex-wrap items-center justify-center py-5">
+      <div className="space-y-1">
+        <Label htmlFor={id}>Input with helper text</Label>
+        <Input id={id} placeholder="Enter text here" />
+        <small
+          className="text-muted-foreground"
+          role="region"
+          aria-live="polite"
+        >
+          Full name as on official documents
         </small>
       </div>
     </div>
@@ -19,14 +23,25 @@ const InputDemo = () => {
 
 const title = "Input with helper text";
 const react = `
-import Input from "@/components/lib/Input";
+import Input from "@/components/lib/input";
 import Label from "@/components/lib/label";
+import { useId } from "react";
 
 const InputDemo = () => {
+  const id = useId();
   return (
-    <div className="space-y-1 w-full">
-        <Label htmlFor="input-with-helper-text">Input with helper text</Label>
-        <Input id="input-with-helper-text" placeholder="Enter text here" />
+    <div className="flex w-full flex-wrap items-center justify-center py-5">
+      <div className="space-y-1">
+        <Label htmlFor={id}>Input with helper text</Label>
+        <Input id={id} placeholder="Enter text here" />
+        <small
+          className="text-muted-foreground"
+          role="region"
+          aria-live="polite"
+        >
+          Full name as on official documents
+        </small>
+      </div>
     </div>
   );
 };

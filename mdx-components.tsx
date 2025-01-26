@@ -1,7 +1,5 @@
 import ComponentViewer from "@/components/ComponentViewer";
 import DemoComponent from "@/components/DemoComponent";
-import Input from "@/components/lib/input";
-import { Textarea } from "@/components/lib/textarea";
 // import Input from "@/components/lib/input";
 // import { Textarea } from "@/components/lib/textarea";
 import PreviewAndCodePanel from "@/components/PreviewAndCodePanel";
@@ -17,8 +15,6 @@ import Link from "next/link";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
-    Input: Input,
-    Textarea: Textarea,
     Image,
     Button: Button as React.FC<React.ComponentProps<"button">>,
     PreviewAndCodePanel,

@@ -1,39 +1,35 @@
-import Input from "@/components/lib/input";
+import Textarea from "@/components/lib/textarea";
 import Label from "@/components/lib/label";
 import { useId } from "react";
 
-const InputDemo = () => {
+const TextareaDemo = () => {
   const id = useId()
   return (
     <div className="flex w-full flex-wrap items-center justify-center py-5">
       <div className="space-y-1">
-        <Label htmlFor={id} required>
-          Required input
-        </Label>
-        <Input id={id} placeholder="Enter text here" />
+        <Label htmlFor={id}>Disabled textarea</Label>
+        <Textarea id={id} disabled placeholder="Leave a comment" />
       </div>
     </div>
   );
 };
 
-const title = " Required input";
+const title = "Disabled Textarea";
 const react = `
-import Input from "@/components/lib/input";
+import Textarea from "@/components/lib/textarea";
 import Label from "@/components/lib/label";
 import { useId } from "react";
 
-const InputDemo = () => {
+const TextareaDemo = () => {
   const id = useId()
   return (
     <div className="flex w-full flex-wrap items-center justify-center py-5">
       <div className="space-y-1">
-        <Label htmlFor={id} required>
-          Required input
-        </Label>
-        <Input id={id} placeholder="Enter text here" />
+        <Label htmlFor={id}>Disabled textarea</Label>
+        <Textarea id={id} disabled placeholder="Leave a comment" />
       </div>
     </div>
   );
 };
 `;
-export { InputDemo, react, title };
+export { TextareaDemo, title, react };

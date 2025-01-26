@@ -28,20 +28,26 @@ export const navigation: NavigationModel[] = [
   {
     heading: "components",
     name: "Button",
-    slug: "Button",
+    slug: "component-button",
     url: "/component/button",
   },
   {
     heading: "components",
     name: "Key Filter",
-    slug: "key-filter",
+    slug: "component-key-filter",
     url: "/component/keyfilters",
   },
 
   {
     heading: "components",
     name: "Input",
-    slug: "inputs",
-    url: "/component/inputs",
+    slug: "component-inputs",
+    url: "/component/input",
+  },
+  {
+    heading: "components",
+    name: "Textarea",
+    slug: "component-textarea",
+    url: "/component/textarea",
   },
 ].sort((a, b) => a.name.localeCompare(b.name));

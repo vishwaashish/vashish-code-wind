@@ -14,11 +14,11 @@ import { cva, VariantProps } from "class-variance-authority";
 import { KeyFilter, KeyFilterType } from "@/components/lib/keyfilter";
 
 const textareaVariants = cva(
-  "flex px-3 py-2 rounded-md border border-input bg-transparent text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 ",
+  "flex px-3 py-1 text-sm rounded-md border border-input  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:resize-none",
   {
     variants: {
       variant: {
-        outlined: "",
+        outlined: "bg-transparent",
         filled: "bg-muted",
       },
       state: {
@@ -157,4 +157,4 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
 Textarea.displayName = "Textarea";
 
-export { Textarea };
+export default Textarea;
