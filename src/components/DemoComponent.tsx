@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { Button } from "./ui/button";
 
 export default function DemoComponent({
   directory,
@@ -60,14 +61,18 @@ export default function DemoComponent({
       {showCopy && (
         <Dialog>
           <DialogTrigger asChild>
-            <Code
-              role="button"
+            <Button
+              variant={"ghost"}
+              size={"icon"}
               className={cn(
-                "absolute right-2 top-2 z-10 text-foreground transition-opacity",
+                "absolute right-2 top-2 z-10 transition-opacity",
                 copyClassName,
               )}
-              size={15}
-            />
+            >
+              <Code
+                size={15}
+              />
+            </Button>
           </DialogTrigger>
           <DialogContent className="max-w-4xl gap-0">
             <DialogHeader>

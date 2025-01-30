@@ -81,7 +81,7 @@ const FormDemo = () => {
 
   return (
     <form
-      className="mx-auto my-5 max-w-md space-y-5 rounded-md border p-4 shadow md:p-6"
+      className="sm:mx-auto mx-2 my-5 max-w-md space-y-5 rounded-md border p-4 shadow md:p-6"
       onSubmit={handleSubmit}
     >
       <h2 className="text-xl font-semibold">Basic Form</h2>

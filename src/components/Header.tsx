@@ -50,19 +50,15 @@ const Header = () => {
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-4 text-sm md:flex xl:gap-6">
-              <Link
-                className="text-foreground/80 transition-colors hover:text-foreground/80"
-                href="/component/button"
-              >
-                Docs
-              </Link>
-              <Link
-                className="text-foreground/80 transition-colors hover:text-foreground/80"
-                href="/ui/buttons"
-              >
-                Components
-              </Link>
+            <nav className="hidden items-center md:flex">
+              <Button variant={"ghost"} asChild>
+                <Link className="" href="/component/button">
+                  Docs
+                </Link>
+              </Button>
+              <Button variant={"ghost"} asChild>
+                <Link href="/ui/buttons">Components</Link>
+              </Button>
               {/* 
               <a
                 className="transition-colors hover:text-foreground/80 text-foreground/80"

@@ -1,6 +1,6 @@
 "use client";
 import { cn, formatString } from "@/lib/utils";
-import { FullscreenIcon, Moon, Sun } from "lucide-react";
+import { FullscreenIcon, Moon, RotateCw, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
@@ -10,6 +10,9 @@ import { SyntaxHighlighter } from "./shiki";
 import { Separator } from "./ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Tooltip } from "./ui/tooltip";
+import { Button } from "./ui/button";
+
+type WindowSize = "laptop" | "tablet" | "mobile";
 const ComponentViewer = ({
   componentName,
   component,
@@ -26,13 +29,20 @@ const ComponentViewer = ({
   hasTitle?: boolean;
 }) => {
   const { theme } = useTheme();
-  const { isLoading, html, error, react, Component, fullScreen, title } =
-    useDynamicComponent({
-      directory,
-      component,
-      componentName,
-    });
-
+  const {
+    isLoading,
+    html,
+    error,
+    react,
+    Component,
+    fullScreen,
+    title,
+    reload,
+  } = useDynamicComponent({
+    directory,
+    component,
+    componentName,
+  });
 
   const languageOptions = [
     { value: html, label: "html" },
@@ -40,6 +50,7 @@ const ComponentViewer = ({
   ].filter((a) => a.value);
 
   const [themeBox, setThemeBox] = useState("light");
+  const [device, setDevice] = useState<WindowSize>("laptop");
   const [selectedLanguage, setSelectedLanguage] = useQueryState("lang", {
     defaultValue: languageOptions[1]?.label || "react",
   });
@@ -103,6 +114,27 @@ const ComponentViewer = ({
     if (value === "react") setCodeSnippet(react);
   };
 
+  const handleReload = () => {
+    setThemeBox(theme || "light");
+    reload();
+  };
+
+  const handleDeviceSize = (device: WindowSize) => () => {
+    setDevice(device);
+  };
+
+  const deviceWidth = (device: WindowSize) => {
+    if (device === "mobile") {
+      return "425px";
+    }
+
+    if (device === "tablet") {
+      return "768px";
+    }
+
+    return "100%";
+  };
+
   const url = `/preview?component=${component}&directory=${directory}&componentName=${componentName}`;
   if (!!error) {
     return;
@@ -124,13 +156,13 @@ const ComponentViewer = ({
           )}
           <TabsTrigger
             value="preview"
-            className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+            className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
           >
             Preview
           </TabsTrigger>
           <TabsTrigger
             value="block"
-            className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+            className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
           >
             Block
           </TabsTrigger>
@@ -142,18 +174,28 @@ const ComponentViewer = ({
               {hasTitle && (
                 <Separator orientation="vertical" className="h-auto py-2" />
               )}
-              <Tooltip title="Select language">
-                <select
-                  className="relative mr-4 rounded-none border-b-2 border-b-transparent bg-transparent pb-3 pl-4 pr-2 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
-                  value={selectedLanguage}
-                  onChange={(e) => handleLanguageChange(e.target.value)}
-                >
-                  {languageOptions.map((item) => (
-                    <option key={item.label} value={item.label}>
-                      {formatString(item.label)}
-                    </option>
-                  ))}
-                </select>
+              <Tooltip
+                title={
+                  languageOptions.length > 1 ? "Select language" : "Language"
+                }
+              >
+                {languageOptions.length == 1 ? (
+                  <Button variant={"text"} disabled className="!bg-transparent">
+                    {formatString(languageOptions[0].label)}
+                  </Button>
+                ) : (
+                  <select
+                    className="relative mr-4 rounded-none border-b-2 border-b-transparent bg-transparent pl-4 pr-2 text-sm text-muted-foreground shadow-none outline-none transition-none"
+                    value={selectedLanguage}
+                    onChange={(e) => handleLanguageChange(e.target.value)}
+                  >
+                    {languageOptions.map((item) => (
+                      <option key={item.label} value={item.label}>
+                        {formatString(item.label)}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </Tooltip>
             </>
           )}
@@ -161,30 +203,131 @@ const ComponentViewer = ({
             <>
               <Separator orientation="vertical" className="h-auto py-2" />
               <Tooltip title="Toggle theme">
-                <button
+                <Button
+                  variant={"text"}
+                  size={"icon"}
+                  className="cursor-pointer"
                   onClick={toggleTheme}
-                  className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
                 >
                   {themeBox === "light" ? (
                     <Sun size={15} className="mx-auto" />
                   ) : (
-                    <Moon size={12} className="mx-auto" />
+                    <Moon size={15} className="mx-auto" />
                   )}
-                </button>
+                </Button>
               </Tooltip>
             </>
           )}
+
+          {!isComponent && (
+            <div className="hidden items-center md:flex">
+              <Separator orientation="vertical" className="h-auto py-2" />
+
+              <Button
+                variant={"text"}
+                color={device === "laptop" ? "primary" : "default"}
+                size={"icon"}
+                className="cursor-pointer"
+                onClick={handleDeviceSize("laptop")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-monitor size-4"
+                >
+                  <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                  <line x1="8" x2="16" y1="21" y2="21"></line>
+                  <line x1="12" x2="12" y1="17" y2="21"></line>
+                </svg>
+              </Button>
+              <Button
+                variant={"text"}
+                size={"icon"}
+                color={device === "tablet" ? "primary" : "default"}
+                className="w-auto cursor-pointer"
+                onClick={handleDeviceSize("tablet")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-tablet size-4"
+                >
+                  <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+                  <line x1="12" x2="12.01" y1="18" y2="18"></line>
+                </svg>
+              </Button>
+              <Button
+                variant={"text"}
+                size={"icon"}
+                color={device === "mobile" ? "primary" : "default"}
+                className="cursor-pointer"
+                onClick={handleDeviceSize("mobile")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-smartphone size-4"
+                >
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                  <path d="M12 18h.01"></path>
+                </svg>
+              </Button>
+            </div>
+          )}
+          {
+            <>
+              <Separator orientation="vertical" className="h-auto py-2" />
+              <Tooltip title="Refresh">
+                <Button
+                  variant={"text"}
+                  size={"icon"}
+                  className="cursor-pointer"
+                  onClick={handleReload}
+                >
+                  <RotateCw size={15} />
+                </Button>
+              </Tooltip>
+            </>
+          }
           {!isComponent && (
             <>
               <Separator orientation="vertical" className="h-auto py-2" />
               <Tooltip title="Open in new tab">
-                <Link
-                  href={url}
-                  target="_blank"
-                  className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
+                <Button
+                  variant={"text"}
+                  size={"icon"}
+                  className="cursor-pointer"
+                  asChild
                 >
-                  <FullscreenIcon size={15} />
-                </Link>
+                  <Link
+                    href={url}
+                    target="_blank"
+                    // className="data-[state=active]:hi relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 text-sm font-semibold text-muted-foreground shadow-none outline-none transition-none"
+                  >
+                    <FullscreenIcon size={15} />
+                  </Link>
+                </Button>
               </Tooltip>
             </>
           )}
@@ -205,7 +348,7 @@ const ComponentViewer = ({
             <div className="flex animate-pulse items-center gap-4 space-y-3 p-1 md:p-4">
               <div className="h-20 w-20 rounded-full bg-input"></div>
               <div className="!m-0 flex-1 space-y-3">
-                <div className="h-2 rounded bg-input"></div>
+                {/* <div className="h-2 rounded bg-input"></div> */}
                 <div className="space-y-3">
                   <div className="grid grid-cols-3 gap-4">
                     <div className="col-span-2 h-2 rounded bg-input"></div>
@@ -227,11 +370,12 @@ const ComponentViewer = ({
                 <iframe
                   ref={iframeRef}
                   src={url}
-                  className="h-full w-full rounded border-none"
+                  className="mx-auto h-full w-[768px] rounded border-none shadow"
                   title="Component Preview"
                   style={{
                     height: `${iframeHeight}px`,
                     maxHeight: IMaxHeight,
+                    width: deviceWidth(device),
                     transition: "height 0.3s ease-in-out",
                   }}
                 />
