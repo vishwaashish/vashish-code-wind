@@ -1,4 +1,4 @@
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import Label from "@/components/lib/label";
 import { useId } from "react";
 
@@ -23,7 +23,7 @@ const InputDemo = () => {
 
 const title = "Input with helper text";
 const react = `
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import Label from "@/components/lib/label";
 import { useId } from "react";
 

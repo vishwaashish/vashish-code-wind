@@ -155,7 +155,7 @@ const ButtonDemo = () => {
 
 const title = "Default";
 const react = `
-import Input from "@/components/lib/Input";
+import { Input } from "@/components/lib/input";
 
 const InputDemo = () => {
   return (

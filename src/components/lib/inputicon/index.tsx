@@ -48,4 +48,3 @@ const InputIcon = memo(
 InputIcon.displayName = "InputIcon";
 
 export { InputIcon };
-

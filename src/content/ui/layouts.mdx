@@ -1,0 +1,28 @@
+---
+title: Layouts
+description: A clean and responsive header component with a brand title and navigation links
+links:
+  - type: doc
+    url: https://www.radix-ui.com/docs/primitives/components/dialog
+    label: Docs
+  - type: api
+    url: https://www.radix-ui.com/docs/primitives/components/dialog#api-reference
+    label: API
+---
+
+<div className="grid grid-cols-1 gap-10">
+  {["layout-01","layout-02","layout-03","layout-04"].map((componentName,index) => {
+    return (
+        <ComponentViewer 
+            directory="demos/layouts"
+            component={componentName}
+            componentName={"LayoutDemo"}
+            key={componentName}
+        >
+
+        </ComponentViewer>
+    );
+
+})}
+
+</div>

@@ -1,7 +1,5 @@
 import ComponentViewer from "@/components/ComponentViewer";
 import DemoComponent from "@/components/DemoComponent";
-// import Input from "@/components/lib/input";
-// import { Textarea } from "@/components/lib/textarea";
 import PreviewAndCodePanel from "@/components/PreviewAndCodePanel";
 import { CodeBlock, SyntaxHighlighter } from "@/components/shiki";
 import TabbedContent from "@/components/TabbedContent";

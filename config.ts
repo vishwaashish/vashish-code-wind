@@ -26,6 +26,12 @@ export const navigation: NavigationModel[] = [
     url: "/ui/buttons",
   },
   {
+    heading: "UI",
+    name: "Layouts",
+    slug: "ui-layouts",
+    url: "/ui/layouts",
+  },
+  {
     heading: "components",
     name: "Button",
     slug: "component-button",

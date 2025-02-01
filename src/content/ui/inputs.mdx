@@ -5,7 +5,7 @@ description: Examples demonstrating its flexibility, including integration with
   structured layouts.
 links:
   - type: docs
-    url: /component/inputs
+    url: /component/input
     label: Input
 ---
 
@@ -24,7 +24,13 @@ links:
       </div>
     );
   })}
-  {["textarea-01", "textarea-02", "textarea-03","textarea-04","textarea-05"].map((componentName) => {
+  {[
+    "textarea-01",
+    "textarea-02",
+    "textarea-03",
+    "textarea-04",
+    "textarea-05",
+  ].map((componentName) => {
     return (
       <div key={componentName} className="group relative">
         <DemoComponent
@@ -32,6 +38,29 @@ links:
           directory={"demos/textareas"}
           component={componentName}
           componentName="TextareaDemo"
+          className="flex w-full items-center justify-center"
+          copyClassName="opacity-0 group-hover:opacity-100"
+        />
+      </div>
+    );
+  })}
+  {[
+    "input-group-01",
+    "input-group-02",
+    "input-group-03",
+    "input-group-04",
+    "input-group-05",
+    "input-group-06",
+    "input-group-07",
+    "input-group-08",
+  ].map((componentName) => {
+    return (
+      <div key={componentName} className="group relative">
+        <DemoComponent
+          key={componentName}
+          directory={"demos/input-groups"}
+          component={componentName}
+          componentName="InputGroupDemo"
           className="flex w-full items-center justify-center"
           copyClassName="opacity-0 group-hover:opacity-100"
         />

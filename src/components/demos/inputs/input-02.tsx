@@ -1,4 +1,4 @@
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import { useState } from "react";
 
 const InputDemo = () => {
@@ -12,7 +12,7 @@ const InputDemo = () => {
 
 const title = "Controlled Input with useState";
 const react = `
-import Input from "@/components/lib/Input";
+import { Input } from "@/components/lib/input";
 import { useState } from "react";
 
 const InputDemo = () => {

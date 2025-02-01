@@ -21,7 +21,7 @@ const Header = () => {
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center gap-4">
             <Link className="mr-4 flex items-center gap-2 lg:mr-6" href="/">
-              <span className="flex items-center gap-2 font-bold">
+              <span className="flex items-center gap-2 font-bold tracking-wider">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="42"

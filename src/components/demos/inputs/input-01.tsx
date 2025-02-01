@@ -1,4 +1,4 @@
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 
 const InputDemo = () => {
   return (
@@ -10,7 +10,7 @@ const InputDemo = () => {
 
 const title = "Default";
 const react = `
-import Input from "@/components/lib/Input";
+import { Input } from "@/components/lib/input";
 
 const InputDemo = () => {
   return (

@@ -1,4 +1,4 @@
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import Label from "@/components/lib/label";
 
 const KeyfilterDemo = () => {
@@ -59,7 +59,7 @@ const KeyfilterDemo = () => {
 
 const title = "KeyFilter Example";
 const react = `
-import Input from "@/components/lib/Input";
+import { Input } from "@/components/lib/input";
 
 const KeyfilterDemo = () => {
   return (

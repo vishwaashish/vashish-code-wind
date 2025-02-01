@@ -1,4 +1,4 @@
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import Label from "@/components/lib/label";
 import Textarea from "@/components/lib/textarea";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -177,7 +177,7 @@ const FormDemo = () => {
 
 const title = "Basic form";
 const react = `
-import Input from "@/components/lib/input";
+import { Input } from "@/components/lib/input";
 import Label from "@/components/lib/label";
 import Textarea from "@/components/lib/textarea";
 import { ChangeEvent, FormEvent, useState } from "react";
