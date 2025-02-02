@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container-wrapper border-t py-5">
           <div className="container flex justify-between">
             <p className="my-auto">
-              © 2024{" "}
+              © {new Date().getFullYear()}{" "}
               <a
                 role="link"
                 className="text-primary"

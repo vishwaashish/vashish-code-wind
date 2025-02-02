@@ -1,6 +1,6 @@
 const LayoutDemo = () => {
   return (
-    <div className="flex h-screen min-h-screen flex-col bg-white dark:bg-[#101010]">
+    <div className="flex h-screen min-h-[500px] flex-col bg-white dark:bg-[#101010]">
       <div className="flex flex-1 flex-row overflow-y-hidden">
         <nav className="order-first hidden w-56 overflow-y-auto bg-white px-2 dark:bg-[#101010] md:block">
           <div className="sticky top-0 bg-white py-5 dark:bg-[#101010]">

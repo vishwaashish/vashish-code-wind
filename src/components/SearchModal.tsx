@@ -7,14 +7,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { formatString, groupBy } from "@/lib/utils";
+import { cn, formatString, groupBy } from "@/lib/utils";
 import { NavigationModel } from "@/types/common.type";
 import { Circle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { navigation } from "../../config";
 
-export default function Search() {
+export default function Search({ className }: { className?: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -42,12 +42,19 @@ export default function Search() {
   return (
     <>
       <div className="" onClick={() => setOpen(true)}>
-        <button className="inline-flex items-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input hover:ring-1 ring-primary px-4 py-2 relative w-full justify-start rounded-[0.5rem]  text-sm font-normal text-muted-foreground shadow-none sm:pr-12 ">
+        <button
+          className={cn(
+            "[&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 relative inline-flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-[0.5rem] border border-input px-4 py-2 text-sm font-normal text-muted-foreground shadow-none ring-primary transition-colors hover:ring-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:pr-12",
+            className,
+          )}
+        >
           <span className="hidden lg:inline-flex">Quick Search...</span>
           <span className="inline-flex lg:hidden">Search...</span>
-          <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.45rem] hidden select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-bold opacity-100 sm:flex">
-            <span className="text-xs">⌘</span>K
-          </kbd>
+          <div className="absolute right-0 hidden h-full items-center p-[3%] md:flex">
+            <kbd className="font-mono pointer-events-none flex aspect-square h-full select-none items-center gap-1 rounded border bg-muted p-1 text-[10px] font-bold">
+              <span className="text-xs">⌘</span>J
+            </kbd>
+          </div>
         </button>
       </div>
       <CommandDialog open={open} title="Search Dialog" onOpenChange={setOpen}>
@@ -66,6 +73,7 @@ export default function Search() {
                   <CommandItem
                     key={item.slug + "-" + index}
                     onSelect={onLinkClick(item)}
+                    className="cursor-pointer"
                   >
                     <Circle />
                     <span>{item.name}</span>

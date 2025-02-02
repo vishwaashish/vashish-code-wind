@@ -94,7 +94,7 @@ const LayoutDemo = () => {
     </div>
   );
 };
-const title = "Layout with stocky header, body and footer";
+const title = "Layout with sticky header, body and footer";
 const react = `
 const LayoutDemo = () => {
   return (

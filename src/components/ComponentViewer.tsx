@@ -145,13 +145,13 @@ const ComponentViewer = ({
       <div className="pb-3">
         {hasTitle && (
           <div className="block pb-4 lg:hidden">
-            <p className="text-lg text-foreground">{title}</p>
+            <p className="text-lg font-medium text-foreground">{title}</p>
           </div>
         )}
         <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
           {hasTitle && (
             <div className="hidden sm:mr-auto lg:block">
-              <p className="m-auto pb-3 pt-2 text-foreground">{title}</p>
+              <p className="m-auto pb-3 pt-2 text-foreground font-medium">{title}</p>
             </div>
           )}
           <TabsTrigger

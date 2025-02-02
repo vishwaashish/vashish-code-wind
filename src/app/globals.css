@@ -262,3 +262,57 @@ pre [data-line] {
     transform: rotate(360deg);
   }
 }
+
+.animate-line1 {
+  animation: line 3s linear infinite;
+}
+
+.animate-line2 {
+  animation: line 6s linear infinite;
+}
+.animate-line3 {
+  animation: line 9s linear infinite;
+}
+
+@keyframes line {
+  0%,
+  to {
+    transform: translateY(100%);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+}
+
+.section-hero {
+  /* background-image: url("https://cdn.prod.website-files.com/6693e7933dc19067eaad7461/6694f361a188cba434c2aea0_grid.png"); */
+  /* background-image: url("https://cdn.prod.website-files.com/6693e7933dc19067eaad7461/6694f361a188cba434c2aea0_grid.png"),
+    linear-gradient(
+      151deg,
+      hsl(var(--background)),
+      hsl(var(--background)) 1%,
+      /* #fdcfb5 38%,
+      #ff92b2 57%, */
+  /* hsl(var(--primary)) 100%, 
+      hsl(var(--background)) 96%
+    ); */
+  background-blend-mode: overlay, normal, normal;
+  background-position:
+    0 0,
+    0 0;
+  background-size: 2.4rem, auto;
+
+  /* background: repeating-linear-gradient(
+    45deg,
+    hsl(var(--background)),
+    hsl(var(--background)) 10px,
+    hsl(var(--muted)) 10px,
+    hsl(var(--muted)) 10.6px
+  ); */
+  /* background-size: 30px 30px; */
+  max-width: 100vw;
+  padding-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}

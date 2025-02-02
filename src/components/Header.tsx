@@ -8,7 +8,7 @@ import { Button, buttonVariants } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
 
 // https://chunky.framer.website/
-const Header = () => {
+const Header = ({ showSidebar = true }: { showSidebar?: boolean }) => {
   const [mounted, setMounted] = useState(false);
   const { setTheme, theme } = useTheme();
   useEffect(() => {
@@ -118,23 +118,25 @@ const Header = () => {
                 >
                   {theme === "light" ? (
                     <Sun
-                      className="rotate-0 transform transition-transform duration-500 dark:rotate-180"
+                      className="rotate-180 transform transition-transform duration-500 dark:rotate-180"
                       size={18}
                     />
                   ) : (
                     <Moon
                       size={18}
-                      className="rotate-180 transform transition-transform duration-500 dark:rotate-0"
+                      className="rotate-0 transform transition-transform duration-500 dark:rotate-0"
                     />
                   )}
                 </Button>
               )}
-              <SidebarTrigger
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "h-8 w-8 md:hidden",
-                )}
-              />
+              {showSidebar && (
+                <SidebarTrigger
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "h-8 w-8 md:hidden",
+                  )}
+                />
+              )}
             </nav>
           </div>
         </div>
