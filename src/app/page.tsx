@@ -16,7 +16,7 @@ export default function Home() {
       <Header showSidebar={false} />
       <section className="flex min-h-screen items-center justify-center p-2">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold tracking-wide md:text-6xl md:leading-tight">
+          <h1 className="text-3xl font-bold tracking-wide md:text-6xl md:leading-tight">
             Prebuilt UI Components <br />
             Design Faster, Build Smarter
           </h1>
@@ -32,7 +32,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-10">
+      <section className="md:py-10">
         <h1 className="mb-4 text-center text-3xl font-semibold md:text-5xl">
           UI Components Library
         </h1>

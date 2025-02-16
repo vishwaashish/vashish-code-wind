@@ -1,0 +1,44 @@
+---
+title: HamburgerDemo Gallary
+description:
+  Enhance User Experience and Aesthetics with Our Range of Creative CSS
+---
+
+<div className="preview-code grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-3 [&>*]:relative [&>*]:px-1 [&>*]:py-5 [&>*]:before:absolute [&>*]:before:bg-border/70 [&>*]:before:[block-size:100vh] [&>*]:before:[inline-size:1px] [&>*]:before:[inset-block-start:0] [&>*]:before:[inset-inline-start:-1px] [&>*]:after:absolute [&>*]:after:bg-border/70 [&>*]:after:[block-size:1px] [&>*]:after:[inline-size:100vw] [&>*]:after:[inset-block-start:-1px] [&>*]:after:[inset-inline-start:0] sm:[&>*]:px-8 xl:[&>*]:px-12">
+  {[
+    "hamburger-01",
+    "hamburger-02",
+    // "button-03",
+    // "button-04",
+    // "button-05",
+    // "button-06",
+    // "button-07",
+    // "button-08",
+    // "button-09",
+    // "button-10",
+    // "button-11",
+    // "button-12",
+    // "button-13",
+    // "button-14",
+    // "button-15",
+    // "button-16",
+    // "button-17",
+    // "button-18",
+    // "button-19",
+    // "button-20",
+    // "button-21",
+  ].map((componentName) => {
+    return (
+      <div key={componentName} className="group relative">
+        <DemoComponent
+          key={componentName}
+          directory={"demos/hamburgers"}
+          component={componentName}
+          componentName={"HamburgerDemo"}
+          copyClassName="md:opacity-0 opacity-100 group-hover:md:opacity-100"
+          className="flex min-h-40 w-full items-center justify-center"
+        ></DemoComponent>
+      </div>
+    );
+  })}
+</div>

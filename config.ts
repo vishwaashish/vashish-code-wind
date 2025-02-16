@@ -32,6 +32,12 @@ export const navigation: NavigationModel[] = [
     url: "/ui/layouts",
   },
   {
+    heading: "UI",
+    name: "Hamburgers",
+    slug: "ui-hamburgers",
+    url: "/ui/hamburgers",
+  },
+  {
     heading: "components",
     name: "Button",
     slug: "component-button",
