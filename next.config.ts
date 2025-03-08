@@ -46,6 +46,9 @@ const withMDX = createMDX({
 
 export default withContentlayer(
   withMDX({
+    images:{
+      domains:["images.unsplash.com"],
+    },
     reactStrictMode: true,
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   }),

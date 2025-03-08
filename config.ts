@@ -39,6 +39,12 @@ export const navigation: NavigationModel[] = [
   },
   {
     heading: "components",
+    name: "Marquee",
+    slug: "component-marquee",
+    url: "/component/marquee",
+  },
+  {
+    heading: "components",
     name: "Button",
     slug: "component-button",
     url: "/component/button",

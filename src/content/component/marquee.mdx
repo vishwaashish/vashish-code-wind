@@ -1,0 +1,138 @@
+---
+title: Marquee Component
+description: A smooth, customizable marquee component using Tailwind CSS. Supports vertical & horizontal scrolling, speed control, reverse, and pause-on-hover
+---
+
+## **Features**
+
+- ✅ Horizontal & Vertical Scrolling – Supports both directions seamlessly.
+- ✅ Custom Speed – Adjust the scrolling speed dynamically.
+- ✅ Reverse Animation – Scroll content in either direction.
+- ✅ Pause on Hover – Stops animation when hovered.
+- ✅ Infinite Looping – Ensures continuous scrolling.
+- ✅ Fully Responsive – Works on all screen sizes.
+- ✅ Minimal CSS – Optimized for performance using Tailwind CSS.
+- ✅ Reusable & Customizable – Easily integrate into any project.
+
+<ComponentViewer
+  directory="demos/marquee"
+  component="marquee-main"
+  componentName="MarqueeDemo"
+  isComponent={true}
+  hasTitle={false}
+/>
+
+
+## Installation
+
+
+<Steps>
+
+<Step>
+
+### Add the Component Code
+
+Copy the full component code and place it in your project under the desired directory, for example: `components/lib/Input.tsx`.
+
+```tsx
+import { cn } from "@/lib/utils";
+import { HTMLAttributes, ReactNode } from "react";
+
+interface MarqueeProps extends HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  itemClassName?: string;
+  children: ReactNode;
+  vertical?: boolean;
+  speed?: number;
+  reverse?: boolean;
+  repeat?: number;
+  pauseOnHover?: boolean;
+}
+
+const Marquee = ({
+  className,
+  children,
+  vertical = false,
+  speed = 50,
+  reverse = false,
+  repeat = 4,
+  pauseOnHover = false,
+  style,
+  itemClassName,
+  ...rest
+}: MarqueeProps) => {
+  return (
+    <>
+      <div
+        className={cn(
+          "group relative flex overflow-hidden",
+          {
+            "flex-row": !vertical,
+            "flex-col": vertical,
+          },
+          className,
+        )}
+        style={
+          {
+            "--duration": `${speed}s`,
+            ...style,
+          } as React.CSSProperties
+        }
+        {...rest}
+      >
+        {Array(repeat)
+          .fill(0)
+          .map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "flex shrink-0 gap-3 justify-around",
+                {
+                  "animate-marquee flex-row": !vertical,
+                  "animate-marquee-vertical flex-col": vertical,
+                  "group-hover:[animation-play-state:paused]": pauseOnHover,
+                  "[animation-direction:reverse]": reverse,
+                },
+                itemClassName,
+              )}
+            >
+              {children}
+            </div>
+          ))}
+      </div>
+    </>
+  );
+};
+
+export { Marquee };
+```
+</Step>
+<Step>
+### Update tailwind.config.js
+Add the following animations to your tailwind.config.js file:
+```tsx
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      animation: {
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(-100%)" },
+        },
+      },
+    },
+  },
+};
+```
+</Step>
+
+</Steps>
