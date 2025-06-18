@@ -1,0 +1,369 @@
+---
+title: ESLint Configuration
+description: Beginner-friendly guide to setting up and understanding ESLint for React & TypeScript projects
+---
+
+ESLint is a static code analysis tool that helps identify problematic patterns, enforce coding standards, and catch potential bugs before they reach production.
+
+## What is ESLint?
+
+ESLint is a pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript and TypeScript. It helps maintain code quality by:
+
+- **Error Detection**: Catches syntax errors and potential runtime issues
+- **Code Standards**: Enforces consistent coding patterns across the team
+- **Best Practices**: Suggests improvements based on community standards
+- **Customization**: Allows teams to define their own rules and conventions
+
+## Why Use ESLint?
+
+- **Early Bug Detection**: Catch errors before code reaches production
+- **Consistent Code Style**: Enforce team coding standards automatically
+- **Learning Tool**: Helps developers learn best practices through suggestions
+- **Integration**: Works seamlessly with editors, build tools, and CI/CD pipelines
+- **Extensible**: Large ecosystem of plugins for frameworks and libraries
+
+## Configuration File
+
+Our ESLint configuration uses the new flat config format (`eslint.config.ts`):
+
+```typescript
+import { defineConfig } from "eslint/config";
+
+// ESLint base JS rules
+import js from "@eslint/js";
+
+// TypeScript parser and plugin
+import tsParser from "@typescript-eslint/parser";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+
+// React plugins
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+
+// Prettier for code formatting (disables conflicting ESLint rules)
+import prettier from "eslint-config-prettier";
+
+export default defineConfig([
+  {
+    // Directories and files to ignore during linting
+    ignores: ["node_modules/", "dist/", "build/"],
+
+    // Language and parser configuration
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: ["./tsconfig.app.json", "./tsconfig.node.json"],
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        document: true,
+        HTMLElement: true,
+        window: true,
+        localStorage: true,
+        sessionStorage: true,
+        console: true,
+      },
+    },
+
+    // Auto-detect React version
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+
+    // Apply these rules only to TypeScript React files
+    files: ["**/*.{ts,tsx}", "vite.config.ts"],
+
+    // Plugin definitions
+    plugins: {
+      "@typescript-eslint": tseslint,
+      react,
+      "react-hooks": reactHooks,
+      "jsx-a11y": jsxA11y,
+    },
+
+    // ESLint rules
+    rules: {
+      // Base ESLint recommended rules
+      ...js.configs.recommended.rules,
+
+      // React-specific recommended rules
+      ...react.configs.recommended.rules,
+
+      // React Hooks recommended rules
+      ...reactHooks.configs.recommended.rules,
+
+      // TypeScript ESLint recommended rules
+      ...tseslint.configs.recommended.rules,
+
+      // Prettier: disables formatting rules that might conflict
+      ...prettier.rules,
+
+      // Accessibility rules
+      ...jsxA11y.configs.recommended.rules,
+
+      // Custom rules
+      "prefer-const": "error",
+      "semi": ["error", "always"],
+      "quotes": ["error", "double"],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+        },
+      ],
+      "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "@typescript-eslint/prefer-readonly": "off",
+      "react/prop-types": "off",
+    },
+  },
+]);
+```
+
+## Plugin Breakdown
+
+### Core Plugins
+
+| Plugin | Purpose | Key Features |
+|--------|---------|--------------|
+| `@eslint/js` | Base JavaScript rules | Syntax errors, basic best practices |
+| `@typescript-eslint/parser` | TypeScript parsing | Understands TypeScript syntax |
+| `@typescript-eslint/eslint-plugin` | TypeScript-specific rules | Type safety, TS best practices |
+
+### React Ecosystem
+
+| Plugin | Purpose | Key Features |
+|--------|---------|--------------|
+| `eslint-plugin-react` | React best practices | Component patterns, JSX rules |
+| `eslint-plugin-react-hooks` | React Hooks rules | Hooks usage validation |
+| `eslint-plugin-jsx-a11y` | Accessibility | ARIA attributes, semantic HTML |
+
+### Integration
+
+| Plugin | Purpose | Key Features |
+|--------|---------|--------------|
+| `eslint-config-prettier` | Prettier integration | Disables conflicting formatting rules |
+
+## Configuration Sections
+
+### File Targeting
+```typescript
+files: ["**/*.{ts,tsx}", "vite.config.ts"]
+```
+- Only lints TypeScript and TSX files
+- Includes Vite configuration file
+- Ignores JavaScript files (focuses on TypeScript)
+
+### Ignored Directories
+```typescript
+ignores: ["node_modules/", "dist/", "build/"]
+```
+- Skips dependency folders
+- Ignores build output directories
+- Improves linting performance
+
+### Language Options
+```typescript
+languageOptions: {
+  parser: tsParser,
+  parserOptions: {
+    project: ["./tsconfig.app.json", "./tsconfig.node.json"],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    ecmaFeatures: { jsx: true }
+  }
+}
+```
+- Uses TypeScript parser for better type understanding
+- References TypeScript config files for type-aware linting
+- Enables JSX parsing for React components
+
+### Global Variables
+```typescript
+globals: {
+  document: true,
+  HTMLElement: true,
+  window: true,
+  localStorage: true,
+  sessionStorage: true,
+  console: true
+}
+```
+- Defines browser globals to prevent "undefined variable" errors
+- Includes common DOM and Web APIs
+- Prevents false positives in browser environments
+
+## Key Rules Explained
+
+### Code Quality Rules
+
+```typescript
+"prefer-const": "error"
+```
+**Purpose**: Enforces using `const` for variables that are never reassigned  
+**Example**: `let name = "John"` → `const name = "John"`
+
+```typescript
+"semi": ["error", "always"]
+```
+**Purpose**: Requires semicolons at the end of statements  
+**Example**: `const x = 1` → `const x = 1;`
+
+```typescript
+"quotes": ["error", "double"]
+```
+**Purpose**: Enforces consistent use of double quotes  
+**Example**: `const msg = 'hello'` → `const msg = "hello"`
+
+### TypeScript-Specific Rules
+
+```typescript
+"@typescript-eslint/no-unused-vars": [
+  "error",
+  {
+    "argsIgnorePattern": "^_",
+    "varsIgnorePattern": "^_"
+  }
+]
+```
+**Purpose**: Catches unused variables but allows underscore-prefixed ones  
+**Example**: `function handler(_event, data)` - `_event` won't trigger error
+
+### React-Specific Rules
+
+```typescript
+"react/react-in-jsx-scope": "off"
+```
+**Purpose**: Disables requirement to import React in JSX files  
+**Reason**: Not needed in React 17+ with new JSX transform
+
+```typescript
+"react/prop-types": "off"
+```
+**Purpose**: Disables PropTypes requirement  
+**Reason**: Using TypeScript for type checking instead
+
+## Package.json Scripts
+
+```json
+{
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  }
+}
+```
+
+### Commands
+
+```bash
+# Check for linting errors
+npm run lint
+
+# Automatically fix fixable issues
+npm run lint:fix
+```
+
+## Editor Integration
+
+### VS Code Settings
+```json
+{
+  "eslint.enable": true,
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
+```
+
+### Popular Extensions
+- **ESLint** (VS Code) - Real-time linting
+- **Error Lens** - Inline error display
+- **TypeScript Hero** - Enhanced TypeScript support
+
+## Common Error Examples
+
+### Before ESLint
+```typescript
+// Multiple issues
+let userName = 'john'  // should be const, double quotes, missing semicolon
+let age = 25;          // unused variable
+var oldSyntax = true;  // should use const/let
+
+function Component() {
+  return <div>Hello</div>  // missing accessibility
+}
+```
+
+### After ESLint
+```typescript
+// Clean, consistent code
+const userName = "john";
+
+function Component() {
+  return <div role="banner">Hello</div>;
+}
+```
+
+## Benefits
+
+### Development Benefits
+- **Real-time Feedback**: Catch errors as you type
+- **Consistent Style**: Automatic enforcement of coding standards
+- **Learning Tool**: Suggestions help improve coding skills
+- **Time Saving**: Catch bugs before manual testing
+
+### Team Benefits
+- **Reduced Code Review Time**: Focus on logic, not style issues
+- **Onboarding**: New developers get immediate feedback
+- **Quality Assurance**: Consistent code quality across the team
+- **Documentation**: Rules serve as living coding standards
+
+## Troubleshooting
+
+### Common Issues
+
+**"Parsing error: Cannot read file"**
+- Check that `tsconfig.json` paths are correct
+- Ensure TypeScript files are properly configured
+
+**"Rule not found" errors**
+- Verify all plugins are installed in package.json
+- Check plugin import statements in config
+
+**Performance issues**
+- Use `.eslintignore` for large directories
+- Limit type-aware rules to necessary files only
+
+**Conflicts with Prettier**
+- Ensure `eslint-config-prettier` is installed and configured
+- Run `npm run lint` after `npm run format`
+
+### Debugging
+```bash
+# Run ESLint with debug information
+DEBUG=eslint:* npm run lint
+
+# Check specific file
+npx eslint src/components/Button.tsx --debug
+```
+
+## Best Practices
+
+1. **Run linting before commits** - Catch issues early
+2. **Use editor integration** - Get real-time feedback
+3. **Fix issues incrementally** - Don't ignore warnings
+4. **Customize rules gradually** - Start with recommended configs
+5. **Document custom rules** - Explain team-specific choices
+
+This ESLint configuration provides a solid foundation for maintaining high code quality in TypeScript React projects while being flexible enough to adapt to team preferences.

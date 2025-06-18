@@ -1,0 +1,153 @@
+---
+title: EditorConfig Setup
+description: Maintain consistent coding styles across different editors and development environments
+---
+
+EditorConfig is a simple configuration file that ensures all team members use the same basic formatting rules, regardless of their preferred code editor or IDE.
+
+## What is EditorConfig?
+
+EditorConfig helps developers maintain consistent coding styles between different editors and IDEs. It's a lightweight solution that automatically configures your editor's basic formatting settings like indentation, line endings, and character encoding.
+
+## Why Use EditorConfig?
+
+- **Team Consistency**: Everyone follows the same formatting rules automatically
+- **Cross-Platform Compatibility**: Prevents issues between Windows, Mac, and Linux
+- **Editor Agnostic**: Works with VS Code, WebStorm, Sublime Text, Vim, and more
+- **Zero Configuration**: Developers don't need to manually adjust editor settings
+- **Git-Friendly**: Reduces merge conflicts caused by formatting differences
+
+## Installation
+
+### Step 1: Create the Configuration File
+
+Create a `.editorconfig` file in your project root directory:
+
+```ini
+# Marks this file as the root EditorConfig file (no parent .editorconfig files will be applied)
+root = true
+
+# Applies the following rules to all files
+[*]
+
+# Use UTF-8 character encoding
+charset = utf-8
+
+# Use LF (Unix-style) line endings
+end_of_line = lf
+
+# Use spaces instead of tabs
+indent_style = space
+
+# Set the number of spaces per indentation level to 2
+indent_size = 2
+
+# Ensure every file ends with a newline character
+insert_final_newline = true
+
+# Automatically remove any trailing whitespace at the end of lines
+trim_trailing_whitespace = true
+```
+
+### Step 2: File Placement
+
+Place the `.editorconfig` file in your project root:
+
+```jsx
+your-project/
+├── .editorconfig          # ← EditorConfig file
+├── package.json
+├── src/
+└── ...
+```
+
+## Configuration Explained
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `root = true` | Boolean | Stops searching for additional `.editorconfig` files in parent directories |
+| `charset = utf-8` | String | Ensures consistent character encoding across all files |
+| `end_of_line = lf` | String | Uses Unix-style line endings (prevents Windows/Mac compatibility issues) |
+| `indent_style = space` | String | Uses spaces instead of tabs for indentation |
+| `indent_size = 2` | Number | Sets indentation to 2 spaces (aligns with modern JS/TS standards) |
+| `insert_final_newline = true` | Boolean | Adds a newline at the end of files (POSIX standard) |
+| `trim_trailing_whitespace = true` | Boolean | Removes unnecessary whitespace at line endings |
+
+## Editor Support
+
+### Editors with Built-in Support
+- **Visual Studio Code** - Works immediately
+- **JetBrains IDEs** (WebStorm, IntelliJ IDEA, PhpStorm) - Built-in support
+- **Sublime Text 4** - Native support
+
+### Editors Requiring Plugins
+- **Vim/Neovim** - Install editorconfig-vim plugin
+- **Emacs** - Install editorconfig-emacs package
+- **Atom** - Install editorconfig package
+
+## Real-World Examples
+
+### Without EditorConfig
+```javascript
+// Developer A (uses tabs, Windows line endings, trailing spaces)
+function greet(name) {
+→   return `Hello, ${name}!`;   
+}
+
+// Developer B (uses 4 spaces, Unix line endings)  
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+```
+
+### With EditorConfig
+```javascript
+// All developers (2 spaces, LF endings, no trailing whitespace)
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+
+## Integration with Development Tools
+
+EditorConfig works as the foundation layer in your development stack:
+
+```json
+┌─────────────────┐
+│   EditorConfig  │  ← Basic formatting (indentation, line endings)
+└─────────────────┘
+         ↓
+┌─────────────────┐
+│    Prettier     │  ← Advanced formatting (quotes, semicolons)
+└─────────────────┘
+         ↓
+┌─────────────────┐
+│     ESLint      │  ← Code quality and linting rules
+└─────────────────┘
+```
+
+## Verification Steps
+
+### 1. Test Indentation
+1. Open any `.js` or `.ts` file
+2. Press `Tab` at the beginning of a line
+3. Should indent with 2 spaces, not a tab character
+
+### 2. Check Line Endings
+Most editors show line endings in the status bar:
+- Should display "LF" (not "CRLF" or "CR")
+
+### 3. Test Trailing Whitespace
+1. Add spaces at the end of any line
+2. Save the file
+3. Trailing spaces should be automatically removed
+
+### 4. Test Final Newline
+1. Go to the end of any file
+2. Ensure cursor automatically moves to a new line after the last character
+
+## Summary
+
+EditorConfig provides the foundation for consistent code formatting across your entire team. It's simple to set up, works with virtually every editor, and eliminates common formatting inconsistencies that can cause merge conflicts and waste development time.
+
+The configuration automatically ensures that every developer on your team uses the same basic formatting rules, creating a solid foundation for your other development tools like Prettier and ESLint to build upon.

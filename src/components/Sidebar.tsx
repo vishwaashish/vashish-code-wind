@@ -74,7 +74,7 @@ export default function Sidebar() {
 
             <Search />
 
-            {Object.entries(groupByFilter).map(([key, value], index) => (
+            {Object.entries(groupByFilter).sort().map(([key, value], index) => (
               <SidebarMenu key={key + "-" + index} className="mt-2">
                 <Collapsible defaultOpen className="group/collapsible">
                   <SidebarMenuItem>

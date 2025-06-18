@@ -6,7 +6,7 @@ import {
   makeSource,
 } from "contentlayer/source-files";
 
-const computedFields: ComputedFields<"UI" | "Components"> = {
+const computedFields: ComputedFields<"docs"> = {
   slug: {
     type: "string",
     resolve: (doc) => `/${doc._raw.flattenedPath}`,
@@ -25,39 +25,77 @@ const LinksProperties = defineNestedType(() => ({
     label: { type: "string", required: false, description: "Optional label for the link" },
   },
 }));
-export const Components = defineDocumentType(() => ({
-  name: "Components",
-  filePathPattern: `component/**/*.mdx`,
-  contentType: "mdx",
-  fields: {
-    title: {
-      type: "string",
-      required: true,
-    },
-    description: {
-      type: "string",
-      required: true,
-    },
-    published: {
-      type: "boolean",
-      default: true,
-    },
-    links: {
-      type: "list", // Indicates this is a list field
-      of: LinksProperties, // Nested type for each item in the list
-      required: false,
-    },
-    toc: {
-      type: "boolean",
-      default: true,
-      required: false,
-    },
-  },
-  computedFields,
-}));
-export const UI = defineDocumentType(() => ({
-  name: "UI",
-  filePathPattern: `ui/**/*.mdx`,
+
+// export const Components = defineDocumentType(() => ({
+//   name: "Components",
+//   filePathPattern: `component/**/*.mdx`,
+//   contentType: "mdx",
+//   fields: {
+//     title: {
+//       type: "string",
+//       required: true,
+//     },
+//     description: {
+//       type: "string",
+//       required: true,
+//     },
+//     published: {
+//       type: "boolean",
+//       default: true,
+//     },
+//     links: {
+//       type: "list", // Indicates this is a list field
+//       of: LinksProperties, // Nested type for each item in the list
+//       required: false,
+//     },
+//     toc: {
+//       type: "boolean",
+//       default: true,
+//       required: false,
+//     },
+//     breadcrumb: {
+//       type: "boolean",
+//       default: true,
+//       required: false,
+//     },
+//   },
+//   computedFields,
+// }));
+
+// export const UI = defineDocumentType(() => ({
+//   name: "UI",
+//   filePathPattern: `ui/**/*.mdx`,
+//   contentType: "mdx",
+//   fields: {
+//     title: {
+//       type: "string",
+//       required: true,
+//     },
+//     description: {
+//       type: "string",
+//       required: true,
+//     },
+//     published: {
+//       type: "boolean",
+//       default: true,
+//     },
+//     links: {
+//       type: "list", // Indicates this is a list field
+//       of: LinksProperties, // Nested type for each item in the list
+//       required: false,
+//     },
+//     toc: {
+//       type: "boolean",
+//       default: true,
+//       required: false,
+//     },
+//   },
+//   computedFields,
+// }));
+
+export const Docs = defineDocumentType(() => ({
+  name: "docs",
+  filePathPattern: `**/*.mdx`,
   contentType: "mdx",
   fields: {
     title: {
@@ -88,7 +126,8 @@ export const UI = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: "src/content",
-  documentTypes: [Components, UI],
+  documentTypes: [Docs],
+  // documentTypes: [Docs, Components, UI],
   mdx: {
     remarkPlugins: [],
     rehypePlugins: [],

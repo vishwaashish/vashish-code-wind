@@ -1,0 +1,157 @@
+---
+title: Prettier Configuration
+description: Beginner-friendly guide to setting up and understanding Prettier for code formatting in modern web projects
+---
+
+Prettier is an opinionated code formatter that automatically formats your code according to consistent rules. This guide covers **what** Prettier is, **why** you should use it, and **how** to set it up in your project, with examples and best practices for beginners.
+
+## What is Prettier?
+
+**Prettier** is a tool that automatically formats your code, making it look neat and consistent every time you save a file or run a formatting command.
+
+- **What it does:**  
+  - Fixes code style issues (indentation, quotes, semicolons, etc.)
+  - Sorts Tailwind CSS classes (with plugin)
+  - Works with JavaScript, TypeScript, CSS, HTML, JSON, Markdown, and more
+
+## Why Use Prettier?
+
+- **Consistency:** Everyone’s code looks the same, no matter who wrote it.
+- **No More Debates:** Stops arguments about code style in code reviews.
+- **Saves Time:** You don’t have to worry about formatting manually.
+- **Easy Integration:** Works with most editors and can be run from the command line or as a pre-commit hook.
+
+## How to Set Up Prettier
+
+### 1. Install Prettier and Plugins
+
+You already have these in your `devDependencies`:
+
+```bash
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12"
+```
+
+If not, install with:
+
+```cmd
+npm install --save-dev prettier prettier-plugin-tailwindcss
+```
+
+---
+
+### 2. Create Prettier Configuration
+
+Create a file named `prettier.config.js` in your project root:
+```json
+// prettier.config.js
+/** @type {import("prettier").Config} */
+export default {
+  // Plugins
+  plugins: ["prettier-plugin-tailwindcss"],
+
+  // Tailwind CSS: sort classes in these utility functions
+  tailwindFunctions: ["clsx", "twMerge"],
+
+  // Formatting options
+  singleQuote: false, // Use double quotes instead of single
+  semi: true, // Always add semicolons
+  trailingComma: "all", // Add trailing commas where valid in ES5 (like objects, arrays)
+};
+
+```
+
+
+#### **What do these options mean?**
+
+| Option                | What it Does                                                  | Example Before                      | Example After                       |
+|-----------------------|--------------------------------------------------------------|-------------------------------------|-------------------------------------|
+| `singleQuote: false`  | Use double quotes instead of single quotes                   | `'hello'`                           | `"hello"`                           |
+| `semi: true`          | Always add semicolons at the end of statements               | `const a = 1`                       | `const a = 1;`                      |
+| `trailingComma: all`  | Add trailing commas wherever possible (objects, arrays, etc) | `{ a: 1, b: 2 }`                    | `{ a: 1, b: 2, }`                   |
+| `plugins`             | Adds Tailwind CSS class sorting                              | `class="p-4 text-center bg-blue-500"` | `class="bg-blue-500 p-4 text-center"` |
+| `tailwindFunctions`   | Sorts classes in these utility functions (like `clsx`)       | `clsx("p-4 text-center bg-blue-500")` | `clsx("bg-blue-500 p-4 text-center")` |
+
+---
+
+### 3. Add Format Scripts
+
+Your `package.json` already includes:
+
+- **`npm run format`**: Formats all files in the project.
+- **`npm run format:check`**: Checks if files are formatted (useful for CI).
+
+---
+
+### 4. Example: Prettier in Action
+
+**Before Prettier:**
+```jsx
+const Button = ({children}) => {
+    return <button className='p-4 text-center bg-blue-500'>{children}</button>
+}
+```
+
+
+**After Prettier:**
+```jsx
+const Button = ({ children }) => {
+    return <button className="bg-blue-500 p-4 text-center">{children}</button>;
+};
+```
+
+- Notice the double quotes, trailing comma, semicolon, and sorted Tailwind classes!
+
+---
+
+### 5. Editor Integration
+
+For best results, enable "Format on Save" in your code editor.
+
+**VS Code Example:**
+
+```json
+{
+"editor.formatOnSave": true,
+"prettier.enable": true
+}
+```
+
+---
+
+## Troubleshooting Tips
+
+- **Prettier not formatting?** Make sure you have the correct config file (`prettier.config.js`) and plugins installed.
+- **Tailwind classes not sorted?** Check that `prettier-plugin-tailwindcss` is installed and listed in your config.
+- **Conflicts with ESLint?** Use `eslint-config-prettier` to turn off conflicting ESLint formatting rules.
+
+---
+
+## Best Practices
+
+1. **Always format before committing code.**
+2. **Use Prettier with ESLint for the best developer experience.**
+3. **Keep your Prettier config in version control.**
+4. **Let Prettier handle all formatting—don’t argue about style in code reviews!**
+
+---
+
+## Summary Table
+
+| Step                  | What to Do                        | Why It's Important                  |
+|-----------------------|-----------------------------------|-------------------------------------|
+| Install Prettier      | Add Prettier & plugins            | Enables auto-formatting             |
+| Create Config File    | Set up `prettier.config.js`       | Defines your formatting rules       |
+| Add Format Scripts    | Use `npm run format`              | Easily format your codebase         |
+| Editor Integration    | Enable format on save             | Instant feedback as you code        |
+
+---
+
+
+Go back to [Development Tools Overview](./overview.md) or [ESLint Configuration](./eslint-configuration.md).
+
+---
+
+**References:**  
+- [Prettier Official Docs](https://prettier.io/docs/en/configuration.html)
+- [Prettier Plugin Tailwind CSS](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)

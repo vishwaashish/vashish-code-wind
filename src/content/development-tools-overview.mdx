@@ -1,0 +1,121 @@
+---
+title: Development Tools Overview
+description: Essential tools for maintaining code quality, consistency, and team collaboration
+---
+
+This project uses three core development tools that work together to ensure clean, consistent, and high-quality code across the entire team.
+
+## The Three Pillars
+
+### EditorConfig
+**What**: Cross-editor configuration for basic formatting rules  
+**Why**: Ensures consistent indentation, line endings, and character encoding across different editors
+
+### ESLint
+**What**: JavaScript/TypeScript linter that identifies and fixes code quality issues  
+**Why**: Catches bugs, enforces coding standards, and maintains code consistency
+
+### Prettier
+**What**: Opinionated code formatter that automatically formats your code  
+**Why**: Eliminates formatting debates and ensures consistent code style
+
+## How They Work Together
+
+```jsx
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   EditorConfig  │    │     ESLint      │    │    Prettier     │
+│                 │    │                 │    │                 │
+│ Basic Settings  │───▶│ Code Quality    │───▶│ Code Formatting │
+│ • Indentation   │    │ • Error Detect  │    │ • Style Rules   │
+│ • Line Endings  │    │ • Best Practice │    │ • Auto Format   │
+│ • Encoding      │    │ • Type Safety   │    │ • Consistency   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+**Layer 1: EditorConfig** - Sets the foundation (2 spaces, LF endings, UTF-8)  
+**Layer 2: ESLint** - Catches errors and enforces coding standards  
+**Layer 3: Prettier** - Applies consistent formatting on top of clean code
+
+## Package Overview
+
+### EditorConfig
+```json
+// No package needed - just a .editorconfig file
+// Supported natively by most modern editors
+```
+
+### ESLint Packages
+```json
+{
+  "devDependencies": {
+    "eslint": "^9.28.0",                           // Core ESLint
+    "@eslint/js": "^9.25.0",                       // JavaScript rules
+    "@typescript-eslint/eslint-plugin": "^8.33.1", // TypeScript linting
+    "@typescript-eslint/parser": "^8.33.1",        // TypeScript parser
+    "eslint-plugin-react": "^7.37.5",              // React rules
+    "eslint-plugin-react-hooks": "^5.2.0",         // React Hooks rules
+    "eslint-plugin-jsx-a11y": "^6.10.2",           // Accessibility rules
+    "eslint-config-prettier": "^10.1.5"            // Prettier integration
+  }
+}
+```
+
+### Prettier Packages
+```json
+{
+  "devDependencies": {
+    "prettier": "^3.5.3",                          // Core Prettier
+    "prettier-plugin-tailwindcss": "^0.6.12"       // Tailwind CSS sorting
+  }
+}
+```
+
+## Why This Combination?
+
+### For Individual Developers
+- **Immediate Feedback**: Catch errors as you type
+- **Automatic Formatting**: No time wasted on manual formatting
+- **Consistent Environment**: Same experience across different editors
+- **Learning Tool**: ESLint teaches best practices
+
+### For Teams
+- **Zero Configuration**: New team members get consistent setup
+- **Reduced Code Review Time**: Focus on logic, not formatting
+- **Conflict Prevention**: Consistent formatting reduces git merge conflicts
+- **Quality Assurance**: Multiple layers prevent bugs from reaching production
+
+### For Projects
+- **Maintainability**: Consistent code is easier to maintain
+- **Scalability**: Standards help as the codebase grows
+- **Professional Quality**: Industry-standard tooling and practices
+- **Future-Proofing**: Easy to onboard new developers
+
+## Development Workflow
+
+```bash
+# 1. Write code (EditorConfig ensures basic consistency)
+# 2. Save file (Prettier auto-formats)
+# 3. ESLint runs (catches issues in real-time)
+# 4. Manual checks before commit
+npm run lint         # Check for linting issues
+npm run format:check # Verify formatting is correct
+```
+
+## Benefits Summary
+
+| Tool | Primary Benefit | Secondary Benefits |
+|------|-----------------|-------------------|
+| **EditorConfig** | Cross-editor consistency | Reduces git conflicts, universal standards |
+| **ESLint** | Code quality & error prevention | Learning tool, best practices enforcement |
+| **Prettier** | Automatic code formatting | Time saving, eliminates style debates |
+
+## Next Steps
+
+Each tool has its own detailed configuration page:
+
+- [**EditorConfig Setup**](../docs/editor-configuration) – Basic editor configuration  
+- [**ESLint Configuration**](../docs/eslint-configuration) – Comprehensive linting rules and plugins  
+- [**Prettier Configuration**](../docs/prettier-configuration) – Code formatting and style rules
+
+
+Together, these tools create a professional development environment that scales with your team and maintains high code quality standards.

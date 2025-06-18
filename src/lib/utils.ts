@@ -141,9 +141,9 @@ export async function renderCode(
     const highlighter = await getHighlighterInstance();
     return highlighter
       ? highlighter.codeToHtml(code, {
-          lang,
-          theme,
-        })
+        lang,
+        theme,
+      })
       : null;
   } catch (error) {
     console.error("Error rendering code:", error);
